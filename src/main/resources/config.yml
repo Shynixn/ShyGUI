@@ -1,0 +1,27 @@
+#######################################################################
+#                          ShyGUI                                     #
+# 		            	   by Shynixn							      #
+#######################################################################
+
+############################
+# Language settings
+############################
+language: "en_us"
+
+############################
+# Command settings
+############################
+commands:
+  shygui:
+    aliases:
+      - "gui"
+      - "menu"
+
+############################
+# Script Engine
+############################
+scriptEngine:
+  # Option parameters for the NashornScriptEngine.
+  options:
+    - "--no-java-access=true"
+    - "--persistent-code-cache=true"

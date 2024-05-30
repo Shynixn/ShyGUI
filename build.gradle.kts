@@ -204,7 +204,7 @@ tasks.register("pluginJarLegacy", com.github.jengelman.gradle.plugins.shadow.tas
 
 tasks.register("languageFile") {
     val kotlinSrcFolder = project.sourceSets.toList()[0].allJava.srcDirs.first { e -> e.endsWith("java") }
-    val languageKotlinFile = kotlinSrcFolder.resolve("com/github/shynixn/shygui/shyguiLanguage.kt")
+    val languageKotlinFile = kotlinSrcFolder.resolve("com/github/shynixn/shygui/ShyGUILanguage.kt")
     val resourceFile = kotlinSrcFolder.parentFile.resolve("resources").resolve("lang").resolve("en_us.properties")
     val bundle = FileInputStream(resourceFile).use { stream ->
         PropertyResourceBundle(stream)
@@ -213,7 +213,7 @@ tasks.register("languageFile") {
     val contents = ArrayList<String>()
     contents.add("package com.github.shynixn.shygui")
     contents.add("")
-    contents.add("object shyguiLanguage {")
+    contents.add("object ShyGUILanguage {")
     for (key in bundle.keys) {
         val value = bundle.getString(key)
         contents.add("  /** $value **/")

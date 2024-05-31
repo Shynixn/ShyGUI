@@ -1,6 +1,7 @@
 package com.github.shynixn.shygui.impl
 
 import com.github.shynixn.mccoroutine.folia.*
+import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
 import com.github.shynixn.mcutils.common.translateChatColors
 import com.github.shynixn.mcutils.packet.api.PacketService
@@ -30,15 +31,18 @@ class GUIMenuImpl(
     private val itemService: ItemService,
     private var playerHandle: Player? = null,
     private var guiMenuService: GUIMenuServiceImpl? = null,
-    private var guiItemConditionService: GUIItemConditionService
+    private var guiItemConditionService: GUIItemConditionService,
+    private val commandService: CommandService
 ) : GUIMenu {
     private val placeHolderStart = "%"
     private val itemStacks: Array<ItemStack?>
+    private val actionItems: Array<GUIItemMeta?>
     private val indicesWithPlaceHolders = HashSet<Int>()
 
     init {
         if (meta.size == WindowType.SIX_ROW) {
             itemStacks = arrayOfNulls(6 * 9)
+            actionItems = arrayOfNulls(6 * 9)
         } else {
             throw Exception("Window Type not found!")
         }
@@ -64,7 +68,6 @@ class GUIMenuImpl(
 
         plugin.launch(plugin.mainDispatcher + object : CoroutineTimings() {}) {
             setGuiItemsToItemStacks(evaluateItemConditions(meta.items))
-            sendContentUpdate()
             while (!isDisposed) {
                 if (isVisible) {
                     setGuiItemsToItemStacks(evaluateItemConditions(prepareItemsWithPlaceHolders()))
@@ -96,6 +99,31 @@ class GUIMenuImpl(
      * Is this GUI already disposed.
      */
     override var isDisposed: Boolean = false
+
+    /**
+     * Triggers a click on the given index.
+     */
+    override fun click(index: Int) {
+        if (isDisposed) {
+            throw RuntimeException("This GUIMenu has already been disposed!")
+        }
+
+        if (index < 0 || index >= actionItems.size) {
+            return
+        }
+
+        val guiItem = actionItems[index] ?: return
+
+        plugin.launch(plugin.globalRegionDispatcher) {
+            for (command in guiItem.commands) {
+                commandService.executeCommand(listOf(player), command) { input, player ->
+                    placeHolderService.replacePlaceHolders(
+                        player, input
+                    )
+                }
+            }
+        }
+    }
 
     /**
      * Sends an open packet to show this gui.
@@ -242,6 +270,7 @@ class GUIMenuImpl(
                     try {
                         val itemStack = itemService.toItemStack(guiItemMeta.item)
                         this.itemStacks[index] = itemStack
+                        this.actionItems[index] = guiItemMeta
                     } catch (e: Exception) {
                         throw RuntimeException("Cannot parse ItemStack at ${guiItemMeta.row} and col ${guiItemMeta.col}!")
                     }

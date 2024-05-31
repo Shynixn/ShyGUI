@@ -1,6 +1,6 @@
 package com.github.shynixn.shygui.impl.service
 
-import com.github.shynixn.mccoroutine.folia.launch
+import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.shygui.contract.GUIItemConditionService
@@ -19,7 +19,8 @@ class GUIMenuServiceImpl @Inject constructor(
     private val packetService: PacketService,
     private val itemService: ItemService,
     private val placeHolderService: PlaceHolderService,
-    private val guiItemConditionService: GUIItemConditionService
+    private val guiItemConditionService: GUIItemConditionService,
+    private val commandService: CommandService
 ) :
     GUIMenuService {
     private val maxSubPages = 20
@@ -39,7 +40,8 @@ class GUIMenuServiceImpl @Inject constructor(
             itemService,
             player,
             this,
-            guiItemConditionService
+            guiItemConditionService,
+            commandService
         )
 
         if (!guis.containsKey(player)) {

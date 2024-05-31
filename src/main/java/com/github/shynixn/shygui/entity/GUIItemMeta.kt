@@ -1,5 +1,6 @@
 package com.github.shynixn.shygui.entity
 
+import com.github.shynixn.mcutils.common.command.CommandMeta
 import com.github.shynixn.mcutils.common.item.Item
 
 data class GUIItemMeta(
@@ -31,7 +32,10 @@ data class GUIItemMeta(
     /**
      * Condition for being rendered.
      */
-    var condition: GUIItemCondition = GUIItemCondition()
-) {
+    var condition: GUIItemCondition = GUIItemCondition(),
 
-}
+    /**
+     * Commands to trigger.
+     */
+    var commands: List<CommandMeta> = emptyList()
+)

@@ -24,6 +24,11 @@ interface GUIMenu {
     val isDisposed: Boolean
 
     /**
+     * Triggers a click on the given index.
+     */
+    fun click(index: Int)
+
+    /**
      * Sends an open packet to show this gui.
      */
     fun show()

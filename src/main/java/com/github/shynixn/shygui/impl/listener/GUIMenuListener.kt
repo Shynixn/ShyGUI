@@ -46,6 +46,11 @@ class GUIMenuListener @Inject constructor(private val plugin: Plugin, private va
 
                 val gui = guiMenuService.getGUI(player) ?: return@launch
 
+                if (gui.containerId != packet.containerId) {
+                    return@launch
+                }
+
+                gui.click(packet.slotId)
                 delay(clickProtectionMilliseconds)
 
                 if (scheduledReSync.contains(player)) {

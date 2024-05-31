@@ -10,9 +10,9 @@ interface GUIMenuService : AutoCloseable {
     fun openGUI(player: Player, meta: GUIMeta): GUIMenu
 
     /**
-     * Closes the current open GUI of the player.
+     * Gets the currently open gui of the player.
      */
-    fun closeGUI(player: Player);
+    fun getGUI(player: Player): GUIMenu?
 
     /**
      * Clears the cache for the given player.

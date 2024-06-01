@@ -20,13 +20,41 @@ class ShyGUICommandExecutor @Inject constructor(
     private val plugin: Plugin,
     private val guiMetaService: CacheRepository<GUIMeta>,
     private val guiMenuService: GUIMenuService,
-    private val chatMessageService: ChatMessageService
+    chatMessageService: ChatMessageService
 ) {
+    companion object{
+        val onlinePlayerTabs: (suspend (CommandSender) -> List<String>) = {
+            Bukkit.getOnlinePlayers().map { e -> e.name }
+        }
+        val playerMustExist = object : Validator<Player> {
+            override suspend fun transform(
+                sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>
+            ): Player? {
+                try {
+                    val playerId = openArgs[0]
+                    val player = Bukkit.getPlayer(playerId)
+
+                    if (player != null) {
+                        return player
+                    }
+                    return Bukkit.getPlayer(UUID.fromString(playerId))
+                } catch (e: Exception) {
+                    return null
+                }
+            }
+
+            override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
+                return ShyGUILanguage.playerNotFoundMessage.format(openArgs[0])
+            }
+        }
+
+        val senderHasToBePlayer: () -> String = {
+            ShyGUILanguage.commandSenderHasToBePlayer
+        }
+    }
+
     private val menuTabs: (suspend (CommandSender) -> List<String>) = {
         guiMetaService.getAll().map { e -> e.name }
-    }
-    private val onlinePlayerTabs: (suspend (CommandSender) -> List<String>) = {
-        Bukkit.getOnlinePlayers().map { e -> e.name }
     }
 
     private val guiMenuMustExist = object : Validator<GUIMeta> {
@@ -53,32 +81,6 @@ class ShyGUICommandExecutor @Inject constructor(
         }
     }
 
-    private val playerMustExist = object : Validator<Player> {
-        override suspend fun transform(
-            sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>
-        ): Player? {
-            try {
-                val playerId = openArgs[0]
-                val player = Bukkit.getPlayer(playerId)
-
-                if (player != null) {
-                    return player
-                }
-                return Bukkit.getPlayer(UUID.fromString(playerId))
-            } catch (e: Exception) {
-                return null
-            }
-        }
-
-        override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return ShyGUILanguage.playerNotFoundMessage.format(openArgs[0])
-        }
-    }
-
-    private val senderHasToBePlayer: () -> String = {
-        ShyGUILanguage.commandSenderHasToBePlayer
-    }
-
     init {
         CommandBuilder(plugin, "shygui", chatMessageService) {
             usage(ShyGUILanguage.commandUsage)
@@ -95,13 +97,17 @@ class ShyGUICommandExecutor @Inject constructor(
                         openGui(guiMeta, player)
                     }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
                     .execute { commandSender, guiMeta, player ->
-                        openGui(guiMeta, player)
+                        if (commandSender.hasPermission(Permission.OTHER_PLAYER.text)) {
+                            openGui(guiMeta, player)
+                        } else {
+                            commandSender.sendMessage(ShyGUILanguage.manipulateOtherPlayerMessage)
+                        }
                     }
             }.helpCommand()
         }.build()
     }
 
-    private suspend fun openGui(guiMeta: GUIMeta, player: Player) {
+    private fun openGui(guiMeta: GUIMeta, player: Player) {
         plugin.launch {
             guiMenuService.openGUI(player, guiMeta)
         }

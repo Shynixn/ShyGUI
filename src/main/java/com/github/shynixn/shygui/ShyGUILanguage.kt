@@ -24,4 +24,7 @@ object ShyGUILanguage {
 
   /** [&9ShyGUI&f] Use /shygui help to see more info about the plugin. **/
   var commandUsage : String = "[&9ShyGUI&f] Use /shygui help to see more info about the plugin."
+
+  /** [&9ShyGUI&f] &cYou do not have permission to open the GUI menu for other players. **/
+  var manipulateOtherPlayerMessage : String = "[&9ShyGUI&f] &cYou do not have permission to open the GUI menu for other players."
 }

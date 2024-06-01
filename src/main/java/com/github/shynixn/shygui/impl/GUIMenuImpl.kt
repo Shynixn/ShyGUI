@@ -40,7 +40,7 @@ class GUIMenuImpl(
     private val indicesWithPlaceHolders = HashSet<Int>()
 
     init {
-        if (meta.size == WindowType.SIX_ROW) {
+        if (meta.windowType == WindowType.SIX_ROW) {
             itemStacks = arrayOfNulls(6 * 9)
             actionItems = arrayOfNulls(6 * 9)
         } else {
@@ -137,7 +137,7 @@ class GUIMenuImpl(
         plugin.launch {
             setGuiItemsToItemStacks(evaluateItemConditions(prepareItemsWithPlaceHolders()))
             packetService.sendPacketOutInventoryOpen(
-                player, PacketOutInventoryOpen(containerId, meta.size, meta.title.translateChatColors())
+                player, PacketOutInventoryOpen(containerId, meta.windowType, meta.title.translateChatColors())
             )
             sendContentUpdate()
         }

@@ -4,6 +4,9 @@ import com.github.shynixn.mcutils.common.repository.Element
 import com.github.shynixn.mcutils.packet.api.meta.enumeration.WindowType
 
 class GUIMeta : Element {
+    /**
+     * Unique identifier.
+     */
     override var name: String = ""
 
     /**
@@ -12,9 +15,14 @@ class GUIMeta : Element {
     var items: List<GUIItemMeta> = emptyList()
 
     /**
+     * Commands to execute.
+     */
+    var command: GUICommand = GUICommand()
+
+    /**
      * Container Size.
      */
-    var size: WindowType = WindowType.SIX_ROW
+    var windowType: WindowType = WindowType.SIX_ROW
 
     /**
      * Container title.

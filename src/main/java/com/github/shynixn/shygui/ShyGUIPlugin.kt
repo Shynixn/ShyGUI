@@ -1,20 +1,17 @@
 package com.github.shynixn.shygui
 
 import com.github.shynixn.mccoroutine.folia.launch
-import com.github.shynixn.mcutils.common.*
-import com.github.shynixn.mcutils.common.item.Item
-import com.github.shynixn.mcutils.common.item.ItemService
-import com.github.shynixn.mcutils.common.repository.Repository
+import com.github.shynixn.mcutils.common.ChatColor
+import com.github.shynixn.mcutils.common.ConfigurationService
+import com.github.shynixn.mcutils.common.Version
+import com.github.shynixn.mcutils.common.reloadTranslation
 import com.github.shynixn.mcutils.guice.DependencyInjectionModule
 import com.github.shynixn.mcutils.packet.api.PacketInType
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.mcutils.packet.api.meta.enumeration.WindowType
-import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryContent
-import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryOpen
 import com.github.shynixn.shygui.contract.GUIMenuService
-import com.github.shynixn.shygui.entity.GUIMeta
 import com.github.shynixn.shygui.impl.commandexecutor.ShyGUICommandExecutor
-import kotlinx.coroutines.delay
+import com.github.shynixn.shygui.impl.listener.GUIMenuListener
 import org.bukkit.Bukkit
 import org.bukkit.plugin.ServicePriority
 import org.bukkit.plugin.java.JavaPlugin
@@ -76,9 +73,9 @@ class ShyGUIPlugin : JavaPlugin() {
 
         // Guice
         this.module = ShyGUIDependencyInjectionModule(this).build()
-        this.reloadConfig()
 
         // Register Language
+        this.reloadConfig()
         val configurationService = module.getService<ConfigurationService>()
         val language = configurationService.findValue<String>("language")
         reloadTranslation(language, ShyGUILanguage::class.java, "en_us")
@@ -87,8 +84,10 @@ class ShyGUIPlugin : JavaPlugin() {
         // Register Packets
         val packetService = module.getService<PacketService>()
         packetService.registerPacketListening(PacketInType.CLICKINVENTORY)
+        packetService.registerPacketListening(PacketInType.CLOSEINVENTORY)
 
         // Register Listeners
+        Bukkit.getPluginManager().registerEvents(module.getService<GUIMenuListener>(), this)
 
         // Register CommandExecutor
         module.getService<ShyGUICommandExecutor>()
@@ -99,40 +98,10 @@ class ShyGUIPlugin : JavaPlugin() {
 
         val plugin = this
         plugin.launch {
-            val metaRepository = module.getService<Repository<GUIMeta>>()
-            metaRepository.getAll()
-
-
-            val player = Bukkit.getPlayer("Shynixn")!!
-
-            val item = Item(typeName = "minecraft:iron_shovel")
-            val itemService = module.getService<ItemService>()
-            val containerId = packetService.getNextContainerId(player)
-
-            packetService.sendPacketOutInventoryOpen(player, PacketOutInventoryOpen().also {
-                it.title = "Test Inventory"
-                it.windowType = WindowType.SIX_ROW
-                it.containerId = containerId
-            })
-
-            delay(5000)
-
-            packetService.sendPacketOutInventoryContent(player, PacketOutInventoryContent().also {
-                it.containerId = containerId
-                it.stateId = 1
-                it.items = listOf(itemService.toItemStack(item))
-            })
-
-
-
-
-
-
-
-
-
-
-
+            plugin.logger.log(Level.INFO, "Registering GUI commands...")
+            val guiMenuService = module.getService<GUIMenuService>()
+            guiMenuService.registerMenuCommands()
+            plugin.logger.log(Level.INFO, "Registered GUI commands.")
             Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Enabled ShyGUI " + plugin.description.version + " by Shynixn")
         }
     }

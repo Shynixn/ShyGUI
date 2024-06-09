@@ -26,7 +26,7 @@ command:
 #  e.g. pet is spawned, show despawn button
 #  e.g. pet is not spawned, show spawn button
 # You can achieve that using the 'condition' property below.
-# If multiple conditions are true for a single position, the latest item in the list wins and is being displayed.
+# If multiple conditions are true for a single position, the last item in the list wins and is being displayed.
 # You can use this to specify background items at the beginning of the list below and overwrite it with more important item by specifying them later in the list.
 items:
   - row: 1 # The GUI is seen as a grid. Use row and col to specify the location of an item. This is the required row property.
@@ -45,7 +45,7 @@ items:
       # Optional Durability.
       durability: 0
       # Optional property to specify a base64 encoded skin URL. Placeholders are supported.
-      skinBase64: ""
+      skinBase64: ""COMPON
       # Optional NBT Tags in standard Minecraft NBT format. e.g. {Unbreakable:1} This works in versions below Minecraft 1.20.5. Placeholders are supported.
       nbt: ""
       # Optional Data Components in Minecraft Data Component JSON format. This has replaced NBT since Minecraft 1.20.5. See https://minecraft.wiki/w/Data_component_format. Placeholders are supported.
@@ -57,7 +57,9 @@ items:
         - ""
     # Optional condition to define when this item will be displayed.
     condition:
-      # Required condition type. Possible values: NONE, JAVASCRIPT, STRING_EQUALS, STRING_NOT_EQUALS, STRING_EQUALS_IGNORE_CASE, STRING_NOT_EQUALS_IGNORE_CASE, NUMBER_GREATER_THAN, NUMBER_GREATER_THAN_OR_EQUAL, NUMBER_LESS_THAN, NUMBER_LESS_THAN_OR_EQUAL
+      # Optional permission required to see this item. This field works independently of the type property below.
+      permission: ""
+      # Optional condition type. Possible values: NONE, JAVASCRIPT, STRING_EQUALS, STRING_NOT_EQUALS, STRING_EQUALS_IGNORE_CASE, STRING_NOT_EQUALS_IGNORE_CASE, NUMBER_GREATER_THAN, NUMBER_GREATER_THAN_OR_EQUAL, NUMBER_LESS_THAN, NUMBER_LESS_THAN_OR_EQUAL
       type: "NONE"
       # Optional left side of the condition if type starts with "STRING_" or "NUMBER_". Placeholders are supported.
       left: ""
@@ -67,6 +69,6 @@ items:
       js: ""
     # Optional list of commands which are executed when you click on this item.
     commands:
-      - type: "" # Execution type. Possible values: "SERVER_PER_PLAYER" executes the command with server level permissions. "PER_PLAYER" executes the command with player level permission.
+      - type: "PER_PLAYER" # Execution type. Possible values: "SERVER_PER_PLAYER" executes the command with server level permissions. "PER_PLAYER" executes the command with player level permission.
         # Command to execute. e.g. /say Hello World. PlaceHolders are supported. Replaces the "%player_name% placeholder with the executing player.
         command: ""

@@ -1,26 +1,18 @@
 package com.github.shynixn.shygui.impl.service
 
-import com.github.shynixn.mcutils.common.chat.ChatMessageService
-import com.github.shynixn.mcutils.common.command.CommandBuilder
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
-import com.github.shynixn.mcutils.common.repository.Repository
-import com.github.shynixn.mcutils.common.translateChatColors
 import com.github.shynixn.mcutils.packet.api.PacketService
-import com.github.shynixn.shygui.ShyGUILanguage
 import com.github.shynixn.shygui.contract.GUIItemConditionService
 import com.github.shynixn.shygui.contract.GUIMenu
 import com.github.shynixn.shygui.contract.GUIMenuService
 import com.github.shynixn.shygui.contract.PlaceHolderService
 import com.github.shynixn.shygui.entity.GUIMeta
-import com.github.shynixn.shygui.enumeration.Permission
 import com.github.shynixn.shygui.impl.GUIMenuImpl
-import com.github.shynixn.shygui.impl.commandexecutor.ShyGUICommandExecutor
 import com.google.inject.Inject
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import java.util.*
-import java.util.logging.Level
 
 class GUIMenuServiceImpl @Inject constructor(
     private val plugin: Plugin,
@@ -28,57 +20,10 @@ class GUIMenuServiceImpl @Inject constructor(
     private val itemService: ItemService,
     private val placeHolderService: PlaceHolderService,
     private val guiItemConditionService: GUIItemConditionService,
-    private val commandService: CommandService,
-    private val repository: Repository<GUIMeta>,
-    private val chatMessageService: ChatMessageService
-) :
-    GUIMenuService {
+    private val commandService: CommandService
+) : GUIMenuService {
     private val maxSubPages = 20
     private val guis = HashMap<Player, Stack<GUIMenu>>()
-    private var areCommandsRegistered = false
-
-
-    /**
-     * Registers all commands for all menus.
-     */
-    override suspend fun registerMenuCommands() {
-        if (areCommandsRegistered) {
-            return
-        }
-
-        val guiMenus = repository.getAll()
-        for (guiMenu in guiMenus) {
-            if (guiMenu.command.command.isBlank()) {
-                continue
-            }
-
-            val command = guiMenu.command
-            CommandBuilder(plugin, command.command, chatMessageService) {
-                usage(command.usage.translateChatColors())
-                description(command.description.translateChatColors())
-                aliases(command.aliases)
-                permission(command.permission)
-                permissionMessage(ShyGUILanguage.commandNoPermission)
-                subCommand("open") {
-                    toolTip { ShyGUILanguage.openCommandHint }
-                    builder()
-                        .executePlayer(ShyGUICommandExecutor.senderHasToBePlayer) { player ->
-                            openGUI(player, guiMenu)
-                        }.argument("player").validator(ShyGUICommandExecutor.playerMustExist)
-                        .tabs(ShyGUICommandExecutor.onlinePlayerTabs)
-                        .execute { commandSender, player ->
-                            if (commandSender.hasPermission(Permission.OTHER_PLAYER.text)) {
-                                openGUI(player, guiMenu)
-                            } else {
-                                commandSender.sendMessage(ShyGUILanguage.manipulateOtherPlayerMessage)
-                            }
-                        }
-                }.helpCommand()
-            }.build()
-            plugin.logger.log(Level.INFO, "Registered command '/${command.command}' for GUI '${guiMenu.name}'.")
-        }
-        areCommandsRegistered = true
-    }
 
     /**
      * Opens a GUI for the given player.
@@ -145,12 +90,16 @@ class GUIMenuServiceImpl @Inject constructor(
     /**
      * Closes the current open GUI of the player.
      */
-    internal fun closeGUI(player: Player) {
+    internal fun closeGUI(player: Player, closeAll: Boolean) {
         if (!guis.containsKey(player)) {
             return
         }
 
         val guiStack = guis[player]!!
+
+        if (closeAll) {
+            guiStack.clear()
+        }
 
         if (guiStack.isEmpty()) {
             guis.remove(player)
@@ -179,7 +128,7 @@ class GUIMenuServiceImpl @Inject constructor(
             val guiStack = guis[player]!!
             while (!guiStack.empty()) {
                 val gui = guiStack.pop()
-                gui.close()
+                gui.closeAll()
             }
         }
         guis.clear()

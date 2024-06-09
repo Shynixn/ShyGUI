@@ -44,7 +44,17 @@ interface GUIMenu {
     fun sendContentUpdate()
 
     /**
-     * Permanently closes and disposes inventory.
+     * Permanently closes this window and all previous windows. Disposes all inventories of the player.
      */
-    fun close()
+    fun closeAll()
+
+    /**
+     * Permanently closes this window and goes back to the previous window. Disposes this inventory.
+     */
+    fun closeBack()
+
+    /**
+     * Disposes the inventory.
+     */
+    fun dispose()
 }

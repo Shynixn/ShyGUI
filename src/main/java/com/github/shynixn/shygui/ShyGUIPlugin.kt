@@ -90,7 +90,8 @@ class ShyGUIPlugin : JavaPlugin() {
         Bukkit.getPluginManager().registerEvents(module.getService<GUIMenuListener>(), this)
 
         // Register CommandExecutor
-        module.getService<ShyGUICommandExecutor>()
+        val commandExecutor = module.getService<ShyGUICommandExecutor>()
+        commandExecutor.registerShyGuiCommand()
 
         // Register Dependencies
         Bukkit.getServicesManager()
@@ -99,8 +100,7 @@ class ShyGUIPlugin : JavaPlugin() {
         val plugin = this
         plugin.launch {
             plugin.logger.log(Level.INFO, "Registering GUI commands...")
-            val guiMenuService = module.getService<GUIMenuService>()
-            guiMenuService.registerMenuCommands()
+            commandExecutor.registerGuiCommands()
             plugin.logger.log(Level.INFO, "Registered GUI commands.")
             Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Enabled ShyGUI " + plugin.description.version + " by Shynixn")
         }

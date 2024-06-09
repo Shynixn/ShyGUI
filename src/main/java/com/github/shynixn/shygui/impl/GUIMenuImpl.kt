@@ -1,6 +1,7 @@
 package com.github.shynixn.shygui.impl
 
 import com.github.shynixn.mccoroutine.folia.*
+import com.github.shynixn.mcutils.common.ChatColor
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
 import com.github.shynixn.mcutils.common.translateChatColors
@@ -9,12 +10,14 @@ import com.github.shynixn.mcutils.packet.api.meta.enumeration.WindowType
 import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryClose
 import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryContent
 import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryOpen
+import com.github.shynixn.shygui.ShyGUILanguage
 import com.github.shynixn.shygui.contract.GUIItemConditionService
 import com.github.shynixn.shygui.contract.GUIMenu
 import com.github.shynixn.shygui.contract.PlaceHolderService
 import com.github.shynixn.shygui.entity.GUIItemMeta
 import com.github.shynixn.shygui.entity.GUIMeta
 import com.github.shynixn.shygui.enumeration.GUIItemConditionType
+import com.github.shynixn.shygui.exception.GUIException
 import com.github.shynixn.shygui.impl.service.GUIMenuServiceImpl
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -116,10 +119,12 @@ class GUIMenuImpl(
 
         plugin.launch(plugin.globalRegionDispatcher) {
             for (command in guiItem.commands) {
-                commandService.executeCommand(listOf(player), command) { input, player ->
-                    placeHolderService.replacePlaceHolders(
-                        player, input
-                    )
+                if (command.command.isNotBlank()) {
+                    commandService.executeCommand(listOf(player), command) { input, player ->
+                        placeHolderService.replacePlaceHolders(
+                            player, input
+                        )
+                    }
                 }
             }
         }
@@ -164,22 +169,44 @@ class GUIMenuImpl(
         }
 
         val items = this.itemStacks
-        packetService.sendPacketOutInventoryContent(player, PacketOutInventoryContent().also {
-            it.items = items.toList()
-        })
+        packetService.sendPacketOutInventoryContent(
+            player,
+            PacketOutInventoryContent(containerId = containerId, stateId = 1, items = items)
+        )
     }
 
     /**
      * Closes the inventory.
      */
-    override fun close() {
+    override fun closeAll() {
         if (playerHandle != null) {
             hide()
             val playerData = playerHandle
             playerHandle = null
-            guiMenuService?.closeGUI(playerData!!)
+            guiMenuService?.closeGUI(playerData!!, true)
         }
 
+        dispose()
+    }
+
+    /**
+     * Permanently closes this window and goes back to the previous window. Disposes this inventory.
+     */
+    override fun closeBack() {
+        if (playerHandle != null) {
+            hide()
+            val playerData = playerHandle
+            playerHandle = null
+            guiMenuService?.closeGUI(playerData!!, false)
+        }
+
+        dispose()
+    }
+
+    /**
+     * Disposes the inventory.
+     */
+    override fun dispose() {
         isDisposed = true
         isVisible = false
         playerHandle = null
@@ -253,15 +280,16 @@ class GUIMenuImpl(
 
     private fun setGuiItemsToItemStacks(guiItems: List<GUIItemMeta>) {
         for (guiItemMeta in guiItems) {
-            val startIndex = (guiItemMeta.row - 1) * 9 + guiItemMeta.col
+            val startIndex = (guiItemMeta.row - 1) * 9 + guiItemMeta.col - 1
 
             if (startIndex < 0 || startIndex >= itemStacks.size) {
-                throw RuntimeException("The specified row ${guiItemMeta.row} and col ${guiItemMeta.col} are out of range of the GUI!")
+                playerHandle?.sendMessage(ShyGUILanguage.rowColOutOfRangeError.format(guiItemMeta.row, guiItemMeta.col))
+                throw GUIException(ShyGUILanguage.rowColOutOfRangeError.format(guiItemMeta.row, guiItemMeta.col))
             }
 
-            for (j in startIndex until guiItemMeta.rowSpan) {
-                for (i in startIndex until guiItemMeta.colSpan) {
-                    val index = i + j * 9
+            for (i in 0 until guiItemMeta.rowSpan) {
+                for (j in 0 until guiItemMeta.colSpan) {
+                    val index = startIndex + (i * 9) + j
 
                     if (index < 0 || index >= itemStacks.size) {
                         continue
@@ -272,7 +300,18 @@ class GUIMenuImpl(
                         this.itemStacks[index] = itemStack
                         this.actionItems[index] = guiItemMeta
                     } catch (e: Exception) {
-                        throw RuntimeException("Cannot parse ItemStack at ${guiItemMeta.row} and col ${guiItemMeta.col}!")
+                        playerHandle?.sendMessage(
+                            ShyGUILanguage.cannotParseItemStackError.format(
+                                guiItemMeta.row,
+                                guiItemMeta.col
+                            )
+                        )
+                        throw GUIException(
+                            ShyGUILanguage.cannotParseItemStackError.format(
+                                guiItemMeta.row,
+                                guiItemMeta.col
+                            ), e
+                        )
                     }
                 }
             }

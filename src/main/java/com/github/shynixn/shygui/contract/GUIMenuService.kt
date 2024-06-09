@@ -5,11 +5,6 @@ import org.bukkit.entity.Player
 
 interface GUIMenuService : AutoCloseable {
     /**
-     * Registers all commands for all menus.
-     */
-    suspend fun registerMenuCommands()
-
-    /**
      * Opens a GUI for the given player.
      */
     fun openGUI(player: Player, meta: GUIMeta): GUIMenu

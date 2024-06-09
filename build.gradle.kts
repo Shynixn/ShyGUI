@@ -40,8 +40,8 @@ dependencies {
     implementation("org.openjdk.nashorn:nashorn-core:15.4")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2024.9")
-    implementation("com.github.shynixn.mcutils:packet:2024.16")
+    implementation("com.github.shynixn.mcutils:common:2024.12")
+    implementation("com.github.shynixn.mcutils:packet:2024.19")
     implementation("com.github.shynixn.mcutils:guice:2024.2")
 
     // Test
@@ -101,7 +101,7 @@ tasks.register("relocatePluginJar", com.github.jengelman.gradle.plugins.shadow.t
     dependsOn("shadowJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-relocate.${archiveExtension.get()}")
-    relocate("com.github.shynixn.mcutils", "com.github.shynixn.shygui.lib.com.github.shynixn.mcutils")
+//    relocate("com.github.shynixn.mcutils", "com.github.shynixn.shygui.lib.com.github.shynixn.mcutils")
 }
 
 /**
@@ -124,7 +124,7 @@ tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tas
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R1/**")
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R2/**")
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R3/**")
-    exclude("com/github/shynixn/mcutils/**")
+   // exclude("com/github/shynixn/mcutils/**")
     exclude("com/github/shynixn/mccoroutine/**")
     exclude("kotlin/**")
     exclude("org/**")

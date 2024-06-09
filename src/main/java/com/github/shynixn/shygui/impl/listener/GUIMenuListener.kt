@@ -17,7 +17,8 @@ class GUIMenuListener @Inject constructor(private val plugin: Plugin, private va
     Listener {
     private val clickCooldownProtection = HashSet<Player>()
     private val scheduledReSync = HashSet<Player>()
-    private val clickProtectionMilliseconds = 100L
+    private val clickProtectionMilliseconds = 300L
+    private val reSyncProtectionMilliseconds = 80L
 
     /**
      * Gets called when a player quits the server.
@@ -40,7 +41,16 @@ class GUIMenuListener @Inject constructor(private val plugin: Plugin, private va
         if (packet is PacketInInventoryClick) {
             plugin.launch {
                 if (clickCooldownProtection.contains(player)) {
+                    if (scheduledReSync.contains(player)) {
+                        return@launch
+                    }
+
                     scheduledReSync.add(player)
+                    val gui = guiMenuService.getGUI(player) ?: return@launch
+                    delay(reSyncProtectionMilliseconds)
+                    gui.sendContentUpdate()
+                    player.updateInventory()
+                    scheduledReSync.remove(player)
                     return@launch
                 }
 
@@ -50,15 +60,11 @@ class GUIMenuListener @Inject constructor(private val plugin: Plugin, private va
                     return@launch
                 }
 
+                clickCooldownProtection.add(player)
                 gui.click(packet.slotId)
+                gui.sendContentUpdate()
+                player.updateInventory()
                 delay(clickProtectionMilliseconds)
-
-                if (scheduledReSync.contains(player)) {
-                    // If a player clicked in the inventory while clickProtection has been active, send one sendContents packet after the clickProtection is over.
-                    scheduledReSync.remove(player)
-                    gui.sendContentUpdate()
-                }
-
                 clickCooldownProtection.remove(player)
             }
             return
@@ -67,7 +73,7 @@ class GUIMenuListener @Inject constructor(private val plugin: Plugin, private va
         if (packet is PacketInInventoryClose) {
             plugin.launch {
                 val gui = guiMenuService.getGUI(player)
-                gui?.close()
+                gui?.closeAll()
             }
         }
     }

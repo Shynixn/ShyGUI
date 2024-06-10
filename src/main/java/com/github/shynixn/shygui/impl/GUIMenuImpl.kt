@@ -1,7 +1,6 @@
 package com.github.shynixn.shygui.impl
 
 import com.github.shynixn.mccoroutine.folia.*
-import com.github.shynixn.mcutils.common.ChatColor
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
 import com.github.shynixn.mcutils.common.translateChatColors
@@ -35,7 +34,9 @@ class GUIMenuImpl(
     private var playerHandle: Player? = null,
     private var guiMenuService: GUIMenuServiceImpl? = null,
     private var guiItemConditionService: GUIItemConditionService,
-    private val commandService: CommandService
+    private val commandService: CommandService,
+    override val previousGUIName: String?,
+    private val params: Array<String>,
 ) : GUIMenu {
     private val placeHolderStart = "%"
     private val itemStacks: Array<ItemStack?>
@@ -104,6 +105,25 @@ class GUIMenuImpl(
     override var isDisposed: Boolean = false
 
     /**
+     * Name of the gui type.
+     */
+    override val name: String
+        get() {
+            return meta.name
+        }
+
+    /**
+     * Gets the argument of the given index or returns an empty string if not set.
+     */
+    override fun getArgument(index: Int): String {
+        if (index < params.size) {
+            return params[index]
+        }
+
+        return ""
+    }
+
+    /**
      * Triggers a click on the given index.
      */
     override fun click(index: Int) {
@@ -116,14 +136,19 @@ class GUIMenuImpl(
         }
 
         val guiItem = actionItems[index] ?: return
+        val menu = this
 
         plugin.launch(plugin.globalRegionDispatcher) {
             for (command in guiItem.commands) {
                 if (command.command.isNotBlank()) {
                     commandService.executeCommand(listOf(player), command) { input, player ->
-                        placeHolderService.replacePlaceHolders(
-                            player, input
-                        )
+                        if (player != null) {
+                            placeHolderService.replacePlaceHolders(
+                                menu, player, input
+                            )
+                        } else {
+                            input
+                        }
                     }
                 }
             }
@@ -215,6 +240,7 @@ class GUIMenuImpl(
 
     private suspend fun prepareItemsWithPlaceHolders(): List<GUIItemMeta> {
         val result = ArrayList<GUIItemMeta>()
+        val menu = this
 
         withContext(plugin.globalRegionDispatcher) {
             for (index in indicesWithPlaceHolders) {
@@ -224,36 +250,39 @@ class GUIMenuImpl(
                 val newItem = newGuiItem.item
 
                 if (oldItem.displayName != null && oldItem.displayName!!.contains(placeHolderStart)) {
-                    newItem.displayName = placeHolderService.replacePlaceHolders(player, oldItem.displayName!!)
+                    newItem.displayName = placeHolderService.replacePlaceHolders(menu, player, oldItem.displayName!!)
                 }
                 if (oldItem.lore != null && oldItem.lore!!.firstOrNull { e -> e.contains(placeHolderStart) } != null) {
                     newItem.lore =
-                        oldItem.lore!!.map { e -> placeHolderService.replacePlaceHolders(player, e) }.toMutableList()
+                        oldItem.lore!!.map { e -> placeHolderService.replacePlaceHolders(menu, player, e) }
+                            .toMutableList()
                 }
                 if (oldItem.nbt != null && oldItem.nbt!!.contains(placeHolderStart)) {
-                    newItem.nbt = placeHolderService.replacePlaceHolders(player, oldItem.nbt!!)
+                    newItem.nbt = placeHolderService.replacePlaceHolders(menu, player, oldItem.nbt!!)
                 }
                 if (oldItem.component != null && oldItem.component!!.contains(placeHolderStart)) {
-                    newItem.component = placeHolderService.replacePlaceHolders(player, oldItem.component!!)
+                    newItem.component = placeHolderService.replacePlaceHolders(menu, player, oldItem.component!!)
                 }
                 if (oldItem.skinBase64 != null && oldItem.skinBase64!!.contains(placeHolderStart)) {
-                    newItem.skinBase64 = placeHolderService.replacePlaceHolders(player, oldItem.skinBase64!!)
+                    newItem.skinBase64 = placeHolderService.replacePlaceHolders(menu, player, oldItem.skinBase64!!)
                 }
                 if (oldItem.typeName.contains(placeHolderStart)) {
-                    newItem.typeName = placeHolderService.replacePlaceHolders(player, oldItem.typeName)
+                    newItem.typeName = placeHolderService.replacePlaceHolders(menu, player, oldItem.typeName)
                 }
 
                 if (guiItem.condition.type != GUIItemConditionType.NONE) {
                     val newCondition = newGuiItem.condition
                     val oldCondition = guiItem.condition
                     if (oldCondition.left != null) {
-                        newCondition.left = placeHolderService.replacePlaceHolders(player, guiItem.condition.left!!)
+                        newCondition.left =
+                            placeHolderService.replacePlaceHolders(menu, player, guiItem.condition.left!!)
                     }
                     if (oldCondition.right != null) {
-                        newCondition.right = placeHolderService.replacePlaceHolders(player, guiItem.condition.right!!)
+                        newCondition.right =
+                            placeHolderService.replacePlaceHolders(menu, player, guiItem.condition.right!!)
                     }
                     if (oldCondition.js != null) {
-                        newCondition.js = placeHolderService.replacePlaceHolders(player, guiItem.condition.js!!)
+                        newCondition.js = placeHolderService.replacePlaceHolders(menu, player, guiItem.condition.js!!)
                     }
                 }
 
@@ -264,15 +293,17 @@ class GUIMenuImpl(
         return result
     }
 
-    private suspend fun evaluateItemConditions(input: List<GUIItemMeta>): List<GUIItemMeta> {
-        val result = ArrayList<GUIItemMeta>()
-        withContext(plugin.asyncDispatcher) {
-            for (item in input) {
-                val evaluationResult = guiItemConditionService.evaluate(item.condition)
+    private fun evaluateItemConditions(input: List<GUIItemMeta>): List<GUIItemMeta> {
+        if (playerHandle == null) {
+            return emptyList()
+        }
 
-                if (evaluationResult) {
-                    result.add(item)
-                }
+        val result = ArrayList<GUIItemMeta>()
+        for (item in input) {
+            val evaluationResult = guiItemConditionService.evaluate(playerHandle!!, item.condition)
+
+            if (evaluationResult) {
+                result.add(item)
             }
         }
         return result

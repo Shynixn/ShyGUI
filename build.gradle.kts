@@ -41,7 +41,7 @@ dependencies {
 
     // Custom dependencies
     implementation("com.github.shynixn.mcutils:common:2024.12")
-    implementation("com.github.shynixn.mcutils:packet:2024.19")
+    implementation("com.github.shynixn.mcutils:packet:2024.20")
     implementation("com.github.shynixn.mcutils:guice:2024.2")
 
     // Test

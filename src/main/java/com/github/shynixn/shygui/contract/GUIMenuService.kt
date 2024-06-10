@@ -7,7 +7,7 @@ interface GUIMenuService : AutoCloseable {
     /**
      * Opens a GUI for the given player.
      */
-    fun openGUI(player: Player, meta: GUIMeta): GUIMenu
+    fun openGUI(player: Player, meta: GUIMeta, arguments: Array<String> = emptyArray()): GUIMenu
 
     /**
      * Gets the currently open gui of the player.

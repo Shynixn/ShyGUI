@@ -28,20 +28,8 @@ class GUIMenuServiceImpl @Inject constructor(
     /**
      * Opens a GUI for the given player.
      */
-    override fun openGUI(player: Player, meta: GUIMeta): GUIMenu {
+    override fun openGUI(player: Player, meta: GUIMeta, arguments: Array<String>): GUIMenu {
         val containerId = packetService.getNextContainerId(player)
-        val guiMenu = GUIMenuImpl(
-            meta,
-            plugin,
-            containerId,
-            packetService,
-            placeHolderService,
-            itemService,
-            player,
-            this,
-            guiItemConditionService,
-            commandService
-        )
 
         if (!guis.containsKey(player)) {
             guis[player] = Stack()
@@ -53,10 +41,28 @@ class GUIMenuServiceImpl @Inject constructor(
             stack.removeFirst()
         }
 
-        if (!stack.isEmpty()) {
+        val previousGuiName = if (!stack.isEmpty()) {
             val previousGUI = stack.peek()
             previousGUI.hide()
+            previousGUI.name
+        } else {
+            null
         }
+
+        val guiMenu = GUIMenuImpl(
+            meta,
+            plugin,
+            containerId,
+            packetService,
+            placeHolderService,
+            itemService,
+            player,
+            this,
+            guiItemConditionService,
+            commandService,
+            previousGuiName,
+            arguments
+        )
 
         stack.push(guiMenu)
         guiMenu.show()

@@ -16,8 +16,8 @@ object ShyGUILanguage {
   /** [&9ShyGUI&f] &cYou do not have permission to execute this command. **/
   var commandNoPermission : String = "[&9ShyGUI&f] &cYou do not have permission to execute this command."
 
-  /** [&9ShyGUI&f] &cCannot parse ItemStack at row %1$1s and col %2$1s! **/
-  var cannotParseItemStackError : String = "[&9ShyGUI&f] &cCannot parse ItemStack at row %1$1s and col %2$1s!"
+  /** [&9ShyGUI&f] &cCannot parse ItemStack at row %1$1s and col %2$1s! Check your GUI menu configuration by reviewing the full item parsing error in the console log. **/
+  var cannotParseItemStackError : String = "[&9ShyGUI&f] &cCannot parse ItemStack at row %1$1s and col %2$1s! Check your GUI menu configuration by reviewing the full item parsing error in the console log."
 
   /** [&9ShyGUI&f] &cYou do not have permission for menu %1$1s. **/
   var guiMenuNoPermissionMessage : String = "[&9ShyGUI&f] &cYou do not have permission for menu %1$1s."
@@ -43,8 +43,8 @@ object ShyGUILanguage {
   /** Closes the GUI menu. **/
   var closeCommandHint : String = "Closes the GUI menu."
 
-  /** [&9ShyGUI&f] &cThe specified row %1$1s and col %2$1s are out of range of the GUI! **/
-  var rowColOutOfRangeError : String = "[&9ShyGUI&f] &cThe specified row %1$1s and col %2$1s are out of range of the GUI!"
+  /** [&9ShyGUI&f] &cThe specified row %1$1s and col %2$1s are out of range of the GUI! Check your GUI menu configuration. **/
+  var rowColOutOfRangeError : String = "[&9ShyGUI&f] &cThe specified row %1$1s and col %2$1s are out of range of the GUI! Check your GUI menu configuration."
 
   /** [&9ShyGUI&f] &cYou do not have permission to open the GUI menu for other players. **/
   var manipulateOtherPlayerMessage : String = "[&9ShyGUI&f] &cYou do not have permission to open the GUI menu for other players."

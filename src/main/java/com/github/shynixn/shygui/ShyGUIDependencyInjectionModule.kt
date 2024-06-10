@@ -22,14 +22,16 @@ import com.github.shynixn.mcutils.packet.impl.service.PacketServiceImpl
 import com.github.shynixn.shygui.contract.GUIItemConditionService
 import com.github.shynixn.shygui.contract.GUIMenuService
 import com.github.shynixn.shygui.contract.PlaceHolderService
+import com.github.shynixn.shygui.contract.ScriptService
 import com.github.shynixn.shygui.entity.GUIMeta
-import com.github.shynixn.shygui.impl.service.GUIItemConditionServiceImpl
-import com.github.shynixn.shygui.impl.service.GUIMenuServiceImpl
-import com.github.shynixn.shygui.impl.service.PlaceHolderServiceImpl
+import com.github.shynixn.shygui.impl.service.*
+import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
+import java.util.logging.Level
 
 class ShyGUIDependencyInjectionModule(private val plugin: Plugin) : DependencyInjectionModule() {
     companion object {
+        private val placeHolderPluginName = "PlaceholderAPI"
         val areLegacyVersionsIncluded: Boolean by lazy {
             try {
                 Class.forName("com.github.shynixn.shygui.lib.com.github.shynixn.mcutils.packet.nms.v1_8_R3.PacketSendServiceImpl")
@@ -42,6 +44,7 @@ class ShyGUIDependencyInjectionModule(private val plugin: Plugin) : DependencyIn
 
 
     override fun configure() {
+        val configurationService = ConfigurationServiceImpl(plugin)
         addService<Plugin>(plugin)
         // Repositories
         val templateRepositoryImpl =
@@ -71,6 +74,28 @@ class ShyGUIDependencyInjectionModule(private val plugin: Plugin) : DependencyIn
         // Services
         addService<GUIMenuService, GUIMenuServiceImpl>()
         addService<GUIItemConditionService, GUIItemConditionServiceImpl>()
-        addService<PlaceHolderService, PlaceHolderServiceImpl>()
+
+        if (Bukkit.getPluginManager().getPlugin(placeHolderPluginName) != null) {
+            addService<PlaceHolderService, DependencyPlaceHolderApiServiceImpl>()
+            plugin.logger.log(Level.INFO, "Loaded dependency ${placeHolderPluginName}.")
+        } else {
+            addService<PlaceHolderService, PlaceHolderServiceImpl>()
+        }
+
+        try {
+            // Try Load Nashorn Implementation
+            val nashornScriptEngine = ScriptNashornEngineServiceImpl(plugin, configurationService)
+            addService<ScriptService>(nashornScriptEngine)
+            plugin.logger.log(Level.INFO, "Loaded embedded NashornScriptEngine.")
+        } catch (e: Error) {
+            try {
+                // Try Load JDK Implementation
+                val jdkScriptEngine = ScriptJdkEngineServiceImpl(plugin, configurationService)
+                addService<ScriptService>(jdkScriptEngine)
+                plugin.logger.log(Level.INFO, "Loaded JDK NashornScriptEngine.")
+            } catch (ex: Exception) {
+                throw RuntimeException("Cannot find NashornScriptEngine implementation.", ex)
+            }
+        }
     }
 }

@@ -8,8 +8,8 @@ import com.github.shynixn.mcutils.common.reloadTranslation
 import com.github.shynixn.mcutils.guice.DependencyInjectionModule
 import com.github.shynixn.mcutils.packet.api.PacketInType
 import com.github.shynixn.mcutils.packet.api.PacketService
-import com.github.shynixn.mcutils.packet.api.meta.enumeration.WindowType
 import com.github.shynixn.shygui.contract.GUIMenuService
+import com.github.shynixn.shygui.contract.PlaceHolderService
 import com.github.shynixn.shygui.impl.commandexecutor.ShyGUICommandExecutor
 import com.github.shynixn.shygui.impl.listener.GUIMenuListener
 import org.bukkit.Bukkit
@@ -92,6 +92,9 @@ class ShyGUIPlugin : JavaPlugin() {
         // Register CommandExecutor
         val commandExecutor = module.getService<ShyGUICommandExecutor>()
         commandExecutor.registerShyGuiCommand()
+
+        // Register PlaceHolder service.
+        module.getService<PlaceHolderService>()
 
         // Register Dependencies
         Bukkit.getServicesManager()

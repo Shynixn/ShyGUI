@@ -24,6 +24,21 @@ interface GUIMenu {
     val isDisposed: Boolean
 
     /**
+     * Name of the gui type.
+     */
+    val name: String
+
+    /**
+     * If this gui menu was opened from another GUI.
+     */
+    val previousGUIName: String?
+
+    /**
+     * Gets the argument of the given index or returns an empty string if not set.
+     */
+    fun getArgument(index: Int): String
+
+    /**
      * Triggers a click on the given index.
      */
     fun click(index: Int)

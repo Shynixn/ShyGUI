@@ -2,7 +2,6 @@ package com.github.shynixn.shygui.impl.commandexecutor
 
 import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
-import com.github.shynixn.mcutils.common.ChatColor
 import com.github.shynixn.mcutils.common.ConfigurationService
 import com.github.shynixn.mcutils.common.CoroutineExecutor
 import com.github.shynixn.mcutils.common.chat.ChatMessageService
@@ -13,7 +12,6 @@ import com.github.shynixn.shygui.ShyGUILanguage
 import com.github.shynixn.shygui.contract.GUIMenuService
 import com.github.shynixn.shygui.entity.GUIMeta
 import com.github.shynixn.shygui.enumeration.Permission
-import com.github.shynixn.shygui.exception.GUIException
 import com.google.inject.Inject
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
@@ -121,14 +119,16 @@ class ShyGUICommandExecutor @Inject constructor(
                     .tabs(menuTabs).executePlayer(senderHasToBePlayer) { player, guiMeta ->
                         plugin.launch {
                             guiMenuService.clearCache(player)
-                            openGUI(player, guiMeta)
+                            openGUI(player, guiMeta, emptyArray())
                         }
                     }.argument("arg/player..").validator(remainingArguments).tabs(paramOrOnlinePlayerTabs)
                     .execute { commandSender, guiMeta, remainingArgs ->
-                        val player = locatePlayer(commandSender, remainingArgs) ?: return@execute
+                        val playerWithArg = locatePlayerAndArguments(commandSender, remainingArgs) ?: return@execute
+                        val player = playerWithArg.second ?: return@execute
+                        val arguments = playerWithArg.first
                         plugin.launch {
                             guiMenuService.clearCache(player)
-                            openGUI(player, guiMeta)
+                            openGUI(player, guiMeta, arguments)
                         }
                     }
             }
@@ -152,13 +152,15 @@ class ShyGUICommandExecutor @Inject constructor(
                 builder().argument("menu").validator(guiMenuMustExist).validator(guiMenuMustHavePermission)
                     .tabs(menuTabs).executePlayer(senderHasToBePlayer) { player, guiMeta ->
                         plugin.launch {
-                            openGUI(player, guiMeta)
+                            openGUI(player, guiMeta, emptyArray())
                         }
                     }.argument("arg/player..").validator(remainingArguments).tabs(paramOrOnlinePlayerTabs)
                     .execute { commandSender, guiMeta, remainingArgs ->
-                        val player = locatePlayer(commandSender, remainingArgs) ?: return@execute
+                        val playerWithArg = locatePlayerAndArguments(commandSender, remainingArgs) ?: return@execute
+                        val player = playerWithArg.second ?: return@execute
+                        val arguments = playerWithArg.first
                         plugin.launch {
-                            openGUI(player, guiMeta)
+                            openGUI(player, guiMeta, arguments)
                         }
                     }
             }
@@ -205,21 +207,17 @@ class ShyGUICommandExecutor @Inject constructor(
         }
     }
 
-    private fun openGUI(player: Player, guiMeta: GUIMeta) {
-        guiMenuService.openGUI(player, guiMeta)
+    private fun openGUI(player: Player, guiMeta: GUIMeta, arguments: Array<String>) {
+        guiMenuService.openGUI(player, guiMeta, arguments)
     }
 
-    private fun locatePlayer(sender: CommandSender, remainArgs: List<String>): Player? {
+    private fun locatePlayerAndArguments(
+        sender: CommandSender,
+        remainArgs: List<String>
+    ): Pair<Array<String>, Player?>? {
         val playerResult = try {
-            val playerId = remainArgs.get(remainArgs.size - 1)
-            val player = Bukkit.getPlayer(playerId)
-
-            if (player != null) {
-                return player
-            }
-
-
-            return Bukkit.getPlayer(UUID.fromString(playerId))!!
+            val playerId = remainArgs[remainArgs.size - 1]
+            Bukkit.getPlayer(playerId) ?: Bukkit.getPlayer(UUID.fromString(playerId))!!
         } catch (e: Exception) {
             if (sender is Player) {
                 sender
@@ -228,7 +226,7 @@ class ShyGUICommandExecutor @Inject constructor(
             }
         }
 
-        if (playerResult == null) {
+        if (playerResult == null && sender !is Player) {
             sender.sendMessage(ShyGUILanguage.commandSenderHasToBePlayer)
             return null
         }
@@ -238,7 +236,11 @@ class ShyGUICommandExecutor @Inject constructor(
             return null
         }
 
-        return playerResult
+        if (playerResult != null) {
+            return Pair(remainArgs.dropLast(1).toTypedArray(), playerResult)
+        }
+
+        return Pair(remainArgs.toTypedArray(), null)
     }
 
     private fun CommandBuilder.permission(permission: Permission) {

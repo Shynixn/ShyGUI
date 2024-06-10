@@ -67,11 +67,23 @@ class GUIMenuImpl(
                 indicesWithPlaceHolders.add(i)
             } else if (item.typeName.contains(placeHolderStart)) {
                 indicesWithPlaceHolders.add(i)
+            } else if (guiItem.commands.firstOrNull { e -> e.command.contains(placeHolderStart) } != null) {
+                indicesWithPlaceHolders.add(i)
+            } else if (guiItem.condition.js != null && guiItem.condition.js!!.contains(placeHolderStart)) {
+                indicesWithPlaceHolders.add(i)
+            } else if (guiItem.condition.left != null && guiItem.condition.left!!.contains(placeHolderStart)) {
+                indicesWithPlaceHolders.add(i)
+            } else if (guiItem.condition.right != null && guiItem.condition.right!!.contains(placeHolderStart)) {
+                indicesWithPlaceHolders.add(i)
             }
         }
 
         plugin.launch(plugin.mainDispatcher + object : CoroutineTimings() {}) {
-            setGuiItemsToItemStacks(evaluateItemConditions(meta.items))
+            setGuiItemsToItemStacks(evaluateItemConditions(meta.items.filterIndexed { index, guiItemMeta ->
+                !indicesWithPlaceHolders.contains(
+                    index
+                )
+            }))
             while (!isDisposed) {
                 if (isVisible) {
                     setGuiItemsToItemStacks(evaluateItemConditions(prepareItemsWithPlaceHolders()))

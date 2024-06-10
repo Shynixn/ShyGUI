@@ -29,46 +29,89 @@ command:
 # If multiple conditions are true for a single position, the last item in the list wins and is being displayed.
 # You can use this to specify background items at the beginning of the list below and overwrite it with more important item by specifying them later in the list.
 items:
-  - row: 1 # The GUI is seen as a grid. Use row and col to specify the location of an item. This is the required row property.
-    # The GUI is seen as a grid. Use row and col to specify the location of an item. This is the required column property.
-    col: 1
-    # Optional the amount of rows this item is being rendered.
-    rowSpan: 9
-    # Optional the amount of columns this item is being rendered.
-    colSpan: 9
-    # Required item to display.
+  # This is our background item which is the default item.
+  - row: 1 # Starting row.
+    col: 1 # Starting column.
+    rowSpan: 6 # Span all rows
+    colSpan: 9 # Span all columns.
     item:
-      # Required minecraft material name. Supports multiple identifiers separated by comma to ensure version compatibility. Placeholders are supported.
-      typeName: "minecraft:iron_block"
-      # Optional amount displayed.
-      amount: 1
-      # Optional Durability.
-      durability: 0
-      # Optional property to specify a base64 encoded skin URL. Placeholders are supported.
-      skinBase64: ""
-      # Optional NBT Tags in standard Minecraft NBT format. e.g. {Unbreakable:1} This works in versions below Minecraft 1.20.5. Placeholders are supported.
-      nbt: ""
-      # Optional Data Components in Minecraft Data Component JSON format. This has replaced NBT since Minecraft 1.20.5. See https://minecraft.wiki/w/Data_component_format. Placeholders are supported.
-      component: ""
-      # Optional displayName for item. Placeholders are supported.
-      displayName: ""
-      # Optional lore for the item. Placeholders are supported.
+      typeName: "minecraft:black_stained_glass_pane,160" # We add the material name and for legacy compatibility the version id 160. This id not neccessary if you are on a version >= 1.16.5.
+      durability: 15 # Durability for legacy version compatibility.
+      displayName: " " # Blank string to show nothing.
+  - row: 1
+    col: 5
+    item:
+      typeName: "%petblocks_pet_itemType_selected%"
+      displayName: "%petblocks_pet_displayName_selected%"
+      skinBase64: "%petblocks_pet_itemHeadBase64%"
+  - row: 3
+    col: 5
+    item:
+      typeName: "minecraft:player_head,397"
+      durability: 3
+      displayName: "&aPet enabled"
+      skinBase64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTI5YjBiMmY3YzhhNWYwNjBmYjY3NDBjZmM0Y2I3OGVmYjYxZjlmMTZjOGU5NGYxYjc3MjU2N2ZkNDJjNjViYSJ9fX0="
       lore:
-        - ""
-    # Optional condition to define when this item will be displayed.
-    condition:
-      # Optional permission required to see this item. This field works independently of the type property below.
-      permission: ""
-      # Optional condition type. Possible values: NONE, JAVASCRIPT, STRING_EQUALS, STRING_NOT_EQUALS, STRING_EQUALS_IGNORE_CASE, STRING_NOT_EQUALS_IGNORE_CASE, NUMBER_GREATER_THAN, NUMBER_GREATER_THAN_OR_EQUAL, NUMBER_LESS_THAN, NUMBER_LESS_THAN_OR_EQUAL
-      type: "NONE"
-      # Optional left side of the condition if type starts with "STRING_" or "NUMBER_". Placeholders are supported.
-      left: ""
-      # Optional right side of the condition if type starts with "STRING_" or "NUMBER_". Placeholders are supported.
-      right: ""
-      # Optional JavaScript based boolean expression if type is "JAVASCRIPT". Placeholders are supported. This can be used for more complex boolean expressions.
-      js: ""
-    # Optional list of commands which are executed when you click on this item.
+        - "&7Click to disable the pet."
     commands:
-      - type: "PER_PLAYER" # Execution type. Possible values: "SERVER_PER_PLAYER" executes the command with server level permissions. "PER_PLAYER" executes the command with player level permission.
-        # Command to execute. e.g. /say Hello World. PlaceHolders are supported. Replaces the "%player_name% placeholder with the executing player.
-        command: ""
+      - type: "PER_PLAYER"
+        command: "/petblocks despawn %petblocks_pet_name_selected%"
+      - type: "PER_PLAYER"
+        command: "/shygui close"
+  - row: 3
+    col: 5
+    item:
+      typeName: "minecraft:player_head,397"
+      durability: 3
+      displayName: "&cPet disabled"
+      skinBase64: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWE0NGRhMGFmOTBhY2I2MDdlYWIyOGYyODc5ODUwNGE3MzE4OTM3YTE1N2ZiM2EwM2UxNDdhZTcwZTM1MzFjZSJ9fX0="
+      lore:
+        - "&7Click to enable the pet."
+    condition:
+      type: "STRING_EQUALS"
+      left: "%petblocks_pet_isSpawned_selected%"
+      right: "false"
+    commands:
+      - type: "PER_PLAYER"
+        command: "/petblocks spawn %petblocks_pet_name_selected%"
+      - type: "PER_PLAYER"
+        command: "/shygui close"
+  - row: 6
+    col: 5
+    item:
+      typeName: "minecraft:barrier,60"
+      displayName: "&cClose"
+      lore:
+        - "&7Closes the current window."
+    commands:
+      - type: "PER_PLAYER"
+        command: "/shygui close"
+  - row: 4
+    col: 4
+    item:
+      typeName: "minecraft:saddle"
+      displayName: "&eRide Pet"
+      lore:
+        - "&7Click to ride your pet."
+    commands:
+      - type: "PER_PLAYER"
+        command: "/petblocks ride %petblocks_pet_name_selected%"
+      - type: "PER_PLAYER"
+        command: "/shygui close"
+  - row: 4
+    col: 4
+    item:
+      typeName: "minecraft:saddle"
+      displayName: "&eDismount Pet"
+      lore:
+        - "&7Click to dismount your pet."
+    condition:
+      type: "STRING_EQUALS"
+      left: "%petblocks_pet_isMounted%"
+      right: "true"
+    commands:
+      - type: "PER_PLAYER"
+        command: "/shygui close"
+      - type: "PER_PLAYER"
+        command: "/petblocks unmount %petblocks_pet_name_selected%"
+

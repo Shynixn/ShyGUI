@@ -95,9 +95,9 @@ items:
         - "&7Click to ride your pet."
     commands:
       - type: "PER_PLAYER"
-        command: "/petblocks ride %petblocks_pet_name_selected%"
-      - type: "PER_PLAYER"
         command: "/shygui close"
+      - type: "PER_PLAYER"
+        command: "/petblocks ride %petblocks_pet_name_selected%"
   - row: 4
     col: 4
     item:

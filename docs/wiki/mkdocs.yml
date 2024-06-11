@@ -1,0 +1,37 @@
+site_name: PetBlocks
+repo_url: https://github.com/Shynixn/PetBlocks
+site_author: Shynixn
+nav:
+  - 'PetBlocks Wiki':
+      - Introduction: README.md
+      - Permission: permission.md
+      - Commands: commands.md
+      - Giving Pets to Players: receivingpets.md
+      - Templates: template.md
+      - GUI: gui.md
+      - PlaceHolders: placeholders.md
+      - Custom Models: custommodels.md
+      - Developer Api: api.md
+      - 'FAQ': faq.md
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - content.tabs.link
+    - content.code.copy
+    - navigation.footer
+extra:
+  generator: false
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.tabbed:
+      alternate_style: true

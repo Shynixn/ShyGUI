@@ -1,7 +1,10 @@
 package com.github.shynixn.shygui.impl.service
 
+import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
+import com.github.shynixn.mcutils.common.repository.CacheRepository
+import com.github.shynixn.mcutils.common.repository.Repository
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.shygui.contract.GUIItemConditionService
 import com.github.shynixn.shygui.contract.GUIMenu
@@ -13,6 +16,9 @@ import com.google.inject.Inject
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import java.util.*
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.CompletionStage
+import java.util.concurrent.Executor
 
 class GUIMenuServiceImpl @Inject constructor(
     private val plugin: Plugin,
@@ -20,10 +26,36 @@ class GUIMenuServiceImpl @Inject constructor(
     private val itemService: ItemService,
     private val placeHolderService: PlaceHolderService,
     private val guiItemConditionService: GUIItemConditionService,
-    private val commandService: CommandService
+    private val commandService: CommandService,
+    private val repository: CacheRepository<GUIMeta>
 ) : GUIMenuService {
     private val maxSubPages = 20
     private val guis = HashMap<Player, Stack<GUIMenu>>()
+
+    /**
+     * Gets the thread executor for this menu.
+     */
+    override fun getExecutor(): Executor {
+        return Executor { command ->
+            plugin.launch {
+                command.run()
+            }
+        }
+    }
+
+    /**
+     * Gets all gui menus.
+     */
+    override fun getAllGUIMetas(): CompletionStage<List<GUIMeta>> {
+        val completeAble = CompletableFuture<List<GUIMeta>>()
+
+        plugin.launch {
+            val metas = repository.getAll()
+            completeAble.complete(metas)
+        }
+
+        return completeAble
+    }
 
     /**
      * Opens a GUI for the given player.

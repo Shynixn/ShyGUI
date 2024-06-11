@@ -2,8 +2,20 @@ package com.github.shynixn.shygui.contract
 
 import com.github.shynixn.shygui.entity.GUIMeta
 import org.bukkit.entity.Player
+import java.util.concurrent.CompletionStage
+import java.util.concurrent.Executor
 
 interface GUIMenuService : AutoCloseable {
+    /**
+     * Gets the thread executor for this menu.
+     */
+    fun getExecutor(): Executor
+
+    /**
+     * Gets all gui menus.
+     */
+    fun getAllGUIMetas(): CompletionStage<List<GUIMeta>>
+
     /**
      * Opens a GUI for the given player.
      */

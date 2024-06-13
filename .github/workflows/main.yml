@@ -1,0 +1,108 @@
+name: ShyGUI
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main, development ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  Build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+
+      - name: Build Java Application
+        env:
+          SHYNIXN_MCUTILS_REPOSITORY: ${{ secrets.SHYNIXN_MCUTILS_REPOSITORY }}
+        run: |
+          chmod +x gradlew
+          ./gradlew build pluginJars
+          echo "RELEASE_VERSION=$(./gradlew -q printVersion)" >> $GITHUB_ENV
+
+      - name: Create Github Release
+        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          body: "This release was automatically created by Github Actions. Please wait until the author manually sets the patchnotes for this release."
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: Release ${{ env.RELEASE_VERSION }}
+          draft: true
+          prerelease: false
+
+      - name: Upload Latest Bukkit Release to Github
+        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /home/runner/work/ShyGUI/ShyGUI/build/libs/shygui-${{ env.RELEASE_VERSION }}-latest.jar
+          asset_name: ShyGUI.jar
+          asset_content_type: application/jar
+
+      - name: Upload Premium Bukkit Release to Github
+        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /home/runner/work/ShyGUI/ShyGUI/build/libs/shygui-${{ env.RELEASE_VERSION }}-premium.jar
+          asset_name: ShyGUI-Premium.jar
+          asset_content_type: application/jar
+
+      - name: Upload Legacy Bukkit Release to Github
+        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /home/runner/work/ShyGUI/ShyGUI/build/libs/shygui-${{ env.RELEASE_VERSION }}-legacy.jar
+          asset_name: ShyGUI-Legacy.jar
+          asset_content_type: application/jar
+
+  Documentation:
+    runs-on: ubuntu-latest
+    if: "contains(github.ref, 'main')"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+
+      - name: Build Documentation
+        run: |
+          git pull
+          git config --global user.email "shynixn@email.com" && git config --global user.name "Shynixn CI Actions"
+          rm -rf docs/wiki/site
+          sudo apt-get install -y mkdocs
+          pip install mkdocs-material
+          pip install Pygments
+          cd docs/wiki
+          mkdocs build
+          cd ..
+          cd ..
+          git add docs
+          git commit --message "Automatic CI Documentation."
+          git push --quiet https://Shynixn:${{ secrets.GITHUB_TOKEN }}@github.com/Shynixn/ShyGUI.git HEAD:main

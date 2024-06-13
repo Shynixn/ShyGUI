@@ -21,8 +21,9 @@ import java.util.*
 import java.util.logging.Level
 
 class ShyGUICommandExecutor @Inject constructor(
+    private val baseCommand : String,
+    private val aliasesPath : String,
     private val plugin: Plugin,
-    private val guiMetaService: CacheRepository<GUIMeta>,
     private val guiMenuService: GUIMenuService,
     private val chatMessageService: ChatMessageService,
     private val repository: CacheRepository<GUIMeta>,
@@ -71,14 +72,14 @@ class ShyGUICommandExecutor @Inject constructor(
     }
 
     private val menuTabs: (suspend (CommandSender) -> List<String>) = {
-        guiMetaService.getAll().map { e -> e.name }
+        repository.getAll().map { e -> e.name }
     }
 
     private val guiMenuMustExist = object : Validator<GUIMeta> {
         override suspend fun transform(
             sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>
         ): GUIMeta? {
-            return guiMetaService.getAll().firstOrNull { e -> e.name.equals(openArgs[0], true) }
+            return repository.getAll().firstOrNull { e -> e.name.equals(openArgs[0], true) }
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
@@ -107,10 +108,10 @@ class ShyGUICommandExecutor @Inject constructor(
     }
 
     fun registerShyGuiCommand() {
-        CommandBuilder(plugin, coroutineExecutor, "shygui", chatMessageService) {
+        CommandBuilder(plugin, coroutineExecutor, baseCommand, chatMessageService) {
             usage(ShyGUILanguage.commandUsage)
             description(ShyGUILanguage.commandDescription)
-            aliases(plugin.config.getStringList("commands.shygui.aliases"))
+            aliases(plugin.config.getStringList(aliasesPath))
             permission(Permission.COMMAND)
             permissionMessage(ShyGUILanguage.commandNoPermission)
             subCommand("open") {

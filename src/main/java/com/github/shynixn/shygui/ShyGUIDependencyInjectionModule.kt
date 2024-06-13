@@ -24,6 +24,7 @@ import com.github.shynixn.shygui.contract.GUIMenuService
 import com.github.shynixn.shygui.contract.PlaceHolderService
 import com.github.shynixn.shygui.contract.ScriptService
 import com.github.shynixn.shygui.entity.GUIMeta
+import com.github.shynixn.shygui.impl.commandexecutor.ShyGUICommandExecutor
 import com.github.shynixn.shygui.impl.service.*
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
@@ -74,7 +75,17 @@ class ShyGUIDependencyInjectionModule(private val plugin: Plugin) : DependencyIn
         // Services
         addService<GUIMenuService, GUIMenuServiceImpl>()
         addService<GUIItemConditionService, GUIItemConditionServiceImpl>()
-
+        addService<ShyGUICommandExecutor> {
+            ShyGUICommandExecutor(
+                "shygui",
+                "commands.shygui.aliases",
+                plugin,
+                getService<GUIMenuService>(),
+                getService<ChatMessageService>(),
+                getService<CacheRepository<GUIMeta>>(),
+                getService<ConfigurationService>()
+            )
+        }
         if (Bukkit.getPluginManager().getPlugin(placeHolderPluginName) != null) {
             addService<PlaceHolderService, DependencyPlaceHolderApiServiceImpl>()
             plugin.logger.log(Level.INFO, "Loaded dependency ${placeHolderPluginName}.")

@@ -2,9 +2,9 @@
 
 The following permissions are available in ShyGUI.
 
-#### Levels*
+#### Levels
 
-** User: A permission all players can have.
+* User: A permission all players can have.
 * Admin: A permission only Admins should have.
 * Admin/User: Depending on your server, you may give this permission to your players. If you are not sure, try to build
   your server around **not giving this permission** to your players.

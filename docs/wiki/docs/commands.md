@@ -22,24 +22,52 @@ shygui.command
 ### /shygui open
 
 ```
-/shygui open <name> [argument/player...]
+/shygui open <name> [arguments.../player]
 ```
 
 Starts a new GUI session and opens the GUI with the given name for the executing player. If any other GUIs were open when executing this command, they get discarded from the navigation history.
 
 * Name: Identifier of a GUI menu
-* Argument/Player: Optional arguments to provide the GUI with additional arguments e.g. ```/shygui open simple_sample_menu 123456 Pikachu```. Here the placeholder ``%shygui_gui_param1%`` is now ``123456`` and the GUI is opened for player ``Pikachu``. The last argument may or may not be a player name.
+* Argument/Player: Optional arguments to provide the GUI with additional arguments and optionally a player to open the GUI for.
+
+Samples:
+
+* Opens the inventory for the executing player.
+
+```
+/shygui open simple_sample_menu
+```
+
+* Opens the inventory for the player named "Pikachu".
+* The slash separates arguments with the player name (in this case there are 0 arguments)
+
+```
+/shygui open simple_sample_menu / Pikachu
+```
+
+* Opens the inventory with additional arguments which can be accessed via the placeholders. ``%shygui_gui_param1%`` is now ``123456``.
+
+```
+/shygui open simple_sample_menu 123456
+```
+
+* Opens the inventory with additional arguments which can be accessed via the placeholders for the player named "Pikachu". ``%shygui_gui_param1%`` is now ``123456`` ``%shygui_gui_param2%`` is now ``abcde``.
+* The slash separates arguments with the player name
+
+```
+/shygui open simple_sample_menu 123456 abcde / Pikachu
+```
 
 ### /shygui next
 
 ```
-/shygui next <name> [argument/player...]
+/shygui next <name> [arguments.../player]
 ```
 
 Reuses the existing GUI session (or starts a new one if it is not available) and opens the GUI with the given name for the executing player. If any other GUIs were open when executing this command, they get put into the navigation history. Executing ``/shygui back`` reopens the previous GUI.
 
 * Name: Identifier of a GUI menu
-* Argument/Player: Optional arguments to provide the GUI with additional arguments e.g. ```/shygui open simple_sample_menu 123456 Pikachu```. Here the placeholder ``%shygui_gui_param1%`` is now ``123456`` and the GUI is opened for player ``Pikachu``. The last argument may or may not be a player name.
+* Argument/Player: Optional arguments to provide the GUI with additional arguments. See the open command for samples.
 
 ### /shygui back
 

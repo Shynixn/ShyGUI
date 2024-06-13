@@ -52,7 +52,7 @@ class ShyGUIDependencyInjectionModule(private val plugin: Plugin) : DependencyIn
             YamlFileRepositoryImpl<GUIMeta>(
                 plugin,
                 "gui",
-                listOf("gui/petblocks_main_menu.yml" to "petblocks_main_menu.yml"),
+                listOf("gui/petblocks_main_menu.yml" to "petblocks_main_menu.yml", "gui/simple_sample_menu.yml" to "simple_sample_menu.yml"),
                 emptyList(),
                 object : TypeReference<GUIMeta>() {})
         val cacheTemplateRepository = CachedRepositoryImpl(templateRepositoryImpl)

@@ -189,7 +189,7 @@ tasks.register("pluginJarLegacy", com.github.jengelman.gradle.plugins.shadow.tas
     dependsOn("relocateLegacyPluginJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("relocateLegacyPluginJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-legacy.${archiveExtension.get()}")
-    // destinationDir = File("C:\\temp\\plugins")
+    destinationDirectory.set(File("C:\\temp\\plugins"))
     exclude("com/github/shynixn/mcutils/**")
     exclude("org/**")
     exclude("kotlin/**")

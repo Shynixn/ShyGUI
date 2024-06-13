@@ -1,7 +1,6 @@
 package com.github.shynixn.shygui
 
 import com.fasterxml.jackson.core.type.TypeReference
-import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mcutils.common.ConfigurationService
 import com.github.shynixn.mcutils.common.ConfigurationServiceImpl
@@ -35,7 +34,7 @@ class ShyGUIDependencyInjectionModule(private val plugin: Plugin) : DependencyIn
         private val placeHolderPluginName = "PlaceholderAPI"
         val areLegacyVersionsIncluded: Boolean by lazy {
             try {
-                Class.forName("com.github.shynixn.shygui.lib.com.github.shynixn.mcutils.packet.nms.v1_8_R3.PacketSendServiceImpl")
+         //       Class.forName("com.github.shynixn.shygui.lib.com.github.shynixn.mcutils.packet.nms.v1_8_R3.PacketSendServiceImpl")
                 true
             } catch (e: ClassNotFoundException) {
                 false

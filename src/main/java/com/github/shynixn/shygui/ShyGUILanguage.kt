@@ -22,6 +22,9 @@ object ShyGUILanguage {
   /** [&9ShyGUI&f] &cYou do not have permission for menu %1$1s. **/
   var guiMenuNoPermissionMessage : String = "[&9ShyGUI&f] &cYou do not have permission for menu %1$1s."
 
+  /** Sends a chat message. **/
+  var messageCommandHint : String = "Sends a chat message."
+
   /** [&9ShyGUI&f] The command sender has to be a player if you do not specify the optional player argument. **/
   var commandSenderHasToBePlayer : String = "[&9ShyGUI&f] The command sender has to be a player if you do not specify the optional player argument."
 

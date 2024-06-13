@@ -78,9 +78,35 @@ items:
       typeName: "minecraft:gold_block,41"
       amount: 1
       durability: 0
-      displayName: "&eSay Hello!"
+      displayName: "&eBroadcast Hello."
       lore:
         - "&aClick me!"
     commands:
       - type: "SERVER_PER_PLAYER"
-        command: "/say Hello from examle GUI!" # Executes the /say command with server level permission. (The player clicking on it does not need to have the permission)
+        command: "/say Hello from GUI." # Executes the /say command with server level permission. (The player clicking on it does not need to have the permission)
+  - row: 3
+    col: 7
+    item:
+      typeName: "minecraft:gold_block,41"
+      amount: 1
+      durability: 0
+      displayName: "&ePlayer Hello via Server Shell."
+      lore:
+        - "&aClick me!"
+    commands:
+      - type: "SERVER_PER_PLAYER"
+        # Sends a message to the executing player. Server level permission require you to reference the player name in the command.
+        command: "/shygui message Hello to player &e%shygui_player_name% &afrom GUI. / %shygui_player_name%"
+  - row: 3
+    col: 8
+    item:
+      typeName: "minecraft:gold_block,41"
+      amount: 1
+      durability: 0
+      displayName: "&ePlayer Hello via Player."
+      lore:
+        - "&aClick me!"
+    commands:
+      - type: "PER_PLAYER"
+        # Sends a message to the executing player. Per Player requires that the player has got the permission to /shygui message but you do not have to specify the name.
+        command: "/shygui message Hello to player &e%shygui_player_name% &afrom GUI."

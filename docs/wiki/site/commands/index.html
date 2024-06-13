@@ -671,20 +671,43 @@ and specify the command in the <code>command</code> section. </p>
 <p><strong>Required Permission:</strong>
 <code>shygui.command</code></p>
 <h3 id="shygui-open">/shygui open</h3>
-<div class="highlight"><pre><span></span><code>/shygui open &lt;name&gt; [argument/player...]
+<div class="highlight"><pre><span></span><code>/shygui open &lt;name&gt; [arguments.../player]
 </code></pre></div>
 <p>Starts a new GUI session and opens the GUI with the given name for the executing player. If any other GUIs were open when executing this command, they get discarded from the navigation history.</p>
 <ul>
 <li>Name: Identifier of a GUI menu</li>
-<li>Argument/Player: Optional arguments to provide the GUI with additional arguments e.g. <code>/shygui open simple_sample_menu 123456 Pikachu</code>. Here the placeholder <code>%shygui_gui_param1%</code> is now <code>123456</code> and the GUI is opened for player <code>Pikachu</code>. The last argument may or may not be a player name.</li>
+<li>Argument/Player: Optional arguments to provide the GUI with additional arguments and optionally a player to open the GUI for.</li>
 </ul>
+<p>Samples:</p>
+<ul>
+<li>Opens the inventory for the executing player.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>/shygui open simple_sample_menu
+</code></pre></div>
+<ul>
+<li>Opens the inventory for the player named "Pikachu".</li>
+<li>The slash separates arguments with the player name (in this case there are 0 arguments)</li>
+</ul>
+<div class="highlight"><pre><span></span><code>/shygui open simple_sample_menu / Pikachu
+</code></pre></div>
+<ul>
+<li>Opens the inventory with additional arguments which can be accessed via the placeholders. <code>%shygui_gui_param1%</code> is now <code>123456</code>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>/shygui open simple_sample_menu 123456
+</code></pre></div>
+<ul>
+<li>Opens the inventory with additional arguments which can be accessed via the placeholders for the player named "Pikachu". <code>%shygui_gui_param1%</code> is now <code>123456</code> <code>%shygui_gui_param2%</code> is now <code>abcde</code>.</li>
+<li>The slash separates arguments with the player name</li>
+</ul>
+<div class="highlight"><pre><span></span><code>/shygui open simple_sample_menu 123456 abcde / Pikachu
+</code></pre></div>
 <h3 id="shygui-next">/shygui next</h3>
-<div class="highlight"><pre><span></span><code>/shygui next &lt;name&gt; [argument/player...]
+<div class="highlight"><pre><span></span><code>/shygui next &lt;name&gt; [arguments.../player]
 </code></pre></div>
 <p>Reuses the existing GUI session (or starts a new one if it is not available) and opens the GUI with the given name for the executing player. If any other GUIs were open when executing this command, they get put into the navigation history. Executing <code>/shygui back</code> reopens the previous GUI.</p>
 <ul>
 <li>Name: Identifier of a GUI menu</li>
-<li>Argument/Player: Optional arguments to provide the GUI with additional arguments e.g. <code>/shygui open simple_sample_menu 123456 Pikachu</code>. Here the placeholder <code>%shygui_gui_param1%</code> is now <code>123456</code> and the GUI is opened for player <code>Pikachu</code>. The last argument may or may not be a player name.</li>
+<li>Argument/Player: Optional arguments to provide the GUI with additional arguments. See the open command for samples.</li>
 </ul>
 <h3 id="shygui-back">/shygui back</h3>
 <div class="highlight"><pre><span></span><code>/shygui back [player]

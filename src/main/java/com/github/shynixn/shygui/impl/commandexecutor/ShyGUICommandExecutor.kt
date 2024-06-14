@@ -9,10 +9,9 @@ import com.github.shynixn.mcutils.common.command.CommandBuilder
 import com.github.shynixn.mcutils.common.command.Validator
 import com.github.shynixn.mcutils.common.repository.CacheRepository
 import com.github.shynixn.mcutils.common.translateChatColors
-import com.github.shynixn.shygui.ShyGUILanguage
 import com.github.shynixn.shygui.contract.GUIMenuService
 import com.github.shynixn.shygui.entity.GUIMeta
-import com.github.shynixn.shygui.enumeration.Permission
+import com.github.shynixn.shygui.entity.Settings
 import com.google.inject.Inject
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
@@ -23,8 +22,7 @@ import java.util.logging.Level
 import kotlin.collections.ArrayList
 
 class ShyGUICommandExecutor @Inject constructor(
-    private val baseCommand: String,
-    private val aliasesPath: String,
+    private val settings: Settings,
     private val plugin: Plugin,
     private val guiMenuService: GUIMenuService,
     private val chatMessageService: ChatMessageService,
@@ -64,12 +62,12 @@ class ShyGUICommandExecutor @Inject constructor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return ShyGUILanguage.playerNotFoundMessage.format(openArgs[0])
+            return settings.playerNotFoundMessage.format(openArgs[0])
         }
     }
 
     private val senderHasToBePlayer: () -> String = {
-        ShyGUILanguage.commandSenderHasToBePlayer
+        settings.commandSenderHasToBePlayerMessage
     }
 
     private val menuTabs: (suspend (CommandSender) -> List<String>) = {
@@ -84,7 +82,7 @@ class ShyGUICommandExecutor @Inject constructor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return ShyGUILanguage.guiMenuNotFoundMessage.format(openArgs[0])
+            return settings.guiNotFoundMessage.format(openArgs[0])
         }
     }
 
@@ -100,23 +98,23 @@ class ShyGUICommandExecutor @Inject constructor(
         override suspend fun validate(
             sender: CommandSender, prevArgs: List<Any>, argument: GUIMeta, openArgs: List<String>
         ): Boolean {
-            return sender.hasPermission(Permission.DYN_OPEN.text + argument.name)
+            return sender.hasPermission(settings.guiPermission + argument.name)
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return ShyGUILanguage.guiMenuNoPermissionMessage.format(openArgs[0])
+            return settings.guiMenuNoPermissionMessage.format(openArgs[0])
         }
     }
 
     fun registerShyGuiCommand() {
-        CommandBuilder(plugin, coroutineExecutor, baseCommand, chatMessageService) {
-            usage(ShyGUILanguage.commandUsage)
-            description(ShyGUILanguage.commandDescription)
-            aliases(plugin.config.getStringList(aliasesPath))
-            permission(Permission.COMMAND)
-            permissionMessage(ShyGUILanguage.commandNoPermission)
+        CommandBuilder(plugin, coroutineExecutor, settings.baseCommand, chatMessageService) {
+            usage(settings.commandUsage)
+            description(settings.commandDescription)
+            aliases(plugin.config.getStringList(settings.aliasesPath))
+            permission(settings.commandPermission)
+            permissionMessage(settings.noPermissionMessage)
             subCommand("open") {
-                toolTip { ShyGUILanguage.openCommandHint }
+                toolTip { settings.openCommandHint }
                 builder().argument("menu").validator(guiMenuMustExist).validator(guiMenuMustHavePermission)
                     .tabs(menuTabs).executePlayer(senderHasToBePlayer) { player, guiMeta ->
                         plugin.launch {
@@ -135,13 +133,13 @@ class ShyGUICommandExecutor @Inject constructor(
                     }
             }
             subCommand("close") {
-                toolTip { ShyGUILanguage.closeCommandHint }
+                toolTip { settings.closeCommandHint }
                 builder().executePlayer(senderHasToBePlayer) { player ->
                     plugin.launch {
                         guiMenuService.getGUI(player)?.closeAll()
                     }
                 }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
-                    .permission { Permission.OTHER_PLAYER.text }.execute { _, player ->
+                    .permission { settings.otherPlayerPermission }.execute { _, player ->
                         plugin.launch {
                             guiMenuService.getGUI(player)?.closeAll()
                         }
@@ -149,7 +147,7 @@ class ShyGUICommandExecutor @Inject constructor(
             }
             subCommand("next") {
                 toolTip {
-                    ShyGUILanguage.nextCommandHint
+                    settings.nextCommandHint
                 }
                 builder().argument("menu").validator(guiMenuMustExist).validator(guiMenuMustHavePermission)
                     .tabs(menuTabs).executePlayer(senderHasToBePlayer) { player, guiMeta ->
@@ -168,14 +166,14 @@ class ShyGUICommandExecutor @Inject constructor(
             }
             subCommand("back") {
                 toolTip {
-                    ShyGUILanguage.backCommandHint
+                    settings.backCommandHint
                 }
                 builder().executePlayer(senderHasToBePlayer) { player ->
                     plugin.launch {
                         guiMenuService.getGUI(player)?.closeBack()
                     }
                 }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
-                    .permission { Permission.OTHER_PLAYER.text }.execute { _, player ->
+                    .permission { settings.otherPlayerPermission }.execute { _, player ->
                         plugin.launch {
                             guiMenuService.getGUI(player)?.closeBack()
                         }
@@ -183,7 +181,7 @@ class ShyGUICommandExecutor @Inject constructor(
             }
             subCommand("message") {
                 toolTip {
-                    ShyGUILanguage.messageCommandHint
+                    settings.messageCommandHint
                 }
                 builder().argument("args.../player").validator(remainingArguments).tabs(paramOrOnlinePlayerTabs)
                     .execute { commandSender, remainingArgs ->
@@ -196,15 +194,16 @@ class ShyGUICommandExecutor @Inject constructor(
             }
             subCommand("reload") {
                 toolTip {
-                    ShyGUILanguage.reloadCommandHint
+                    settings.reloadCommandHint
                 }
                 builder().execute { sender ->
                     guiMenuService.close()
                     plugin.saveDefaultConfig()
                     plugin.reloadConfig()
                     configurationService.reload()
+                    settings.reload()
                     repository.clearCache()
-                    sender.sendMessage(ShyGUILanguage.reloadMessage)
+                    sender.sendMessage(settings.reloadMessage)
                 }
             }.helpCommand()
         }.build()
@@ -223,9 +222,12 @@ class ShyGUICommandExecutor @Inject constructor(
                 description(command.description)
                 aliases(command.aliases)
                 permission(command.permission)
-                permissionMessage(ShyGUILanguage.commandNoPermission)
+                permissionMessage(settings.noPermissionMessage)
                 builder().executePlayer(senderHasToBePlayer) { player ->
-                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "${baseCommand} open ${guiMenu.name} / ${player.name}")
+                    Bukkit.getServer().dispatchCommand(
+                        Bukkit.getConsoleSender(),
+                        "${settings.baseCommand} open ${guiMenu.name} / ${player.name}"
+                    )
                 }
             }.build()
 
@@ -270,19 +272,15 @@ class ShyGUICommandExecutor @Inject constructor(
         }
 
         if (playerResult == null) {
-            sender.sendMessage(ShyGUILanguage.commandSenderHasToBePlayer)
+            sender.sendMessage(settings.commandSenderHasToBePlayerMessage)
             return null
         }
 
-        if (playerResult != sender && !sender.hasPermission(Permission.OTHER_PLAYER.text)) {
-            sender.sendMessage(ShyGUILanguage.manipulateOtherPlayerMessage)
+        if (playerResult != sender && !sender.hasPermission(settings.otherPlayerPermission)) {
+            sender.sendMessage(settings.manipulateOtherMessage)
             return null
         }
 
         return Pair(arguments.toTypedArray(), playerResult)
-    }
-
-    private fun CommandBuilder.permission(permission: Permission) {
-        this.permission(permission.text)
     }
 }

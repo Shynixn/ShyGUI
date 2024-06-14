@@ -23,29 +23,22 @@ import com.github.shynixn.shygui.contract.GUIMenuService
 import com.github.shynixn.shygui.contract.PlaceHolderService
 import com.github.shynixn.shygui.contract.ScriptService
 import com.github.shynixn.shygui.entity.GUIMeta
-import com.github.shynixn.shygui.impl.commandexecutor.ShyGUICommandExecutor
+import com.github.shynixn.shygui.entity.Settings
 import com.github.shynixn.shygui.impl.service.*
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import java.util.logging.Level
 
-class ShyGUIDependencyInjectionModule(private val plugin: Plugin) : DependencyInjectionModule() {
+class ShyGUIDependencyInjectionModule(private val settings : Settings, private val plugin: Plugin) : DependencyInjectionModule() {
     companion object {
         private val placeHolderPluginName = "PlaceholderAPI"
-        val areLegacyVersionsIncluded: Boolean by lazy {
-            try {
-         //       Class.forName("com.github.shynixn.shygui.lib.com.github.shynixn.mcutils.packet.nms.v1_8_R3.PacketSendServiceImpl")
-                true
-            } catch (e: ClassNotFoundException) {
-                false
-            }
-        }
     }
-
 
     override fun configure() {
         val configurationService = ConfigurationServiceImpl(plugin)
         addService<Plugin>(plugin)
+        addService<Settings>(settings)
+
         // Repositories
         val templateRepositoryImpl =
             YamlFileRepositoryImpl<GUIMeta>(
@@ -74,17 +67,6 @@ class ShyGUIDependencyInjectionModule(private val plugin: Plugin) : DependencyIn
         // Services
         addService<GUIMenuService, GUIMenuServiceImpl>()
         addService<GUIItemConditionService, GUIItemConditionServiceImpl>()
-        addService<ShyGUICommandExecutor> {
-            ShyGUICommandExecutor(
-                "shygui",
-                "commands.shygui.aliases",
-                plugin,
-                getService<GUIMenuService>(),
-                getService<ChatMessageService>(),
-                getService<CacheRepository<GUIMeta>>(),
-                getService<ConfigurationService>()
-            )
-        }
         if (Bukkit.getPluginManager().getPlugin(placeHolderPluginName) != null) {
             addService<PlaceHolderService, DependencyPlaceHolderApiServiceImpl>()
             plugin.logger.log(Level.INFO, "Loaded dependency ${placeHolderPluginName}.")

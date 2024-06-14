@@ -78,6 +78,20 @@ jobs:
           asset_name: ShyGUI-Legacy.jar
           asset_content_type: application/jar
 
+      - uses: Shynixn/repository-m2-deploy-action@v1.1.0
+        name: Deploy ShyGUI Jar
+        with:
+          primary-jar-file: 'build/libs/shygui-${{ env.RELEASE_VERSION }}.jar'
+          group-id: 'com.github.shynixn.shygui'
+          artifact-id: 'shygui'
+          source-directories: 'src/main/java'
+          version-id: ${{ env.RELEASE_VERSION }}
+          repository: 'release'
+          generate-sources-jar: true
+          github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          github-username: 'Shynixn'
+          github-repository: 'm2'
+
   Documentation:
     runs-on: ubuntu-latest
     if: "contains(github.ref, 'main')"
@@ -104,5 +118,5 @@ jobs:
           cd ..
           cd ..
           git add docs
-          git commit --message "Automatic CI Documentation."
-          git push --quiet https://Shynixn:${{ secrets.GITHUB_TOKEN }}@github.com/Shynixn/ShyGUI.git HEAD:main
+          git commit --message "Automatic CI Documentation." || true 
+          git push --quiet https://Shynixn:${{ secrets.GITHUB_TOKEN }}@github.com/Shynixn/ShyGUI.git HEAD:main || true

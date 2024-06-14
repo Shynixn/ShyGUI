@@ -10,6 +10,8 @@ import com.github.shynixn.mcutils.packet.api.PacketInType
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.shygui.contract.GUIMenuService
 import com.github.shynixn.shygui.contract.PlaceHolderService
+import com.github.shynixn.shygui.entity.Settings
+import com.github.shynixn.shygui.enumeration.Permission
 import com.github.shynixn.shygui.impl.commandexecutor.ShyGUICommandExecutor
 import com.github.shynixn.shygui.impl.listener.GUIMenuListener
 import org.bukkit.Bukkit
@@ -22,13 +24,24 @@ class ShyGUIPlugin : JavaPlugin() {
     private lateinit var module: DependencyInjectionModule
     private var immediateDisable = false
 
+    companion object {
+        private val areLegacyVersionsIncluded: Boolean by lazy {
+            try {
+                Class.forName("com.github.shynixn.shygui.lib.com.github.shynixn.mcutils.packet.nms.v1_8_R3.PacketSendServiceImpl")
+                true
+            } catch (e: ClassNotFoundException) {
+                false
+            }
+        }
+    }
+
     /**
      * Called when this plugin is enabled.
      */
     override fun onEnable() {
         Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Loading ShyGUI ...")
         this.saveDefaultConfig()
-        val versions = if (ShyGUIDependencyInjectionModule.areLegacyVersionsIncluded) {
+        val versions = if (areLegacyVersionsIncluded) {
             listOf(
                 Version.VERSION_1_8_R3,
                 Version.VERSION_1_9_R2,
@@ -72,13 +85,41 @@ class ShyGUIPlugin : JavaPlugin() {
         logger.log(Level.INFO, "Loaded NMS version ${Version.serverVersion}.")
 
         // Guice
-        this.module = ShyGUIDependencyInjectionModule(this).build()
+        val settings = object : Settings() {
+            override fun reload() {
+                this.baseCommand = "shygui"
+                this.commandPermission = Permission.COMMAND.text
+                this.otherPlayerPermission = Permission.OTHER_PLAYER.text
+                this.guiPermission = Permission.DYN_OPEN.text
+                this.baseCommand = "shygui"
+                this.aliasesPath = "commands.shygui.aliases"
+                this.commandUsage = ShyGUILanguage.commandUsage
+                this.commandDescription = ShyGUILanguage.commandDescription
+
+                this.playerNotFoundMessage = ShyGUILanguage.playerNotFoundMessage
+                this.commandSenderHasToBePlayerMessage = ShyGUILanguage.commandSenderHasToBePlayer
+                this.manipulateOtherMessage = ShyGUILanguage.manipulateOtherPlayerMessage
+                this.reloadMessage = ShyGUILanguage.reloadMessage
+                this.noPermissionMessage = ShyGUILanguage.commandNoPermission
+                this.guiNotFoundMessage = ShyGUILanguage.guiMenuNotFoundMessage
+                this.guiMenuNoPermissionMessage = ShyGUILanguage.guiMenuNoPermissionMessage
+
+                this.reloadCommandHint = ShyGUILanguage.reloadCommandHint
+                this.openCommandHint = ShyGUILanguage.openCommandHint
+                this.nextCommandHint = ShyGUILanguage.nextCommandHint
+                this.closeCommandHint = ShyGUILanguage.closeCommandHint
+                this.backCommandHint = ShyGUILanguage.backCommandHint
+                this.messageCommandHint = ShyGUILanguage.messageCommandHint
+            }
+        };
+        this.module = ShyGUIDependencyInjectionModule(settings, this).build()
 
         // Register Language
         this.reloadConfig()
         val configurationService = module.getService<ConfigurationService>()
         val language = configurationService.findValue<String>("language")
         reloadTranslation(language, ShyGUILanguage::class.java, "en_us")
+        settings.reload()
         logger.log(Level.INFO, "Loaded language file $language.properties.")
 
         // Register Packets

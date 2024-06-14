@@ -3,13 +3,12 @@ package com.github.shynixn.shygui.impl.service
 import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
+import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.common.repository.CacheRepository
-import com.github.shynixn.mcutils.common.repository.Repository
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.shygui.contract.GUIItemConditionService
 import com.github.shynixn.shygui.contract.GUIMenu
 import com.github.shynixn.shygui.contract.GUIMenuService
-import com.github.shynixn.shygui.contract.PlaceHolderService
 import com.github.shynixn.shygui.entity.GUIMeta
 import com.github.shynixn.shygui.impl.GUIMenuImpl
 import com.google.inject.Inject

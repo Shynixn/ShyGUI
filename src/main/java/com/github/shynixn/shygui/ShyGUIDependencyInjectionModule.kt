@@ -9,6 +9,8 @@ import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.command.CommandServiceImpl
 import com.github.shynixn.mcutils.common.item.ItemService
+import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
+import com.github.shynixn.mcutils.common.placeholder.PlaceHolderServiceImpl
 import com.github.shynixn.mcutils.common.repository.CacheRepository
 import com.github.shynixn.mcutils.common.repository.CachedRepositoryImpl
 import com.github.shynixn.mcutils.common.repository.Repository
@@ -20,20 +22,18 @@ import com.github.shynixn.mcutils.packet.impl.service.ItemServiceImpl
 import com.github.shynixn.mcutils.packet.impl.service.PacketServiceImpl
 import com.github.shynixn.shygui.contract.GUIItemConditionService
 import com.github.shynixn.shygui.contract.GUIMenuService
-import com.github.shynixn.shygui.contract.PlaceHolderService
 import com.github.shynixn.shygui.contract.ScriptService
 import com.github.shynixn.shygui.entity.GUIMeta
 import com.github.shynixn.shygui.entity.Settings
-import com.github.shynixn.shygui.impl.service.*
-import org.bukkit.Bukkit
+import com.github.shynixn.shygui.impl.service.GUIItemConditionServiceImpl
+import com.github.shynixn.shygui.impl.service.GUIMenuServiceImpl
+import com.github.shynixn.shygui.impl.service.ScriptJdkEngineServiceImpl
+import com.github.shynixn.shygui.impl.service.ScriptNashornEngineServiceImpl
 import org.bukkit.plugin.Plugin
 import java.util.logging.Level
 
 class ShyGUIDependencyInjectionModule(private val settings: Settings, private val plugin: Plugin) :
     DependencyInjectionModule() {
-    companion object {
-        private val placeHolderPluginName = "PlaceholderAPI"
-    }
 
     override fun configure() {
         val configurationService = ConfigurationServiceImpl(plugin)
@@ -41,16 +41,10 @@ class ShyGUIDependencyInjectionModule(private val settings: Settings, private va
         addService<Settings>(settings)
 
         // Repositories
-        val templateRepositoryImpl =
-            YamlFileRepositoryImpl<GUIMeta>(
-                plugin,
-                "gui",
-                listOf(
-                    "gui/petblocks_main_menu.yml" to "petblocks_main_menu.yml",
-                    "gui/simple_sample_menu.yml" to "simple_sample_menu.yml"
-                ),
-                emptyList(),
-                object : TypeReference<GUIMeta>() {})
+        val templateRepositoryImpl = YamlFileRepositoryImpl<GUIMeta>(plugin, "gui", listOf(
+            "gui/petblocks_main_menu.yml" to "petblocks_main_menu.yml",
+            "gui/simple_sample_menu.yml" to "simple_sample_menu.yml"
+        ), emptyList(), object : TypeReference<GUIMeta>() {})
         val cacheTemplateRepository = CachedRepositoryImpl(templateRepositoryImpl)
         addService<Repository<GUIMeta>>(cacheTemplateRepository)
         addService<CacheRepository<GUIMeta>>(cacheTemplateRepository)
@@ -59,6 +53,7 @@ class ShyGUIDependencyInjectionModule(private val settings: Settings, private va
         addService<ConfigurationService>(ConfigurationServiceImpl(plugin))
         addService<PacketService>(PacketServiceImpl(plugin))
         addService<ItemService>(ItemServiceImpl())
+        addService<PlaceHolderService>(PlaceHolderServiceImpl(plugin))
         addService<CommandService>(CommandServiceImpl(object : CoroutineExecutor {
             override fun execute(f: suspend () -> Unit) {
                 plugin.launch {
@@ -71,18 +66,6 @@ class ShyGUIDependencyInjectionModule(private val settings: Settings, private va
         // Services
         addService<GUIMenuService, GUIMenuServiceImpl>()
         addService<GUIItemConditionService, GUIItemConditionServiceImpl>()
-        if (Bukkit.getPluginManager().getPlugin(placeHolderPluginName) != null) {
-            addService<PlaceHolderService>(
-                DependencyPlaceHolderApiServiceImpl(
-                    plugin,
-                    getService<GUIMenuService>(),
-                    PlaceHolderServiceImpl(plugin)
-                )
-            )
-            plugin.logger.log(Level.INFO, "Loaded ${settings.embedded} dependency ${placeHolderPluginName}.")
-        } else {
-            addService<PlaceHolderService>(PlaceHolderServiceImpl(plugin))
-        }
 
         try {
             // Try Load Nashorn Implementation

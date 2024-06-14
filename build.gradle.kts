@@ -40,7 +40,7 @@ dependencies {
     implementation("org.openjdk.nashorn:nashorn-core:15.4")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2024.12")
+    implementation("com.github.shynixn.mcutils:common:2024.15")
     implementation("com.github.shynixn.mcutils:packet:2024.22")
     implementation("com.github.shynixn.mcutils:guice:2024.2")
 

@@ -4,24 +4,27 @@ import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mcutils.common.ChatColor
 import com.github.shynixn.mcutils.common.ConfigurationService
 import com.github.shynixn.mcutils.common.Version
+import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.common.reloadTranslation
 import com.github.shynixn.mcutils.guice.DependencyInjectionModule
 import com.github.shynixn.mcutils.packet.api.PacketInType
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.shygui.contract.GUIMenuService
-import com.github.shynixn.shygui.contract.PlaceHolderService
 import com.github.shynixn.shygui.entity.Settings
 import com.github.shynixn.shygui.enumeration.Permission
 import com.github.shynixn.shygui.impl.commandexecutor.ShyGUICommandExecutor
 import com.github.shynixn.shygui.impl.listener.GUIMenuListener
+import com.github.shynixn.shygui.impl.provider.ShyGUIPlaceHolderApiProvider
+import com.github.shynixn.shygui.impl.provider.ShyGUIPlaceHolderProvider
 import org.bukkit.Bukkit
+import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.ServicePriority
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Level
 
 class ShyGUIPlugin : JavaPlugin() {
     private val prefix: String = ChatColor.BLUE.toString() + "[ShyGUI] " + ChatColor.WHITE
-    private lateinit var module: DependencyInjectionModule
+    private lateinit var shyGuiModule: DependencyInjectionModule
     private var immediateDisable = false
 
     companion object {
@@ -87,6 +90,7 @@ class ShyGUIPlugin : JavaPlugin() {
         // Guice
         val settings = object : Settings() {
             override fun reload() {
+                this.embedded = "ShyGUI"
                 this.baseCommand = "shygui"
                 this.commandPermission = Permission.COMMAND.text
                 this.otherPlayerPermission = Permission.OTHER_PLAYER.text
@@ -112,34 +116,47 @@ class ShyGUIPlugin : JavaPlugin() {
                 this.messageCommandHint = ShyGUILanguage.messageCommandHint
             }
         };
-        this.module = ShyGUIDependencyInjectionModule(settings, this).build()
+        settings.reload()
+        this.shyGuiModule = ShyGUIDependencyInjectionModule(settings, this).build()
 
         // Register Language
         this.reloadConfig()
-        val configurationService = module.getService<ConfigurationService>()
+        val configurationService = shyGuiModule.getService<ConfigurationService>()
         val language = configurationService.findValue<String>("language")
         reloadTranslation(language, ShyGUILanguage::class.java, "en_us")
         settings.reload()
         logger.log(Level.INFO, "Loaded language file $language.properties.")
 
         // Register Packets
-        val packetService = module.getService<PacketService>()
+        val packetService = shyGuiModule.getService<PacketService>()
         packetService.registerPacketListening(PacketInType.CLICKINVENTORY)
         packetService.registerPacketListening(PacketInType.CLOSEINVENTORY)
 
         // Register Listeners
-        Bukkit.getPluginManager().registerEvents(module.getService<GUIMenuListener>(), this)
+        Bukkit.getPluginManager().registerEvents(shyGuiModule.getService<GUIMenuListener>(), this)
 
         // Register CommandExecutor
-        val commandExecutor = module.getService<ShyGUICommandExecutor>()
+        val commandExecutor = shyGuiModule.getService<ShyGUICommandExecutor>()
         commandExecutor.registerShyGuiCommand()
 
-        // Register PlaceHolder service.
-        module.getService<PlaceHolderService>().registerPlaceHolders()
+        // Register PlaceHolders
+        val placeholderService = shyGuiModule.getService<PlaceHolderService>()
+        placeholderService.registerProvider(ShyGUIPlaceHolderProvider(shyGuiModule.getService<Plugin>()))
+        placeholderService.registerPlaceHolderApiProvider {
+            ShyGUIPlaceHolderApiProvider(
+                shyGuiModule.getService<Plugin>(),
+                shyGuiModule.getService<PlaceHolderService>(), shyGuiModule.getService<GUIMenuService>()
+            )
+        }
 
         // Register Dependencies
         Bukkit.getServicesManager()
-            .register(GUIMenuService::class.java, module.getService<GUIMenuService>(), this, ServicePriority.Normal)
+            .register(
+                GUIMenuService::class.java,
+                shyGuiModule.getService<GUIMenuService>(),
+                this,
+                ServicePriority.Normal
+            )
 
         val plugin = this
         plugin.launch {
@@ -158,10 +175,10 @@ class ShyGUIPlugin : JavaPlugin() {
             return
         }
 
-        val menuService = module.getService<GUIMenuService>()
+        val menuService = shyGuiModule.getService<GUIMenuService>()
         menuService.close()
 
-        val packetService = module.getService<PacketService>()
+        val packetService = shyGuiModule.getService<PacketService>()
         packetService.close()
     }
 }

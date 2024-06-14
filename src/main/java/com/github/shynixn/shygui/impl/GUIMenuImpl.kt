@@ -3,6 +3,7 @@ package com.github.shynixn.shygui.impl
 import com.github.shynixn.mccoroutine.folia.*
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
+import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.common.translateChatColors
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.mcutils.packet.api.meta.enumeration.WindowType
@@ -12,11 +13,11 @@ import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryOpen
 import com.github.shynixn.shygui.ShyGUILanguage
 import com.github.shynixn.shygui.contract.GUIItemConditionService
 import com.github.shynixn.shygui.contract.GUIMenu
-import com.github.shynixn.shygui.contract.PlaceHolderService
 import com.github.shynixn.shygui.entity.GUIItemMeta
 import com.github.shynixn.shygui.entity.GUIMeta
 import com.github.shynixn.shygui.enumeration.GUIItemConditionType
 import com.github.shynixn.shygui.exception.GUIException
+import com.github.shynixn.shygui.impl.provider.ShyGUIPlaceHolderProvider
 import com.github.shynixn.shygui.impl.service.GUIMenuServiceImpl
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -155,8 +156,8 @@ class GUIMenuImpl(
                 if (command.command.isNotBlank()) {
                     commandService.executeCommand(listOf(player), command) { input, player ->
                         if (player != null) {
-                            placeHolderService.replacePlaceHolders(
-                                menu, player, input
+                            placeHolderService.resolvePlaceHolder(
+                                player, input, mapOf(ShyGUIPlaceHolderProvider.guiKey to menu)
                             )
                         } else {
                             input
@@ -262,24 +263,50 @@ class GUIMenuImpl(
                 val newItem = newGuiItem.item
 
                 if (oldItem.displayName != null && oldItem.displayName!!.contains(placeHolderStart)) {
-                    newItem.displayName = placeHolderService.replacePlaceHolders(menu, player, oldItem.displayName!!)
+                    newItem.displayName = placeHolderService.resolvePlaceHolder(
+                        player,
+                        oldItem.displayName!!,
+                        mapOf(ShyGUIPlaceHolderProvider.guiKey to menu)
+                    )
                 }
                 if (oldItem.lore != null && oldItem.lore!!.firstOrNull { e -> e.contains(placeHolderStart) } != null) {
                     newItem.lore =
-                        oldItem.lore!!.map { e -> placeHolderService.replacePlaceHolders(menu, player, e) }
+                        oldItem.lore!!.map { e ->
+                            placeHolderService.resolvePlaceHolder(
+                                player,
+                                e,
+                                mapOf(ShyGUIPlaceHolderProvider.guiKey to menu)
+                            )
+                        }
                             .toMutableList()
                 }
                 if (oldItem.nbt != null && oldItem.nbt!!.contains(placeHolderStart)) {
-                    newItem.nbt = placeHolderService.replacePlaceHolders(menu, player, oldItem.nbt!!)
+                    newItem.nbt = placeHolderService.resolvePlaceHolder(
+                        player,
+                        oldItem.nbt!!,
+                        mapOf(ShyGUIPlaceHolderProvider.guiKey to menu)
+                    )
                 }
                 if (oldItem.component != null && oldItem.component!!.contains(placeHolderStart)) {
-                    newItem.component = placeHolderService.replacePlaceHolders(menu, player, oldItem.component!!)
+                    newItem.component = placeHolderService.resolvePlaceHolder(
+                        player,
+                        oldItem.component!!,
+                        mapOf(ShyGUIPlaceHolderProvider.guiKey to menu)
+                    )
                 }
                 if (oldItem.skinBase64 != null && oldItem.skinBase64!!.contains(placeHolderStart)) {
-                    newItem.skinBase64 = placeHolderService.replacePlaceHolders(menu, player, oldItem.skinBase64!!)
+                    newItem.skinBase64 = placeHolderService.resolvePlaceHolder(
+                        player,
+                        oldItem.skinBase64!!,
+                        mapOf(ShyGUIPlaceHolderProvider.guiKey to menu)
+                    )
                 }
                 if (oldItem.typeName.contains(placeHolderStart)) {
-                    newItem.typeName = placeHolderService.replacePlaceHolders(menu, player, oldItem.typeName)
+                    newItem.typeName = placeHolderService.resolvePlaceHolder(
+                        player,
+                        oldItem.typeName,
+                        mapOf(ShyGUIPlaceHolderProvider.guiKey to menu)
+                    )
                 }
 
                 if (guiItem.condition.type != GUIItemConditionType.NONE) {
@@ -287,14 +314,26 @@ class GUIMenuImpl(
                     val oldCondition = guiItem.condition
                     if (oldCondition.left != null) {
                         newCondition.left =
-                            placeHolderService.replacePlaceHolders(menu, player, guiItem.condition.left!!)
+                            placeHolderService.resolvePlaceHolder(
+                                player,
+                                guiItem.condition.left!!,
+                                mapOf(ShyGUIPlaceHolderProvider.guiKey to menu)
+                            )
                     }
                     if (oldCondition.right != null) {
                         newCondition.right =
-                            placeHolderService.replacePlaceHolders(menu, player, guiItem.condition.right!!)
+                            placeHolderService.resolvePlaceHolder(
+                                player,
+                                guiItem.condition.right!!,
+                                mapOf(ShyGUIPlaceHolderProvider.guiKey to menu)
+                            )
                     }
                     if (oldCondition.js != null) {
-                        newCondition.js = placeHolderService.replacePlaceHolders(menu, player, guiItem.condition.js!!)
+                        newCondition.js = placeHolderService.resolvePlaceHolder(
+                            player,
+                            guiItem.condition.js!!,
+                            mapOf(ShyGUIPlaceHolderProvider.guiKey to menu)
+                        )
                     }
                 }
 
@@ -326,7 +365,9 @@ class GUIMenuImpl(
             val startIndex = (guiItemMeta.row - 1) * 9 + guiItemMeta.col - 1
 
             if (startIndex < 0 || startIndex >= itemStacks.size) {
-                playerHandle?.sendMessage(ShyGUILanguage.rowColOutOfRangeError.format(guiItemMeta.row, guiItemMeta.col))
+                playerHandle?.sendMessage(
+                    ShyGUILanguage.rowColOutOfRangeError.format(guiItemMeta.row, guiItemMeta.col).translateChatColors()
+                )
                 throw GUIException(ShyGUILanguage.rowColOutOfRangeError.format(guiItemMeta.row, guiItemMeta.col))
             }
 
@@ -347,7 +388,7 @@ class GUIMenuImpl(
                             ShyGUILanguage.cannotParseItemStackError.format(
                                 guiItemMeta.row,
                                 guiItemMeta.col
-                            )
+                            ).translateChatColors()
                         )
                         throw GUIException(
                             ShyGUILanguage.cannotParseItemStackError.format(

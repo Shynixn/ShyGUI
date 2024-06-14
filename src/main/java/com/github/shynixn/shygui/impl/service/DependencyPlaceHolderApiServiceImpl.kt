@@ -3,21 +3,16 @@ package com.github.shynixn.shygui.impl.service
 import com.github.shynixn.shygui.contract.GUIMenu
 import com.github.shynixn.shygui.contract.GUIMenuService
 import com.github.shynixn.shygui.contract.PlaceHolderService
-import com.google.inject.Inject
 import me.clip.placeholderapi.PlaceholderAPI
 import me.clip.placeholderapi.expansion.PlaceholderExpansion
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 
-class DependencyPlaceHolderApiServiceImpl @Inject constructor(
+class DependencyPlaceHolderApiServiceImpl constructor(
     private val plugin: Plugin,
     private val guiMenuService: GUIMenuService,
+    private val placeHolderService: PlaceHolderService
 ) : PlaceholderExpansion(), PlaceHolderService {
-    private val placeHolderService = PlaceHolderServiceImpl()
-
-    init {
-        this.register()
-    }
 
     override fun onPlaceholderRequest(p: Player?, params: String?): String? {
         if (params == null || p == null) {
@@ -26,7 +21,7 @@ class DependencyPlaceHolderApiServiceImpl @Inject constructor(
 
         try {
             val guiMenu = guiMenuService.getGUI(p) ?: return null
-            return placeHolderService.replacePlaceHolders(guiMenu, p, "%shygui_$params")
+            return placeHolderService.replacePlaceHolders(guiMenu, p, "%${plugin.name}_$params")
         } catch (ignored: Exception) {
             ignored.printStackTrace()
         }
@@ -44,6 +39,13 @@ class DependencyPlaceHolderApiServiceImpl @Inject constructor(
 
     override fun getVersion(): String {
         return plugin.description.version
+    }
+
+    /**
+     * Registers the placeholders.
+     */
+    override fun registerPlaceHolders() {
+        this.register()
     }
 
     /**

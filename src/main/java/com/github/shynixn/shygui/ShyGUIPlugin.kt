@@ -135,7 +135,7 @@ class ShyGUIPlugin : JavaPlugin() {
         commandExecutor.registerShyGuiCommand()
 
         // Register PlaceHolder service.
-        module.getService<PlaceHolderService>()
+        module.getService<PlaceHolderService>().registerPlaceHolders()
 
         // Register Dependencies
         Bukkit.getServicesManager()

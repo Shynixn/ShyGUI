@@ -5,11 +5,13 @@ import com.github.shynixn.shygui.contract.GUIMenu
 import com.github.shynixn.shygui.contract.PlaceHolderService
 import com.github.shynixn.shygui.enumeration.PlaceHolder
 import org.bukkit.entity.Player
+import org.bukkit.plugin.Plugin
 import java.util.*
 
-class PlaceHolderServiceImpl : PlaceHolderService {
+class PlaceHolderServiceImpl(private val plugin: Plugin) : PlaceHolderService {
     private val placeHolderFunctions = HashMap<PlaceHolder, ((GUIMenu, Player) -> String)>()
     private val placeHolders = HashMap<String, PlaceHolder>()
+    private val id = "%shygui_"
 
     init {
         for (placeHolder in PlaceHolder.values()) {
@@ -62,13 +64,20 @@ class PlaceHolderServiceImpl : PlaceHolderService {
     }
 
     /**
+     * Registers the placeholders.
+     */
+    override fun registerPlaceHolders() {
+    }
+
+    /**
      * Replaces incoming strings with the escaped version.
      */
     override fun replacePlaceHolders(menu: GUIMenu, player: Player, input: String): String {
+        val nInput = input.replace("%${plugin.name}_", id)
         val locatedPlaceHolders = HashMap<PlaceHolder, String>()
         val characterCache = StringBuilder()
 
-        for (character in input) {
+        for (character in nInput) {
             characterCache.append(character)
 
             if (character == '%') {
@@ -88,7 +97,7 @@ class PlaceHolderServiceImpl : PlaceHolderService {
             }
         }
 
-        var output = input
+        var output = nInput
 
         for (locatedPlaceHolder in locatedPlaceHolders.keys) {
             output = output.replace(locatedPlaceHolder.fullPlaceHolder, locatedPlaceHolders[locatedPlaceHolder]!!)

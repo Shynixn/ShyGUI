@@ -1,6 +1,7 @@
 package com.github.shynixn.shygui.entity
 
 abstract class Settings {
+    var embedded : String = ""
     var commandPermission: String = ""
     var otherPlayerPermission: String = ""
     var guiPermission: String = ""

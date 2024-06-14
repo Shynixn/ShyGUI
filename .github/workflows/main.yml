@@ -86,7 +86,7 @@ jobs:
           artifact-id: 'shygui'
           source-directories: 'src/main/java'
           version-id: ${{ env.RELEASE_VERSION }}
-          repository: 'release'
+          repository: 'releases'
           generate-sources-jar: true
           github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           github-username: 'Shynixn'

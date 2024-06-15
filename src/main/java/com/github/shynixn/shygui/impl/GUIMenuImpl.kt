@@ -9,7 +9,6 @@ import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.mcutils.packet.api.meta.enumeration.WindowType
 import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryClose
 import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryContent
-import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryOpen
 import com.github.shynixn.shygui.ShyGUILanguage
 import com.github.shynixn.shygui.contract.GUIItemConditionService
 import com.github.shynixn.shygui.contract.GUIMenu
@@ -57,6 +56,10 @@ class GUIMenuImpl(
             val guiItem = meta.items[i]
             val item = guiItem.item
             if (item.displayName != null && item.displayName!!.contains(placeHolderStart)) {
+                indicesWithPlaceHolders.add(i)
+            } else if (item.durability != null && item.durability!!.contains(placeHolderStart)) {
+                indicesWithPlaceHolders.add(i)
+            } else if (item.amount.contains(placeHolderStart)) {
                 indicesWithPlaceHolders.add(i)
             } else if (item.lore != null && item.lore!!.firstOrNull { e -> e.contains(placeHolderStart) } != null) {
                 indicesWithPlaceHolders.add(i)

@@ -47,3 +47,8 @@ command: "mycoolgui"
 2. Please take a look into the ``simple_sample_menu.yml`` file again. Each available options is explained with a short comments. 
 3. If the comment mentiones ``Required.`` You need to set this property. If it says ``Optional`` you do not need to set it.
 4. As an easy test, locate the ``minecraft:gold_block`` in your ``my_first_menu.yml`` and replace it with ``minecraft:diamond_block``. After you gave done that simply execute ``/shygui reload`` again and open the GUI ``/mycoolgui``.
+
+### Advanced menus with sub-pages
+
+There are also menus starting with ``petblocks`` in the ``gui`` folder. These are multiple connected menus, which may help you to build more advanced menus.
+In order to open them, you need to install [PlaceHolderAPI](https://www.spigotmc.org/resources/6245/) and [PetBlocks](https://www.spigotmc.org/resources/12056/).

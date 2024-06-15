@@ -16,6 +16,7 @@ import com.github.shynixn.shygui.impl.commandexecutor.ShyGUICommandExecutor
 import com.github.shynixn.shygui.impl.listener.GUIMenuListener
 import com.github.shynixn.shygui.impl.provider.ShyGUIPlaceHolderApiProvider
 import com.github.shynixn.shygui.impl.provider.ShyGUIPlaceHolderProvider
+import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.ServicePriority
@@ -168,7 +169,7 @@ class ShyGUIPlugin : JavaPlugin() {
             )
 
         val plugin = this
-        plugin.launch {
+        runBlocking {
             plugin.logger.log(Level.INFO, "Registering GUI commands...")
             commandExecutor.registerGuiCommands()
             plugin.logger.log(Level.INFO, "Registered GUI commands.")

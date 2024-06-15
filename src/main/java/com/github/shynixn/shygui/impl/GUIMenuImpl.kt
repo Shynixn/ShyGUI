@@ -85,6 +85,7 @@ class GUIMenuImpl(
                     index
                 )
             }))
+            setGuiItemsToItemStacks(evaluateItemConditions(prepareItemsWithPlaceHolders()))
             while (!isDisposed) {
                 if (isVisible) {
                     setGuiItemsToItemStacks(evaluateItemConditions(prepareItemsWithPlaceHolders()))
@@ -179,9 +180,6 @@ class GUIMenuImpl(
         isVisible = true
         plugin.launch {
             setGuiItemsToItemStacks(evaluateItemConditions(prepareItemsWithPlaceHolders()))
-            packetService.sendPacketOutInventoryOpen(
-                player, PacketOutInventoryOpen(containerId, meta.windowType, meta.title.translateChatColors())
-            )
             sendContentUpdate()
         }
     }
@@ -195,7 +193,6 @@ class GUIMenuImpl(
         }
 
         isVisible = false
-        packetService.sendPacketOutInventoryClose(player, PacketOutInventoryClose(containerId))
     }
 
     /**
@@ -203,14 +200,16 @@ class GUIMenuImpl(
      */
     override fun sendContentUpdate() {
         if (isDisposed) {
-            throw RuntimeException("This GUIMenu has already been disposed!")
+            return
         }
 
-        val items = this.itemStacks
-        packetService.sendPacketOutInventoryContent(
-            player,
-            PacketOutInventoryContent(containerId = containerId, stateId = 1, items = items)
-        )
+        if (isVisible) {
+            val items = this.itemStacks
+            packetService.sendPacketOutInventoryContent(
+                player,
+                PacketOutInventoryContent(containerId = containerId, stateId = 1, items = items)
+            )
+        }
     }
 
     /**
@@ -218,7 +217,7 @@ class GUIMenuImpl(
      */
     override fun closeAll() {
         if (playerHandle != null) {
-            hide()
+            packetService.sendPacketOutInventoryClose(player, PacketOutInventoryClose(containerId))
             val playerData = playerHandle
             playerHandle = null
             guiMenuService?.closeGUI(playerData!!, true)
@@ -256,6 +255,9 @@ class GUIMenuImpl(
         val menu = this
 
         withContext(plugin.globalRegionDispatcher) {
+            val player = playerHandle ?: return@withContext
+
+
             for (index in indicesWithPlaceHolders) {
                 val guiItem = meta.items[index]
                 val oldItem = guiItem.item

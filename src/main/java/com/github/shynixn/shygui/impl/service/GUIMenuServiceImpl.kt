@@ -5,7 +5,9 @@ import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.common.repository.CacheRepository
+import com.github.shynixn.mcutils.common.translateChatColors
 import com.github.shynixn.mcutils.packet.api.PacketService
+import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryOpen
 import com.github.shynixn.shygui.contract.GUIItemConditionService
 import com.github.shynixn.shygui.contract.GUIMenu
 import com.github.shynixn.shygui.contract.GUIMenuService
@@ -60,8 +62,6 @@ class GUIMenuServiceImpl @Inject constructor(
      * Opens a GUI for the given player.
      */
     override fun openGUI(player: Player, meta: GUIMeta, arguments: Array<String>): GUIMenu {
-        val containerId = packetService.getNextContainerId(player)
-
         if (!guis.containsKey(player)) {
             guis[player] = Stack()
         }
@@ -78,6 +78,19 @@ class GUIMenuServiceImpl @Inject constructor(
             previousGUI.name
         } else {
             null
+        }
+
+        val containerId = if (!stack.isEmpty()) {
+            val previousGUI = stack.peek()
+            previousGUI.containerId
+        } else {
+            val containerId = packetService.getNextContainerId(player)
+            plugin.launch {
+                packetService.sendPacketOutInventoryOpen(
+                    player, PacketOutInventoryOpen(containerId, meta.windowType, meta.title.translateChatColors())
+                )
+            }
+            containerId
         }
 
         val guiMenu = GUIMenuImpl(

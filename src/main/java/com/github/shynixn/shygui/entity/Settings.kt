@@ -1,6 +1,7 @@
 package com.github.shynixn.shygui.entity
 
 abstract class Settings {
+    var guis : List<Pair<String, String>> = emptyList()
     var embedded : String = ""
     var commandPermission: String = ""
     var otherPlayerPermission: String = ""

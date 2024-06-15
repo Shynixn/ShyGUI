@@ -101,7 +101,7 @@ tasks.register("relocatePluginJar", com.github.jengelman.gradle.plugins.shadow.t
     dependsOn("shadowJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-relocate.${archiveExtension.get()}")
-//    relocate("com.github.shynixn.mcutils", "com.github.shynixn.shygui.lib.com.github.shynixn.mcutils")
+    relocate("com.github.shynixn.mcutils", "com.github.shynixn.shygui.lib.com.github.shynixn.mcutils")
 }
 
 /**
@@ -111,7 +111,7 @@ tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tas
     dependsOn("relocatePluginJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("relocatePluginJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-latest.${archiveExtension.get()}")
-    destinationDirectory.set(File("C:\\temp\\plugins"))
+    // destinationDirectory.set(File("C:\\temp\\plugins"))
 
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_8_R3/**")
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_9_R2/**")
@@ -124,7 +124,7 @@ tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tas
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R1/**")
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R2/**")
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R3/**")
-   // exclude("com/github/shynixn/mcutils/**")
+    exclude("com/github/shynixn/mcutils/**")
     exclude("com/github/shynixn/mccoroutine/**")
     exclude("kotlin/**")
     exclude("org/**")
@@ -162,7 +162,7 @@ tasks.register("relocateLegacyPluginJar", com.github.jengelman.gradle.plugins.sh
     dependsOn("shadowJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-legacy-relocate.${archiveExtension.get()}")
-  //  relocate("com.github.shynixn.mcutils", "com.github.shynixn.shygui.lib.com.github.shynixn.mcutils")
+    relocate("com.github.shynixn.mcutils", "com.github.shynixn.shygui.lib.com.github.shynixn.mcutils")
     relocate("kotlin", "com.github.shynixn.shygui.lib.kotlin")
     relocate("org.intellij", "com.github.shynixn.shygui.lib.org.intelli")
     relocate("org.aopalliance", "com.github.shynixn.shygui.lib.org.aopalliance")
@@ -189,8 +189,8 @@ tasks.register("pluginJarLegacy", com.github.jengelman.gradle.plugins.shadow.tas
     dependsOn("relocateLegacyPluginJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("relocateLegacyPluginJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-legacy.${archiveExtension.get()}")
-    destinationDirectory.set(File("C:\\temp\\plugins"))
-//   exclude("com/github/shynixn/mcutils/**")
+    // destinationDirectory.set(File("C:\\temp\\plugins"))
+    exclude("com/github/shynixn/mcutils/**")
     exclude("org/**")
     exclude("kotlin/**")
     exclude("kotlinx/**")

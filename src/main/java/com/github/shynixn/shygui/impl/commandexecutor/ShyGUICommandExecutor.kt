@@ -193,6 +193,7 @@ class ShyGUICommandExecutor @Inject constructor(
                     }
             }
             subCommand("reload") {
+                permission(settings.otherPlayerPermission)
                 toolTip {
                     settings.reloadCommandHint
                 }

@@ -41,10 +41,12 @@ class ShyGUIDependencyInjectionModule(private val settings: Settings, private va
         addService<Settings>(settings)
 
         // Repositories
-        val templateRepositoryImpl = YamlFileRepositoryImpl<GUIMeta>(plugin, "gui", listOf(
-            "gui/petblocks_main_menu.yml" to "petblocks_main_menu.yml",
-            "gui/simple_sample_menu.yml" to "simple_sample_menu.yml"
-        ), emptyList(), object : TypeReference<GUIMeta>() {})
+        val templateRepositoryImpl = YamlFileRepositoryImpl<GUIMeta>(
+            plugin,
+            "gui",
+            settings.guis,
+            emptyList(),
+            object : TypeReference<GUIMeta>() {})
         val cacheTemplateRepository = CachedRepositoryImpl(templateRepositoryImpl)
         addService<Repository<GUIMeta>>(cacheTemplateRepository)
         addService<CacheRepository<GUIMeta>>(cacheTemplateRepository)

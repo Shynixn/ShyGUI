@@ -91,6 +91,15 @@ class ShyGUIPlugin : JavaPlugin() {
         val settings = object : Settings() {
             override fun reload() {
                 this.embedded = "ShyGUI"
+                this.guis = listOf(
+                    "gui/petblocks_main_menu.yml" to "petblocks_main_menu.yml",
+                    "gui/petblocks_skins_menu.yml" to "petblocks_skins_menu.yml",
+                    "gui/petblocks_skins_blockskins_menu.yml" to "petblocks_skins_blockskins_menu.yml",
+                    "gui/petblocks_skins_petskins_menu.yml" to "petblocks_skins_petskins_menu.yml",
+                    "gui/petblocks_skins_plushieskins_menu.yml" to "petblocks_skins_plushieskins_menu.yml",
+                    "gui/petblocks_skins_vehicleskins_menu.yml" to "petblocks_skins_vehicleskins_menu.yml",
+                    "gui/simple_sample_menu.yml" to "simple_sample_menu.yml"
+                )
                 this.baseCommand = "shygui"
                 this.commandPermission = Permission.COMMAND.text
                 this.otherPlayerPermission = Permission.OTHER_PLAYER.text

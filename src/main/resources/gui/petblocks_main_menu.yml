@@ -28,6 +28,7 @@ items:
     col: 5
     item:
       typeName: "%petblocks_pet_itemType_selected%"
+      durability: "%petblocks_pet_itemDurability_selected%"
       displayName: "%petblocks_pet_displayName_selected%"
       skinBase64: "%petblocks_pet_itemHeadBase64_selected%"
   - row: 2

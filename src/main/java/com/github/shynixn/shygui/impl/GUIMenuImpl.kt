@@ -313,6 +313,13 @@ class GUIMenuImpl(
                         mapOf(ShyGUIPlaceHolderProvider.guiKey to menu)
                     )
                 }
+                if (oldItem.durability != null && oldItem.durability!!.contains(placeHolderStart)) {
+                    newItem.durability = placeHolderService.resolvePlaceHolder(
+                        player,
+                        oldItem.durability!!,
+                        mapOf(ShyGUIPlaceHolderProvider.guiKey to menu)
+                    )
+                }
 
                 if (guiItem.condition.type != GUIItemConditionType.NONE) {
                     val newCondition = newGuiItem.condition

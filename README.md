@@ -1,2 +1,3 @@
 # ShyGUI
-ShyGUI is a Bukkit and Folia compatible, high performance, asynchronous GUI plugin for Minecraft.
+
+ShyGUI is a high performance and asynchronous GUI plugin for Bukkit and Folia based Minecraft servers.

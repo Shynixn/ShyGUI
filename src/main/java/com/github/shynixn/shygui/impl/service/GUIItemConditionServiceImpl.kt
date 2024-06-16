@@ -59,8 +59,26 @@ class GUIItemConditionServiceImpl @Inject constructor(private val scriptService:
             return !left.equals(right, true)
         }
 
-        val leftNumber = left.toDoubleOrNull() ?: throw RuntimeException("Left property cannot be converted to a number!")
-        val rightNumber = right.toDoubleOrNull() ?: throw RuntimeException("Right property cannot be converted to a number!")
+        if (conditionType == GUIItemConditionType.STRING_CONTAINS) {
+            return left.contains(right)
+        }
+
+        if (conditionType == GUIItemConditionType.STRING_NOT_CONTAINS) {
+            return !left.contains(right)
+        }
+
+        if (conditionType == GUIItemConditionType.STRING_CONTAINS_IGNORE_CASE) {
+            return left.contains(right, true)
+        }
+
+        if (conditionType == GUIItemConditionType.STRING_NOT_CONTAINS_IGNORE_CASE) {
+            return !left.contains(right, true)
+        }
+
+        val leftNumber =
+            left.toDoubleOrNull() ?: throw RuntimeException("Left property cannot be converted to a number!")
+        val rightNumber =
+            right.toDoubleOrNull() ?: throw RuntimeException("Right property cannot be converted to a number!")
 
         if (conditionType == GUIItemConditionType.NUMBER_GREATER_THAN) {
             return leftNumber > rightNumber

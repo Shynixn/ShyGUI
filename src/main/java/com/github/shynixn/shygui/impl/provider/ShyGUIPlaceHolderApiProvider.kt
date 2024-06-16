@@ -14,6 +14,7 @@ class ShyGUIPlaceHolderApiProvider @Inject constructor(
     private val placeHolderService: PlaceHolderService,
     private val guiMenuService: GUIMenuService
 ) : PlaceholderExpansion(), PlaceHolderProvider {
+    private val placeHolderApiKey = "placeholderapi"
 
     init {
         register()
@@ -27,7 +28,9 @@ class ShyGUIPlaceHolderApiProvider @Inject constructor(
         try {
             val guiMenu = guiMenuService.getGUI(p) ?: return null
             return placeHolderService.resolvePlaceHolder(
-                p, "%${plugin.name.lowercase()}_$params%", mapOf(ShyGUIPlaceHolderProvider.guiKey to guiMenu)
+                p,
+                "%${plugin.name.lowercase()}_$params%",
+                mapOf(ShyGUIPlaceHolderProvider.guiKey to guiMenu, placeHolderApiKey to true)
             )
         } catch (ignored: Exception) {
             ignored.printStackTrace()
@@ -37,6 +40,10 @@ class ShyGUIPlaceHolderApiProvider @Inject constructor(
     }
 
     override fun resolvePlaceHolder(player: Player, input: String, parameters: Map<String, Any>): String {
+        if (parameters.containsKey(placeHolderApiKey)) {
+            return input
+        }
+
         return PlaceholderAPI.setPlaceholders(player, input)
     }
 

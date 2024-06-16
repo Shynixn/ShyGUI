@@ -1,5 +1,6 @@
 package com.github.shynixn.shygui.impl.service
 
+import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
@@ -11,9 +12,12 @@ import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryOpen
 import com.github.shynixn.shygui.contract.GUIItemConditionService
 import com.github.shynixn.shygui.contract.GUIMenu
 import com.github.shynixn.shygui.contract.GUIMenuService
+import com.github.shynixn.shygui.entity.GUIItemCondition
 import com.github.shynixn.shygui.entity.GUIMeta
+import com.github.shynixn.shygui.enumeration.GUIItemConditionType
 import com.github.shynixn.shygui.impl.GUIMenuImpl
 import com.google.inject.Inject
+import kotlinx.coroutines.withContext
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import java.util.*
@@ -61,7 +65,18 @@ class GUIMenuServiceImpl @Inject constructor(
     /**
      * Opens a GUI for the given player.
      */
-    override fun openGUI(player: Player, meta: GUIMeta, arguments: Array<String>): GUIMenu {
+    override suspend fun openGUI(player: Player, meta: GUIMeta, arguments: Array<String>): GUIMenu? {
+        val condition = evaluateGUIOpenCondition(player, meta)
+
+        if (condition != null) {
+            val conditionResult = guiItemConditionService.evaluate(player, condition)
+
+            if (!conditionResult) {
+                return null
+            }
+        }
+
+
         if (!guis.containsKey(player)) {
             guis[player] = Stack()
         }
@@ -111,6 +126,20 @@ class GUIMenuServiceImpl @Inject constructor(
         stack.push(guiMenu)
         guiMenu.show()
         return guiMenu
+    }
+
+    /**
+     * Opens the GUI menu async.
+     * Returns null if not opened.
+     */
+    override fun openGUIAsync(player: Player, meta: GUIMeta, arguments: Array<String>): CompletionStage<GUIMenu?> {
+        val completableStage = CompletableFuture<GUIMenu?>()
+
+        plugin.launch {
+            completableStage.complete(openGUI(player, meta, arguments))
+        }
+
+        return completableStage
     }
 
     /**
@@ -182,5 +211,48 @@ class GUIMenuServiceImpl @Inject constructor(
             }
         }
         guis.clear()
+    }
+
+    private suspend fun evaluateGUIOpenCondition(player: Player, guiMeta: GUIMeta): GUIItemCondition? {
+        val condition = guiMeta.condition
+
+        if (condition == null) {
+            return null
+        }
+
+        if (condition.type == GUIItemConditionType.NONE) {
+            return null
+        }
+
+        val newCondition = condition.copy()
+        val oldCondition = condition
+
+        withContext(plugin.globalRegionDispatcher) {
+            if (oldCondition.left != null) {
+                newCondition.left =
+                    placeHolderService.resolvePlaceHolder(
+                        player,
+                        oldCondition.left!!,
+                        emptyMap()
+                    )
+            }
+            if (oldCondition.right != null) {
+                newCondition.right =
+                    placeHolderService.resolvePlaceHolder(
+                        player,
+                        oldCondition.right!!,
+                        emptyMap()
+                    )
+            }
+            if (oldCondition.js != null) {
+                newCondition.js = placeHolderService.resolvePlaceHolder(
+                    player,
+                    oldCondition.js!!,
+                    emptyMap()
+                )
+            }
+        }
+
+        return newCondition
     }
 }

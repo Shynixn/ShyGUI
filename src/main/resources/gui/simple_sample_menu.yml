@@ -21,6 +21,17 @@ command:
   aliases:
     - "samplemenu"
 
+# Optional condition which has to be true in order to open the gui.
+condition:
+  # Optional condition type. Possible values: NONE, JAVASCRIPT, STRING_EQUALS, STRING_NOT_EQUALS, STRING_EQUALS_IGNORE_CASE, STRING_NOT_EQUALS_IGNORE_CASE, NUMBER_GREATER_THAN, NUMBER_GREATER_THAN_OR_EQUAL, NUMBER_LESS_THAN, NUMBER_LESS_THAN_OR_EQUAL, STRING_CONTAINS, STRING_NOT_CONTAINS, STRING_CONTAINS_IGNORE_CASE, STRING_NOT_CONTAINS_IGNORE_CASE
+  type: "NONE"
+  # Optional left side of the condition if type starts with "STRING_" or "NUMBER_". Placeholders are supported.
+  left: ""
+  # Optional right side of the condition if type starts with "STRING_" or "NUMBER_". Placeholders are supported.
+  right: ""
+  # Optional JavaScript based boolean expression if type is "JAVASCRIPT". Placeholders are supported. This can be used for more complex boolean expressions.
+  js: ""
+
 # All items which are rendered inside the inventory. You need to specify the item you want to display and the position.
 # For more complex GUIs, you may want to show different items on the same position depending on a certain condition:
 #  e.g. pet is spawned, show despawn button
@@ -59,7 +70,7 @@ items:
     condition:
       # Optional permission required to see this item. This field works independently of the type property below.
       permission: ""
-      # Optional condition type. Possible values: NONE, JAVASCRIPT, STRING_EQUALS, STRING_NOT_EQUALS, STRING_EQUALS_IGNORE_CASE, STRING_NOT_EQUALS_IGNORE_CASE, NUMBER_GREATER_THAN, NUMBER_GREATER_THAN_OR_EQUAL, NUMBER_LESS_THAN, NUMBER_LESS_THAN_OR_EQUAL
+      # Optional condition type. Possible values: NONE, JAVASCRIPT, STRING_EQUALS, STRING_NOT_EQUALS, STRING_EQUALS_IGNORE_CASE, STRING_NOT_EQUALS_IGNORE_CASE, NUMBER_GREATER_THAN, NUMBER_GREATER_THAN_OR_EQUAL, NUMBER_LESS_THAN, NUMBER_LESS_THAN_OR_EQUAL, STRING_CONTAINS, STRING_NOT_CONTAINS, STRING_CONTAINS_IGNORE_CASE, STRING_NOT_CONTAINS_IGNORE_CASE
       type: "NONE"
       # Optional left side of the condition if type starts with "STRING_" or "NUMBER_". Placeholders are supported.
       left: ""

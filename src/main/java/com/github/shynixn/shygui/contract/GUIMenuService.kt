@@ -18,8 +18,15 @@ interface GUIMenuService : AutoCloseable {
 
     /**
      * Opens a GUI for the given player.
+     * Returns null if not opened.
      */
-    fun openGUI(player: Player, meta: GUIMeta, arguments: Array<String> = emptyArray()): GUIMenu
+    suspend fun openGUI(player: Player, meta: GUIMeta, arguments: Array<String> = emptyArray()): GUIMenu?
+
+    /**
+     * Opens the GUI menu async.
+     * Returns null if not opened.
+     */
+    fun openGUIAsync(player: Player, meta: GUIMeta, arguments: Array<String> = emptyArray()): CompletionStage<GUIMenu?>
 
     /**
      * Gets the currently open gui of the player.

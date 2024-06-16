@@ -25,6 +25,11 @@ class GUIMeta : Element {
     var windowType: WindowType = WindowType.SIX_ROW
 
     /**
+     * Optional condition to open the GUI.
+     */
+    var condition : GUIItemCondition? = null
+
+    /**
      * Container title.
      */
     var title: String = "ShyGUI"

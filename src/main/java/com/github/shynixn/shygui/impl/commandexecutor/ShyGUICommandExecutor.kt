@@ -236,7 +236,7 @@ class ShyGUICommandExecutor @Inject constructor(
         }
     }
 
-    private fun openGUI(player: Player, guiMeta: GUIMeta, arguments: Array<String>) {
+    private suspend fun openGUI(player: Player, guiMeta: GUIMeta, arguments: Array<String>) {
         guiMenuService.openGUI(player, guiMeta, arguments)
     }
 

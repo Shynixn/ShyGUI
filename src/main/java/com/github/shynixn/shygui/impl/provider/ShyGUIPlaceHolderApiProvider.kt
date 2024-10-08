@@ -20,7 +20,7 @@ class ShyGUIPlaceHolderApiProvider @Inject constructor(
         register()
     }
 
-    override fun onPlaceholderRequest(p: Player?, params: String?): String? {
+    override fun onPlaceholderRequest(p: Player?, params: String): String? {
         if (params == null || p == null) {
             return null
         }

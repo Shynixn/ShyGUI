@@ -44,12 +44,20 @@ class GUIMenuImpl(
     private val indicesWithPlaceHolders = HashSet<Int>()
 
     init {
-        if (meta.windowType == WindowType.SIX_ROW) {
-            itemStacks = arrayOfNulls(6 * 9)
-            actionItems = arrayOfNulls(6 * 9)
+        val rows = if (meta.windowType == WindowType.SIX_ROW) {
+            6
+        } else if (meta.windowType == WindowType.THREE_ROW) {
+            3
+        } else if (meta.windowType == WindowType.TWO_ROW) {
+            2
+        } else if (meta.windowType == WindowType.ONE_ROW) {
+            1
         } else {
             throw Exception("Window Type not found!")
         }
+
+        itemStacks = arrayOfNulls(rows * 9)
+        actionItems = arrayOfNulls(rows * 9)
 
         // Preprocess items to find out which indices need to be refreshed.
         for (i in 0 until meta.items.size) {

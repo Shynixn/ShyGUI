@@ -5,7 +5,7 @@ import com.github.shynixn.shygui.contract.ShyGUILanguage
 
 class ShyGUILanguageImpl : ShyGUILanguage {
  override val names: List<String>
-  get() = listOf("en_us", "es_es", "zh_cn")
+  get() = listOf("en_us")
  override var playerNotFoundMessage = LanguageItem("[&9ShyGUI&f] &cPlayer %1$1s not found.")
 
  override var commandNoPermission = LanguageItem("[&9ShyGUI&f] &cYou do not have permission to execute this command.")

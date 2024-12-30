@@ -3,11 +3,13 @@ package com.github.shynixn.shygui
 import com.github.shynixn.mcutils.common.ChatColor
 import com.github.shynixn.mcutils.common.Version
 import com.github.shynixn.mcutils.common.language.reloadTranslation
+import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.guice.DependencyInjectionModule
 import com.github.shynixn.mcutils.packet.api.PacketInType
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.shygui.contract.GUIMenuService
 import com.github.shynixn.shygui.entity.ShyGUISettings
+import com.github.shynixn.shygui.enumeration.PlaceHolder
 import com.github.shynixn.shygui.impl.commandexecutor.ShyGUICommandExecutor
 import com.github.shynixn.shygui.impl.listener.GUIMenuListener
 import kotlinx.coroutines.runBlocking
@@ -64,9 +66,11 @@ class ShyGUIPlugin : JavaPlugin() {
                 Version.VERSION_1_20_R3,
                 Version.VERSION_1_20_R4,
                 Version.VERSION_1_21_R1,
+                Version.VERSION_1_21_R2,
+                Version.VERSION_1_21_R3,
             )
         } else {
-            listOf(Version.VERSION_1_21_R1)
+            listOf(Version.VERSION_1_21_R3)
         }
 
         if (!Version.serverVersion.isCompatible(*versions.toTypedArray())) {
@@ -86,10 +90,17 @@ class ShyGUIPlugin : JavaPlugin() {
         // Register Language
         val language = ShyGUILanguageImpl()
         reloadTranslation(language, ShyGUILanguageImpl::class.java)
-        logger.log(Level.INFO, "Loaded language file $language.properties.")
+        logger.log(Level.INFO, "Loaded language file.")
 
         // Guice
         this.shyGuiModule = ShyGUIDependencyInjectionModule(this, ShyGUISettings(), language).build()
+
+        // Register PlaceHolders
+        PlaceHolder.registerAll(
+            this,
+            shyGuiModule.getService<PlaceHolderService>(),
+            shyGuiModule.getService<GUIMenuService>()
+        )
 
         // Register Packets
         val packetService = shyGuiModule.getService<PacketService>()
@@ -112,7 +123,7 @@ class ShyGUIPlugin : JavaPlugin() {
                 ServicePriority.Normal
             )
 
-        // Load GUI Commmands
+        // Load GUI Commands
         val plugin = this
         runBlocking {
             plugin.logger.log(Level.INFO, "Registering GUI commands...")

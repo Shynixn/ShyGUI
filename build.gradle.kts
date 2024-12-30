@@ -53,7 +53,7 @@ dependencies {
 
     // Custom dependencies
     implementation("com.github.shynixn.mcutils:common:2024.45")
-    implementation("com.github.shynixn.mcutils:packet:2024.54")
+    implementation("com.github.shynixn.mcutils:packet:2024.55")
     implementation("com.github.shynixn.mcutils:guice:2024.2")
     implementation("com.github.shynixn.mcutils:javascript:2024.1")
 
@@ -100,6 +100,7 @@ tasks.register("relocatePluginJar", com.github.jengelman.gradle.plugins.shadow.t
     from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-relocate.${archiveExtension.get()}")
     relocate("com.github.shynixn.mcutils", "com.github.shynixn.shygui.lib.com.github.shynixn.mcutils")
+    relocate("com.fasterxml", "com.github.shynixn.shygui.lib.com.fasterxml")
 }
 
 /**
@@ -237,7 +238,7 @@ tasks.register("languageFile") {
     implContents.add("")
     implContents.add("class ShyGUILanguageImpl : ShyGUILanguage {")
     implContents.add(" override val names: List<String>\n" +
-            "  get() = listOf(\"en_us\", \"es_es\", \"zh_cn\")")
+            "  get() = listOf(\"en_us\")")
 
     for (i in 0 until lines.size) {
         val key = lines[i]

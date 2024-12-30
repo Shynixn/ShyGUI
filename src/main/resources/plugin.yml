@@ -7,8 +7,6 @@ api-version: 1.13
 libraries:
   - com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.16.0
   - com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.16.0
-  - com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.3.0
-  - com.fasterxml.jackson.core:jackson-databind:2.3.0
   - com.google.inject:guice:7.0.0
   - com.google.code.gson:gson:2.10.1
   - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.23

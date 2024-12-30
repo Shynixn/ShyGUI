@@ -1,15 +1,14 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.*
 import java.io.*
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version ("1.6.10")
+    id("org.jetbrains.kotlin.jvm") version ("1.9.25")
     id("com.github.johnrengelman.shadow") version ("7.0.0")
 }
 
 group = "com.github.shynixn"
-version = "1.0.1"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -24,6 +23,19 @@ tasks.register("printVersion") {
 }
 
 dependencies {
+    // Dependencies of spigot mojang want to restrict usage to only Java 16. However, we do not care
+    // what they want because the general compatibility of this plugin is Java 8. The plugin
+    // guarantees that everything works during runtime. This error is a false positive.
+    components {
+        all {
+            allVariants {
+                attributes {
+                    attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 8)
+                }
+            }
+        }
+    }
+
     // Compile Only
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.6")
@@ -40,9 +52,10 @@ dependencies {
     implementation("org.openjdk.nashorn:nashorn-core:15.4")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2024.23")
-    implementation("com.github.shynixn.mcutils:packet:2024.38")
+    implementation("com.github.shynixn.mcutils:common:2024.45")
+    implementation("com.github.shynixn.mcutils:packet:2024.55")
     implementation("com.github.shynixn.mcutils:guice:2024.2")
+    implementation("com.github.shynixn.mcutils:javascript:2024.1")
 
     // Test
     testImplementation(kotlin("test"))
@@ -50,30 +63,15 @@ dependencies {
     testImplementation("org.mockito:mockito-core:2.23.0")
 }
 
-tasks.test {
-    useJUnitPlatform()
-    testLogging.showStandardStreams = true
-    failFast = true
-
-    testLogging {
-        events(
-            org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-            org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
-            org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED,
-            org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED
-        )
-        displayGranularity = 0
-        showExceptions = true
-        showCauses = true
-        showStackTraces = true
-        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-    }
-}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 /**
  * Include all but exclude debugging classes.
@@ -102,6 +100,7 @@ tasks.register("relocatePluginJar", com.github.jengelman.gradle.plugins.shadow.t
     from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-relocate.${archiveExtension.get()}")
     relocate("com.github.shynixn.mcutils", "com.github.shynixn.shygui.lib.com.github.shynixn.mcutils")
+    relocate("com.fasterxml", "com.github.shynixn.shygui.lib.com.fasterxml")
 }
 
 /**
@@ -204,27 +203,69 @@ tasks.register("pluginJarLegacy", com.github.jengelman.gradle.plugins.shadow.tas
 
 tasks.register("languageFile") {
     val kotlinSrcFolder = project.sourceSets.toList()[0].allJava.srcDirs.first { e -> e.endsWith("java") }
-    val languageKotlinFile = kotlinSrcFolder.resolve("com/github/shynixn/shygui/ShyGUILanguage.kt")
-    val resourceFile = kotlinSrcFolder.parentFile.resolve("resources").resolve("lang").resolve("en_us.properties")
-    val bundle = FileInputStream(resourceFile).use { stream ->
-        PropertyResourceBundle(stream)
+    val contractFile = kotlinSrcFolder.resolve("com/github/shynixn/shygui/contract/ShyGUILanguage.kt")
+    val resourceFile = kotlinSrcFolder.parentFile.resolve("resources").resolve("lang").resolve("en_us.yml")
+    val lines = resourceFile.readLines()
+
+    val contractContents = ArrayList<String>()
+    contractContents.add("package com.github.shynixn.shygui.contract")
+    contractContents.add("")
+    contractContents.add("import com.github.shynixn.mcutils.common.language.LanguageItem")
+    contractContents.add("import com.github.shynixn.mcutils.common.language.LanguageProvider")
+    contractContents.add("")
+    contractContents.add("interface ShyGUILanguage : LanguageProvider {")
+    for (key in lines) {
+        if (key.toCharArray()[0].isLetter()) {
+            contractContents.add("  var ${key} LanguageItem")
+            contractContents.add("")
+        }
+    }
+    contractContents.removeLast()
+    contractContents.add("}")
+
+    contractFile.printWriter().use { out ->
+        for (line in contractContents) {
+            out.println(line)
+        }
     }
 
-    val contents = ArrayList<String>()
-    contents.add("package com.github.shynixn.shygui")
-    contents.add("")
-    contents.add("object ShyGUILanguage {")
-    for (key in bundle.keys) {
-        val value = bundle.getString(key)
-        contents.add("  /** $value **/")
-        contents.add("  var ${key} : String = \"$value\"")
-        contents.add("")
-    }
-    contents.removeLast()
-    contents.add("}")
+    val implFile = kotlinSrcFolder.resolve("com/github/shynixn/shygui/ShyGUILanguageImpl.kt")
+    val implContents = ArrayList<String>()
+    implContents.add("package com.github.shynixn.shygui")
+    implContents.add("")
+    implContents.add("import com.github.shynixn.mcutils.common.language.LanguageItem")
+    implContents.add("import com.github.shynixn.shygui.contract.ShyGUILanguage")
+    implContents.add("")
+    implContents.add("class ShyGUILanguageImpl : ShyGUILanguage {")
+    implContents.add(" override val names: List<String>\n" +
+            "  get() = listOf(\"en_us\")")
 
-    languageKotlinFile.printWriter().use { out ->
-        for (line in contents) {
+    for (i in 0 until lines.size) {
+        val key = lines[i]
+
+        if (key.toCharArray()[0].isLetter()) {
+            var text = ""
+            println(">" + lines[i])
+
+            println("_")
+            var j = i
+            while (true){
+                if(lines[j].contains("text:")){
+                    text = lines[j]
+                    break
+                }
+                j++
+            }
+
+            implContents.add(" override var ${key.replace(":","")} = LanguageItem(${text.replace("  text: ","")})")
+            implContents.add("")
+        }
+    }
+    implContents.removeLast()
+    implContents.add("}")
+
+    implFile.printWriter().use { out ->
+        for (line in implContents) {
             out.println(line)
         }
     }

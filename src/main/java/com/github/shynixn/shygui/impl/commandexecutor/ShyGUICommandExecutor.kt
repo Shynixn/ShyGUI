@@ -7,11 +7,15 @@ import com.github.shynixn.mcutils.common.CoroutineExecutor
 import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandBuilder
 import com.github.shynixn.mcutils.common.command.Validator
+import com.github.shynixn.mcutils.common.language.reloadTranslation
+import com.github.shynixn.mcutils.common.language.sendPluginMessage
 import com.github.shynixn.mcutils.common.repository.CacheRepository
 import com.github.shynixn.mcutils.common.translateChatColors
+import com.github.shynixn.shygui.ShyGUILanguageImpl
 import com.github.shynixn.shygui.contract.GUIMenuService
+import com.github.shynixn.shygui.contract.ShyGUILanguage
 import com.github.shynixn.shygui.entity.GUIMeta
-import com.github.shynixn.shygui.entity.Settings
+import com.github.shynixn.shygui.entity.ShyGUISettings
 import com.google.inject.Inject
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
@@ -22,12 +26,13 @@ import java.util.logging.Level
 import kotlin.collections.ArrayList
 
 class ShyGUICommandExecutor @Inject constructor(
-    private val settings: Settings,
+    private val settings: ShyGUISettings,
     private val plugin: Plugin,
     private val guiMenuService: GUIMenuService,
     private val chatMessageService: ChatMessageService,
     private val repository: CacheRepository<GUIMeta>,
-    private val configurationService: ConfigurationService
+    private val configurationService: ConfigurationService,
+    private val language: ShyGUILanguage
 ) {
     private val coroutineExecutor = object : CoroutineExecutor {
         override fun execute(f: suspend () -> Unit) {
@@ -62,12 +67,12 @@ class ShyGUICommandExecutor @Inject constructor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return settings.playerNotFoundMessage.format(openArgs[0])
+            return language.playerNotFoundMessage.text.format(openArgs[0])
         }
     }
 
     private val senderHasToBePlayer: () -> String = {
-        settings.commandSenderHasToBePlayerMessage
+        language.commandSenderHasToBePlayer.text
     }
 
     private val menuTabs: (suspend (CommandSender) -> List<String>) = {
@@ -82,7 +87,7 @@ class ShyGUICommandExecutor @Inject constructor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return settings.guiNotFoundMessage.format(openArgs[0])
+            return language.guiMenuNotFoundMessage.text.format(openArgs[0])
         }
     }
 
@@ -102,19 +107,19 @@ class ShyGUICommandExecutor @Inject constructor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return settings.guiMenuNoPermissionMessage.format(openArgs[0])
+            return language.guiMenuNoPermissionMessage.text.format(openArgs[0])
         }
     }
 
     fun registerShyGuiCommand() {
         CommandBuilder(plugin, coroutineExecutor, settings.baseCommand, chatMessageService) {
-            usage(settings.commandUsage)
-            description(settings.commandDescription)
+            usage(language.commandUsage.text)
+            description(language.commandDescription.text)
             aliases(plugin.config.getStringList(settings.aliasesPath))
             permission(settings.commandPermission)
-            permissionMessage(settings.noPermissionMessage)
+            permissionMessage(language.commandNoPermission.text)
             subCommand("open") {
-                toolTip { settings.openCommandHint }
+                toolTip { language.openCommandHint.text }
                 builder().argument("menu").validator(guiMenuMustExist).validator(guiMenuMustHavePermission)
                     .tabs(menuTabs).executePlayer(senderHasToBePlayer) { player, guiMeta ->
                         plugin.launch {
@@ -133,7 +138,7 @@ class ShyGUICommandExecutor @Inject constructor(
                     }
             }
             subCommand("close") {
-                toolTip { settings.closeCommandHint }
+                toolTip { language.closeCommandHint.text }
                 builder().executePlayer(senderHasToBePlayer) { player ->
                     plugin.launch {
                         guiMenuService.getGUI(player)?.closeAll()
@@ -147,7 +152,7 @@ class ShyGUICommandExecutor @Inject constructor(
             }
             subCommand("next") {
                 toolTip {
-                    settings.nextCommandHint
+                    language.nextCommandHint.text
                 }
                 builder().argument("menu").validator(guiMenuMustExist).validator(guiMenuMustHavePermission)
                     .tabs(menuTabs).executePlayer(senderHasToBePlayer) { player, guiMeta ->
@@ -166,7 +171,7 @@ class ShyGUICommandExecutor @Inject constructor(
             }
             subCommand("back") {
                 toolTip {
-                    settings.backCommandHint
+                    language.backCommandHint.text
                 }
                 builder().executePlayer(senderHasToBePlayer) { player ->
                     plugin.launch {
@@ -181,7 +186,7 @@ class ShyGUICommandExecutor @Inject constructor(
             }
             subCommand("message") {
                 toolTip {
-                    settings.messageCommandHint
+                    language.messageCommandHint.text
                 }
                 builder().argument("args.../player").validator(remainingArguments).tabs(paramOrOnlinePlayerTabs)
                     .execute { commandSender, remainingArgs ->
@@ -195,16 +200,16 @@ class ShyGUICommandExecutor @Inject constructor(
             subCommand("reload") {
                 permission(settings.otherPlayerPermission)
                 toolTip {
-                    settings.reloadCommandHint
+                    language.reloadCommandHint.text
                 }
                 builder().execute { sender ->
                     guiMenuService.close()
                     plugin.saveDefaultConfig()
                     plugin.reloadConfig()
+                    plugin.reloadTranslation(language, ShyGUILanguageImpl::class.java)
                     configurationService.reload()
-                    settings.reload()
                     repository.clearCache()
-                    sender.sendMessage(settings.reloadMessage)
+                    sender.sendPluginMessage(language.reloadMessage)
                 }
             }.helpCommand()
         }.build()
@@ -223,7 +228,7 @@ class ShyGUICommandExecutor @Inject constructor(
                 description(command.description)
                 aliases(command.aliases)
                 permission(command.permission)
-                permissionMessage(settings.noPermissionMessage)
+                permissionMessage(language.commandNoPermission.text)
                 builder().executePlayer(senderHasToBePlayer) { player ->
                     Bukkit.getServer().dispatchCommand(
                         Bukkit.getConsoleSender(),
@@ -273,12 +278,12 @@ class ShyGUICommandExecutor @Inject constructor(
         }
 
         if (playerResult == null) {
-            sender.sendMessage(settings.commandSenderHasToBePlayerMessage)
+            sender.sendPluginMessage(language.commandSenderHasToBePlayer)
             return null
         }
 
         if (playerResult != sender && !sender.hasPermission(settings.otherPlayerPermission)) {
-            sender.sendMessage(settings.manipulateOtherMessage)
+            sender.sendPluginMessage(language.manipulateOtherPlayerMessage)
             return null
         }
 

@@ -1,24 +1,17 @@
 package com.github.shynixn.shygui
 
-import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mcutils.common.ChatColor
-import com.github.shynixn.mcutils.common.ConfigurationService
 import com.github.shynixn.mcutils.common.Version
-import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
-import com.github.shynixn.mcutils.common.reloadTranslation
+import com.github.shynixn.mcutils.common.language.reloadTranslation
 import com.github.shynixn.mcutils.guice.DependencyInjectionModule
 import com.github.shynixn.mcutils.packet.api.PacketInType
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.shygui.contract.GUIMenuService
-import com.github.shynixn.shygui.entity.Settings
-import com.github.shynixn.shygui.enumeration.Permission
+import com.github.shynixn.shygui.entity.ShyGUISettings
 import com.github.shynixn.shygui.impl.commandexecutor.ShyGUICommandExecutor
 import com.github.shynixn.shygui.impl.listener.GUIMenuListener
-import com.github.shynixn.shygui.impl.provider.ShyGUIPlaceHolderApiProvider
-import com.github.shynixn.shygui.impl.provider.ShyGUIPlaceHolderProvider
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
-import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.ServicePriority
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Level
@@ -45,6 +38,7 @@ class ShyGUIPlugin : JavaPlugin() {
     override fun onEnable() {
         Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Loading ShyGUI ...")
         this.saveDefaultConfig()
+        this.reloadConfig()
         val versions = if (areLegacyVersionsIncluded) {
             listOf(
                 Version.VERSION_1_8_R3,
@@ -89,54 +83,13 @@ class ShyGUIPlugin : JavaPlugin() {
 
         logger.log(Level.INFO, "Loaded NMS version ${Version.serverVersion}.")
 
-        // Guice
-        val settings = object : Settings() {
-            override fun reload() {
-                this.embedded = "ShyGUI"
-                this.guis = listOf(
-                    "gui/petblocks_main_menu.yml" to "petblocks_main_menu.yml",
-                    "gui/petblocks_skins_menu.yml" to "petblocks_skins_menu.yml",
-                    "gui/petblocks_skins_blockskins_menu.yml" to "petblocks_skins_blockskins_menu.yml",
-                    "gui/petblocks_skins_petskins_menu.yml" to "petblocks_skins_petskins_menu.yml",
-                    "gui/petblocks_skins_plushieskins_menu.yml" to "petblocks_skins_plushieskins_menu.yml",
-                    "gui/petblocks_skins_vehicleskins_menu.yml" to "petblocks_skins_vehicleskins_menu.yml",
-                    "gui/simple_sample_menu.yml" to "simple_sample_menu.yml"
-                )
-                this.baseCommand = "shygui"
-                this.commandPermission = Permission.COMMAND.text
-                this.otherPlayerPermission = Permission.OTHER_PLAYER.text
-                this.guiPermission = Permission.DYN_OPEN.text
-                this.baseCommand = "shygui"
-                this.aliasesPath = "commands.shygui.aliases"
-                this.commandUsage = ShyGUILanguage.commandUsage
-                this.commandDescription = ShyGUILanguage.commandDescription
-
-                this.playerNotFoundMessage = ShyGUILanguage.playerNotFoundMessage
-                this.commandSenderHasToBePlayerMessage = ShyGUILanguage.commandSenderHasToBePlayer
-                this.manipulateOtherMessage = ShyGUILanguage.manipulateOtherPlayerMessage
-                this.reloadMessage = ShyGUILanguage.reloadMessage
-                this.noPermissionMessage = ShyGUILanguage.commandNoPermission
-                this.guiNotFoundMessage = ShyGUILanguage.guiMenuNotFoundMessage
-                this.guiMenuNoPermissionMessage = ShyGUILanguage.guiMenuNoPermissionMessage
-
-                this.reloadCommandHint = ShyGUILanguage.reloadCommandHint
-                this.openCommandHint = ShyGUILanguage.openCommandHint
-                this.nextCommandHint = ShyGUILanguage.nextCommandHint
-                this.closeCommandHint = ShyGUILanguage.closeCommandHint
-                this.backCommandHint = ShyGUILanguage.backCommandHint
-                this.messageCommandHint = ShyGUILanguage.messageCommandHint
-            }
-        };
-        settings.reload()
-        this.shyGuiModule = ShyGUIDependencyInjectionModule(settings, this).build()
-
         // Register Language
-        this.reloadConfig()
-        val configurationService = shyGuiModule.getService<ConfigurationService>()
-        val language = configurationService.findValue<String>("language")
-        reloadTranslation(language, ShyGUILanguage::class.java, "en_us")
-        settings.reload()
+        val language = ShyGUILanguageImpl()
+        reloadTranslation(language, ShyGUILanguageImpl::class.java)
         logger.log(Level.INFO, "Loaded language file $language.properties.")
+
+        // Guice
+        this.shyGuiModule = ShyGUIDependencyInjectionModule(this, ShyGUISettings(), language).build()
 
         // Register Packets
         val packetService = shyGuiModule.getService<PacketService>()
@@ -150,17 +103,7 @@ class ShyGUIPlugin : JavaPlugin() {
         val commandExecutor = shyGuiModule.getService<ShyGUICommandExecutor>()
         commandExecutor.registerShyGuiCommand()
 
-        // Register PlaceHolders
-        val placeholderService = shyGuiModule.getService<PlaceHolderService>()
-        placeholderService.registerProvider(ShyGUIPlaceHolderProvider(shyGuiModule.getService<Plugin>()))
-        placeholderService.registerPlaceHolderApiProvider {
-            ShyGUIPlaceHolderApiProvider(
-                shyGuiModule.getService<Plugin>(),
-                shyGuiModule.getService<PlaceHolderService>(), shyGuiModule.getService<GUIMenuService>()
-            )
-        }
-
-        // Register Dependencies
+        // Register Developer Api
         Bukkit.getServicesManager()
             .register(
                 GUIMenuService::class.java,
@@ -169,6 +112,7 @@ class ShyGUIPlugin : JavaPlugin() {
                 ServicePriority.Normal
             )
 
+        // Load GUI Commmands
         val plugin = this
         runBlocking {
             plugin.logger.log(Level.INFO, "Registering GUI commands...")

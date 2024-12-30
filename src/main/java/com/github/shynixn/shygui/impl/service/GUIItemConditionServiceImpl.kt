@@ -1,13 +1,18 @@
 package com.github.shynixn.shygui.impl.service
 
+import com.github.shynixn.mcutils.javascript.JavaScriptService
 import com.github.shynixn.shygui.contract.GUIItemConditionService
-import com.github.shynixn.shygui.contract.ScriptService
 import com.github.shynixn.shygui.entity.GUIItemCondition
 import com.github.shynixn.shygui.enumeration.GUIItemConditionType
 import com.google.inject.Inject
 import org.bukkit.entity.Player
+import org.bukkit.plugin.Plugin
+import java.util.logging.Level
 
-class GUIItemConditionServiceImpl @Inject constructor(private val scriptService: ScriptService) :
+class GUIItemConditionServiceImpl @Inject constructor(
+    private val plugin: Plugin,
+    private val scriptService: JavaScriptService
+) :
     GUIItemConditionService {
     /**
      * Evaluates the condition. If condition type is NONE. True is returned.
@@ -28,8 +33,13 @@ class GUIItemConditionServiceImpl @Inject constructor(private val scriptService:
                 throw RuntimeException("JS property is required when having a condition with type JAVASCRIPT!")
             }
 
-            val scriptResult = scriptService.evaluate(guiItemCondition.js!!) as Boolean
-            return scriptResult
+            try {
+                // Script Engine is thread safe.
+                return scriptService.evaluate(guiItemCondition.js!!) as Boolean
+            } catch (e: Exception) {
+                plugin.logger.log(Level.SEVERE, "Cannot evaluate expression '${guiItemCondition.js!!}'.", e)
+                return false
+            }
         }
 
         val left = guiItemCondition.left

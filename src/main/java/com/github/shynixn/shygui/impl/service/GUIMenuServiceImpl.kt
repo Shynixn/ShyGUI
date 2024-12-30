@@ -12,6 +12,7 @@ import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryOpen
 import com.github.shynixn.shygui.contract.GUIItemConditionService
 import com.github.shynixn.shygui.contract.GUIMenu
 import com.github.shynixn.shygui.contract.GUIMenuService
+import com.github.shynixn.shygui.contract.ShyGUILanguage
 import com.github.shynixn.shygui.entity.GUIItemCondition
 import com.github.shynixn.shygui.entity.GUIMeta
 import com.github.shynixn.shygui.enumeration.GUIItemConditionType
@@ -32,7 +33,8 @@ class GUIMenuServiceImpl @Inject constructor(
     private val placeHolderService: PlaceHolderService,
     private val guiItemConditionService: GUIItemConditionService,
     private val commandService: CommandService,
-    private val repository: CacheRepository<GUIMeta>
+    private val repository: CacheRepository<GUIMeta>,
+    private val language : ShyGUILanguage
 ) : GUIMenuService {
     private val maxSubPages = 20
     private val guis = HashMap<Player, Stack<GUIMenu>>()
@@ -119,6 +121,7 @@ class GUIMenuServiceImpl @Inject constructor(
             this,
             guiItemConditionService,
             commandService,
+            language,
             previousGuiName,
             arguments
         )
@@ -231,24 +234,21 @@ class GUIMenuServiceImpl @Inject constructor(
             if (oldCondition.left != null) {
                 newCondition.left =
                     placeHolderService.resolvePlaceHolder(
-                        player,
                         oldCondition.left!!,
-                        emptyMap()
+                        player
                     )
             }
             if (oldCondition.right != null) {
                 newCondition.right =
                     placeHolderService.resolvePlaceHolder(
-                        player,
                         oldCondition.right!!,
-                        emptyMap()
+                        player,
                     )
             }
             if (oldCondition.js != null) {
                 newCondition.js = placeHolderService.resolvePlaceHolder(
-                    player,
                     oldCondition.js!!,
-                    emptyMap()
+                    player,
                 )
             }
         }

@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.1.0"
+version = "1.1.1"
 
 repositories {
     mavenCentral()
@@ -52,7 +52,7 @@ dependencies {
     implementation("org.openjdk.nashorn:nashorn-core:15.4")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2024.45")
+    implementation("com.github.shynixn.mcutils:common:2024.46")
     implementation("com.github.shynixn.mcutils:packet:2024.55")
     implementation("com.github.shynixn.mcutils:guice:2024.2")
     implementation("com.github.shynixn.mcutils:javascript:2024.1")

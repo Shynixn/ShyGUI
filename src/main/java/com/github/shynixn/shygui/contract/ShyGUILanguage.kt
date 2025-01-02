@@ -6,7 +6,7 @@ import com.github.shynixn.mcutils.common.language.LanguageProvider
 interface ShyGUILanguage : LanguageProvider {
   var playerNotFoundMessage: LanguageItem
 
-  var commandNoPermission: LanguageItem
+  var noPermissionCommand: LanguageItem
 
   var commandUsage: LanguageItem
 
@@ -18,7 +18,7 @@ interface ShyGUILanguage : LanguageProvider {
 
   var guiMenuNoPermissionMessage: LanguageItem
 
-  var manipulateOtherPlayerMessage: LanguageItem
+  var manipulateOtherMessage: LanguageItem
 
   var closeCommandHint: LanguageItem
 

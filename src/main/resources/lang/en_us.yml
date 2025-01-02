@@ -13,7 +13,7 @@ playerNotFoundMessage:
   stayTicks: 60
   # Only available for type: "TITLE". Adds a fade out effect.
   fadeOutTicks: 20
-commandNoPermission:
+noPermissionCommand:
   type: "CHAT"
   text: "[&9ShyGUI&f] &cYou do not have permission to execute this command."
 commandUsage:
@@ -31,7 +31,7 @@ guiMenuNotFoundMessage:
 guiMenuNoPermissionMessage:
   type: "CHAT"
   text: "[&9ShyGUI&f] &cYou do not have permission for menu %1$1s."
-manipulateOtherPlayerMessage:
+manipulateOtherMessage:
   type: "CHAT"
   text: "[&9ShyGUI&f] &cYou do not have permission to open the GUI menu for other players."
 closeCommandHint:

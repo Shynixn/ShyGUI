@@ -117,7 +117,7 @@ class ShyGUICommandExecutor @Inject constructor(
             description(language.commandDescription.text)
             aliases(plugin.config.getStringList(settings.aliasesPath))
             permission(settings.commandPermission)
-            permissionMessage(language.commandNoPermission.text)
+            permissionMessage(language.noPermissionCommand.text)
             subCommand("open") {
                 toolTip { language.openCommandHint.text }
                 builder().argument("menu").validator(guiMenuMustExist).validator(guiMenuMustHavePermission)
@@ -228,7 +228,7 @@ class ShyGUICommandExecutor @Inject constructor(
                 description(command.description)
                 aliases(command.aliases)
                 permission(command.permission)
-                permissionMessage(language.commandNoPermission.text)
+                permissionMessage(language.noPermissionCommand.text)
                 builder().executePlayer(senderHasToBePlayer) { player ->
                     Bukkit.getServer().dispatchCommand(
                         Bukkit.getConsoleSender(),
@@ -283,7 +283,7 @@ class ShyGUICommandExecutor @Inject constructor(
         }
 
         if (playerResult != sender && !sender.hasPermission(settings.otherPlayerPermission)) {
-            sender.sendPluginMessage(language.manipulateOtherPlayerMessage)
+            sender.sendPluginMessage(language.manipulateOtherMessage)
             return null
         }
 

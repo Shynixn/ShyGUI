@@ -8,7 +8,7 @@ class ShyGUILanguageImpl : ShyGUILanguage {
   get() = listOf("en_us")
  override var playerNotFoundMessage = LanguageItem("[&9ShyGUI&f] &cPlayer %1$1s not found.")
 
- override var commandNoPermission = LanguageItem("[&9ShyGUI&f] &cYou do not have permission to execute this command.")
+ override var noPermissionCommand = LanguageItem("[&9ShyGUI&f] &cYou do not have permission to execute this command.")
 
  override var commandUsage = LanguageItem("[&9ShyGUI&f] Use /shygui help to see more info about the plugin.")
 
@@ -20,7 +20,7 @@ class ShyGUILanguageImpl : ShyGUILanguage {
 
  override var guiMenuNoPermissionMessage = LanguageItem("[&9ShyGUI&f] &cYou do not have permission for menu %1$1s.")
 
- override var manipulateOtherPlayerMessage = LanguageItem("[&9ShyGUI&f] &cYou do not have permission to open the GUI menu for other players.")
+ override var manipulateOtherMessage = LanguageItem("[&9ShyGUI&f] &cYou do not have permission to open the GUI menu for other players.")
 
  override var closeCommandHint = LanguageItem("Closes the GUI menu.")
 

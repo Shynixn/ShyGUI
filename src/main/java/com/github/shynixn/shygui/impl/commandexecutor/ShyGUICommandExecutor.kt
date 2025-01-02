@@ -206,7 +206,7 @@ class ShyGUICommandExecutor @Inject constructor(
                     guiMenuService.close()
                     plugin.saveDefaultConfig()
                     plugin.reloadConfig()
-                    plugin.reloadTranslation(language, ShyGUILanguageImpl::class.java)
+                    plugin.reloadTranslation(language)
                     configurationService.reload()
                     repository.clearCache()
                     sender.sendPluginMessage(language.reloadMessage)

@@ -89,7 +89,7 @@ class ShyGUIPlugin : JavaPlugin() {
 
         // Register Language
         val language = ShyGUILanguageImpl()
-        reloadTranslation(language, ShyGUILanguageImpl::class.java)
+        reloadTranslation(language)
         logger.log(Level.INFO, "Loaded language file.")
 
         // Guice

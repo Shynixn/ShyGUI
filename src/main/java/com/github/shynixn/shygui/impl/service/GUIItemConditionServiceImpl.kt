@@ -4,12 +4,11 @@ import com.github.shynixn.mcutils.javascript.JavaScriptService
 import com.github.shynixn.shygui.contract.GUIItemConditionService
 import com.github.shynixn.shygui.entity.GUIItemCondition
 import com.github.shynixn.shygui.enumeration.GUIItemConditionType
-import com.google.inject.Inject
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import java.util.logging.Level
 
-class GUIItemConditionServiceImpl @Inject constructor(
+class GUIItemConditionServiceImpl (
     private val plugin: Plugin,
     private val scriptService: JavaScriptService
 ) :

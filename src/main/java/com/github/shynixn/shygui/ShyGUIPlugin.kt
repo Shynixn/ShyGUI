@@ -2,9 +2,9 @@ package com.github.shynixn.shygui
 
 import com.github.shynixn.mcutils.common.ChatColor
 import com.github.shynixn.mcutils.common.Version
+import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
 import com.github.shynixn.mcutils.common.language.reloadTranslation
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
-import com.github.shynixn.mcutils.guice.DependencyInjectionModule
 import com.github.shynixn.mcutils.packet.api.PacketInType
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.shygui.contract.GUIMenuService
@@ -92,7 +92,7 @@ class ShyGUIPlugin : JavaPlugin() {
         reloadTranslation(language)
         logger.log(Level.INFO, "Loaded language file.")
 
-        // Guice
+        // Module
         this.shyGuiModule = ShyGUIDependencyInjectionModule(this, ShyGUISettings(), language).build()
 
         // Register PlaceHolders

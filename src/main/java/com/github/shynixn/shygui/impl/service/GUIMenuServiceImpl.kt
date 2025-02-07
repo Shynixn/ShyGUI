@@ -17,7 +17,6 @@ import com.github.shynixn.shygui.entity.GUIItemCondition
 import com.github.shynixn.shygui.entity.GUIMeta
 import com.github.shynixn.shygui.enumeration.GUIItemConditionType
 import com.github.shynixn.shygui.impl.GUIMenuImpl
-import com.google.inject.Inject
 import kotlinx.coroutines.withContext
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
@@ -26,7 +25,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.CompletionStage
 import java.util.concurrent.Executor
 
-class GUIMenuServiceImpl @Inject constructor(
+class GUIMenuServiceImpl (
     private val plugin: Plugin,
     private val packetService: PacketService,
     private val itemService: ItemService,

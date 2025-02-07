@@ -11,12 +11,10 @@ import com.github.shynixn.mcutils.common.language.reloadTranslation
 import com.github.shynixn.mcutils.common.language.sendPluginMessage
 import com.github.shynixn.mcutils.common.repository.CacheRepository
 import com.github.shynixn.mcutils.common.translateChatColors
-import com.github.shynixn.shygui.ShyGUILanguageImpl
 import com.github.shynixn.shygui.contract.GUIMenuService
 import com.github.shynixn.shygui.contract.ShyGUILanguage
 import com.github.shynixn.shygui.entity.GUIMeta
 import com.github.shynixn.shygui.entity.ShyGUISettings
-import com.google.inject.Inject
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -25,7 +23,7 @@ import java.util.*
 import java.util.logging.Level
 import kotlin.collections.ArrayList
 
-class ShyGUICommandExecutor @Inject constructor(
+class ShyGUICommandExecutor(
     private val settings: ShyGUISettings,
     private val plugin: Plugin,
     private val guiMenuService: GUIMenuService,

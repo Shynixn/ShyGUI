@@ -5,7 +5,6 @@ import com.github.shynixn.mcutils.packet.api.event.PacketAsyncEvent
 import com.github.shynixn.mcutils.packet.api.packet.PacketInInventoryClick
 import com.github.shynixn.mcutils.packet.api.packet.PacketInInventoryClose
 import com.github.shynixn.shygui.contract.GUIMenuService
-import com.google.inject.Inject
 import kotlinx.coroutines.delay
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -13,7 +12,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.plugin.Plugin
 
-class GUIMenuListener @Inject constructor(private val plugin: Plugin, private val guiMenuService: GUIMenuService) :
+class GUIMenuListener (private val plugin: Plugin, private val guiMenuService: GUIMenuService) :
     Listener {
     private val clickCooldownProtection = HashSet<Player>()
     private val scheduledReSync = HashSet<Player>()

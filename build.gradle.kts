@@ -8,14 +8,14 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.1.4"
+version = "1.2.0"
 
 repositories {
     mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi")
     maven("https://repo.opencollab.dev/main/")
-    maven(System.getenv("SHYNIXN_MCUTILS_REPOSITORY")) // All MCUTILS libraries are private and not OpenSource.
+    maven(System.getenv("SHYNIXN_MCUTILS_REPOSITORY_2025")) // All MCUTILS libraries are private and not OpenSource.
 }
 
 tasks.register("printVersion") {
@@ -43,19 +43,15 @@ dependencies {
     // Library dependencies with legacy compatibility, we can use more up-to-date version in the plugin.yml
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.16.0")
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.16.0")
-    implementation("com.google.inject:guice:5.0.1")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.3.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.2.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
-    implementation("com.google.code.gson:gson:2.8.6")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.3")
     implementation("org.openjdk.nashorn:nashorn-core:15.4")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2024.52")
-    implementation("com.github.shynixn.mcutils:packet:2024.55")
-    implementation("com.github.shynixn.mcutils:guice:2024.2")
-    implementation("com.github.shynixn.mcutils:javascript:2024.1")
+    implementation("com.github.shynixn.mcutils:common:2025.4")
+    implementation("com.github.shynixn.mcutils:packet:2025.3")
+    implementation("com.github.shynixn.mcutils:javascript:2025.1")
 
     // Test
     testImplementation(kotlin("test"))

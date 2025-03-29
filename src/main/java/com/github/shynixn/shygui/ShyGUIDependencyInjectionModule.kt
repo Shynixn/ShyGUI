@@ -52,7 +52,7 @@ class ShyGUIDependencyInjectionModule(
         // Repositories
         val templateRepositoryImpl = YamlFileRepositoryImpl<GUIMeta>(
             plugin,
-            "gui",
+            plugin.dataFolder.toPath().resolve("gui"),
             settings.guis,
             emptyList(),
             object : TypeReference<GUIMeta>() {})

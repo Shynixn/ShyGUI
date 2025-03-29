@@ -4,11 +4,11 @@ import java.io.*
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version ("1.9.25")
-    id("com.github.johnrengelman.shadow") version ("7.0.0")
+    id("com.gradleup.shadow") version ("8.3.6")
 }
 
 group = "com.github.shynixn"
-version = "1.2.0"
+version = "1.3.0"
 
 repositories {
     mavenCentral()
@@ -23,34 +23,22 @@ tasks.register("printVersion") {
 }
 
 dependencies {
-    // Dependencies of spigot mojang want to restrict usage to only Java 16. However, we do not care
-    // what they want because the general compatibility of this plugin is Java 8. The plugin
-    // guarantees that everything works during runtime. This error is a false positive.
-    components {
-        all {
-            allVariants {
-                attributes {
-                    attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 8)
-                }
-            }
-        }
-    }
-
     // Compile Only
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.6")
 
     // Library dependencies with legacy compatibility, we can use more up-to-date version in the plugin.yml
-    implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.16.0")
-    implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.16.0")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.3.0")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.2.3")
+    implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.21.0")
+    implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.21.0")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
     implementation("org.openjdk.nashorn:nashorn-core:15.4")
+    implementation("org.yaml:snakeyaml:1.33")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.4")
-    implementation("com.github.shynixn.mcutils:packet:2025.3")
+    implementation("com.github.shynixn.mcutils:common:2025.14")
+    implementation("com.github.shynixn.mcutils:packet:2025.16")
     implementation("com.github.shynixn.mcutils:javascript:2025.1")
 
     // Test
@@ -172,6 +160,7 @@ tasks.register("relocateLegacyPluginJar", com.github.jengelman.gradle.plugins.sh
     relocate("com.google", "com.github.shynixn.shygui.lib.com.google")
     relocate("com.fasterxml", "com.github.shynixn.shygui.lib.com.fasterxml")
     relocate("com.zaxxer", "com.github.shynixn.shygui.lib.com.zaxxer")
+    relocate("org.yaml", "com.github.shynixn.shygui.lib.org.yaml")
     relocate("com.github.shynixn.mccoroutine", "com.github.shynixn.shygui.lib.com.github.shynixn.mccoroutine")
     exclude("plugin.yml")
     rename("plugin-legacy.yml", "plugin.yml")

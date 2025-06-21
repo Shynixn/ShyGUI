@@ -21,7 +21,6 @@ import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import java.util.*
 import java.util.logging.Level
-import kotlin.collections.ArrayList
 
 class ShyGUICommandExecutor(
     private val settings: ShyGUISettings,
@@ -40,10 +39,10 @@ class ShyGUICommandExecutor(
         }
     }
 
-    private val onlinePlayerTabs: (suspend (CommandSender) -> List<String>) = {
+    private val onlinePlayerTabs: ( (CommandSender) -> List<String>) = {
         Bukkit.getOnlinePlayers().map { e -> e.name }
     }
-    private val paramOrOnlinePlayerTabs: (suspend (CommandSender) -> List<String>) = {
+    private val paramOrOnlinePlayerTabs: ((CommandSender) -> List<String>) = {
         val list = mutableListOf("<param>")
         list
     }
@@ -73,8 +72,9 @@ class ShyGUICommandExecutor(
         language.commandSenderHasToBePlayer.text
     }
 
-    private val menuTabs: (suspend (CommandSender) -> List<String>) = {
-        repository.getAll().map { e -> e.name }
+    private val menuTabs: (CommandSender) -> List<String> = {
+        val cache = repository.getCache()
+        cache?.map { e -> e.name } ?: emptyList()
     }
 
     private val guiMenuMustExist = object : Validator<GUIMeta> {

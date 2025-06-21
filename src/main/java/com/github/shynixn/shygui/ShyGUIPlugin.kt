@@ -5,6 +5,7 @@ import com.github.shynixn.mcutils.common.Version
 import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
 import com.github.shynixn.mcutils.common.language.reloadTranslation
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
+import com.github.shynixn.mcutils.common.placeholder.PlaceHolderServiceImpl
 import com.github.shynixn.mcutils.packet.api.PacketInType
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.shygui.contract.GUIMenuService
@@ -69,9 +70,10 @@ class ShyGUIPlugin : JavaPlugin() {
                 Version.VERSION_1_21_R2,
                 Version.VERSION_1_21_R3,
                 Version.VERSION_1_21_R4,
+                Version.VERSION_1_21_R5,
             )
         } else {
-            listOf(Version.VERSION_1_21_R4)
+            listOf(Version.VERSION_1_21_R5)
         }
 
         if (!Version.serverVersion.isCompatible(*versions.toTypedArray())) {
@@ -94,13 +96,13 @@ class ShyGUIPlugin : JavaPlugin() {
         logger.log(Level.INFO, "Loaded language file.")
 
         // Module
-        this.shyGuiModule = ShyGUIDependencyInjectionModule(this, ShyGUISettings(), language).build()
+        val placeHolderService = PlaceHolderServiceImpl(this)
+        this.shyGuiModule =
+            ShyGUIDependencyInjectionModule(this, ShyGUISettings(), language, placeHolderService).build()
 
         // Register PlaceHolders
         PlaceHolder.registerAll(
-            this,
-            shyGuiModule.getService<PlaceHolderService>(),
-            shyGuiModule.getService<GUIMenuService>()
+            this, shyGuiModule.getService<PlaceHolderService>(), shyGuiModule.getService<GUIMenuService>()
         )
 
         // Register Packets
@@ -116,12 +118,8 @@ class ShyGUIPlugin : JavaPlugin() {
         commandExecutor.registerShyGuiCommand()
 
         // Register Developer Api
-        Bukkit.getServicesManager()
-            .register(
-                GUIMenuService::class.java,
-                shyGuiModule.getService<GUIMenuService>(),
-                this,
-                ServicePriority.Normal
+        Bukkit.getServicesManager().register(
+                GUIMenuService::class.java, shyGuiModule.getService<GUIMenuService>(), this, ServicePriority.Normal
             )
 
         // Load GUI Commands
@@ -142,10 +140,6 @@ class ShyGUIPlugin : JavaPlugin() {
             return
         }
 
-        val menuService = shyGuiModule.getService<GUIMenuService>()
-        menuService.close()
-
-        val packetService = shyGuiModule.getService<PacketService>()
-        packetService.close()
+        shyGuiModule.close()
     }
 }

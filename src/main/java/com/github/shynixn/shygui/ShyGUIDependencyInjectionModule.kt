@@ -1,6 +1,6 @@
 package com.github.shynixn.shygui
 
-import com.fasterxml.jackson.core.type.TypeReference
+import com.github.shynixn.fasterxml.jackson.core.type.TypeReference
 import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mcutils.common.ConfigurationService
 import com.github.shynixn.mcutils.common.ConfigurationServiceImpl
@@ -38,7 +38,8 @@ import org.bukkit.plugin.Plugin
 class ShyGUIDependencyInjectionModule(
     private val plugin: Plugin,
     private val settings: ShyGUISettings,
-    private val language: ShyGUILanguage
+    private val language: ShyGUILanguage,
+    private val placeHolderService: PlaceHolderService
 ) {
 
     fun build(): DependencyInjectionModule {
@@ -52,6 +53,7 @@ class ShyGUIDependencyInjectionModule(
         // Repositories
         val templateRepositoryImpl = YamlFileRepositoryImpl<GUIMeta>(
             plugin,
+            "gui",
             plugin.dataFolder.toPath().resolve("gui"),
             settings.guis,
             emptyList(),
@@ -90,7 +92,6 @@ class ShyGUIDependencyInjectionModule(
         module.addService<ConfigurationService>(ConfigurationServiceImpl(plugin))
         module.addService<PacketService>(PacketServiceImpl(plugin))
         module.addService<ItemService>(ItemServiceImpl())
-        val placeHolderService = PlaceHolderServiceImpl(plugin)
         module.addService<PlaceHolderService>(placeHolderService)
         module.addService<CommandService>(CommandServiceImpl(object : CoroutineExecutor {
             override fun execute(f: suspend () -> Unit) {

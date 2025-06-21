@@ -28,17 +28,15 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.6")
 
     // Library dependencies with legacy compatibility, we can use more up-to-date version in the plugin.yml
-    implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.21.0")
-    implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.21.0")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+    implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0")
+    implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.22.0")
+    implementation("com.github.shynixn:fasterxml:1.2.0")
     implementation("org.openjdk.nashorn:nashorn-core:15.4")
-    implementation("org.yaml:snakeyaml:1.33")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.14")
-    implementation("com.github.shynixn.mcutils:packet:2025.16")
+    implementation("com.github.shynixn.mcutils:common:2025.28")
+    implementation("com.github.shynixn.mcutils:packet:2025.25")
     implementation("com.github.shynixn.mcutils:javascript:2025.1")
 
     // Test
@@ -84,7 +82,6 @@ tasks.register("relocatePluginJar", com.github.jengelman.gradle.plugins.shadow.t
     from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-relocate.${archiveExtension.get()}")
     relocate("com.github.shynixn.mcutils", "com.github.shynixn.shygui.lib.com.github.shynixn.mcutils")
-    relocate("com.fasterxml", "com.github.shynixn.shygui.lib.com.fasterxml")
 }
 
 /**
@@ -107,15 +104,21 @@ tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tas
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R1/**")
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R2/**")
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R3/**")
+    exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R4/**")
+    exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R1/**")
+    exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R2/**")
+    exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R3/**")
+    exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R4/**")
     exclude("com/github/shynixn/mcutils/**")
     exclude("com/github/shynixn/mccoroutine/**")
-    exclude("kotlin/**")
+    exclude("com/github/shynixn/fasterxml/**")
     exclude("org/**")
+    exclude("kotlin/**")
     exclude("kotlinx/**")
     exclude("javax/**")
-    exclude("com/google/**")
-    exclude("com/fasterxml/**")
     exclude("com/zaxxer/**")
+    exclude("templates/**")
+    exclude("plugin-legacy.yml")
 }
 
 /**
@@ -129,13 +132,14 @@ tasks.register("pluginJarPremium", com.github.jengelman.gradle.plugins.shadow.ta
 
     exclude("com/github/shynixn/mcutils/**")
     exclude("com/github/shynixn/mccoroutine/**")
-    exclude("kotlin/**")
+    exclude("com/github/shynixn/fasterxml/**")
     exclude("org/**")
+    exclude("kotlin/**")
     exclude("kotlinx/**")
     exclude("javax/**")
     exclude("com/zaxxer/**")
-    exclude("com/google/**")
-    exclude("com/fasterxml/**")
+    exclude("templates/**")
+    exclude("plugin-legacy.yml")
 }
 
 /**
@@ -145,7 +149,6 @@ tasks.register("relocateLegacyPluginJar", com.github.jengelman.gradle.plugins.sh
     dependsOn("shadowJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-legacy-relocate.${archiveExtension.get()}")
-    relocate("com.github.shynixn.mcutils", "com.github.shynixn.shygui.lib.com.github.shynixn.mcutils")
     relocate("kotlin", "com.github.shynixn.shygui.lib.kotlin")
     relocate("org.intellij", "com.github.shynixn.shygui.lib.org.intelli")
     relocate("org.aopalliance", "com.github.shynixn.shygui.lib.org.aopalliance")
@@ -160,8 +163,9 @@ tasks.register("relocateLegacyPluginJar", com.github.jengelman.gradle.plugins.sh
     relocate("com.google", "com.github.shynixn.shygui.lib.com.google")
     relocate("com.fasterxml", "com.github.shynixn.shygui.lib.com.fasterxml")
     relocate("com.zaxxer", "com.github.shynixn.shygui.lib.com.zaxxer")
-    relocate("org.yaml", "com.github.shynixn.shygui.lib.org.yaml")
+    relocate("com.github.shynixn.mcutils", "com.github.shynixn.shygui.lib.com.github.shynixn.mcutils")
     relocate("com.github.shynixn.mccoroutine", "com.github.shynixn.shygui.lib.com.github.shynixn.mccoroutine")
+    relocate("com.github.shynixn.fasterxml", "com.github.shynixn.shygui.lib.com.github.shynixn.fasterxml")
     exclude("plugin.yml")
     rename("plugin-legacy.yml", "plugin.yml")
 }
@@ -175,14 +179,16 @@ tasks.register("pluginJarLegacy", com.github.jengelman.gradle.plugins.shadow.tas
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-legacy.${archiveExtension.get()}")
     // destinationDirectory.set(File("C:\\temp\\plugins"))
     exclude("com/github/shynixn/mcutils/**")
+    exclude("com/github/shynixn/mccoroutine/**")
+    exclude("com/github/shynixn/shyscoreboard/**")
+    exclude("com/github/shynixn/shybossbar/**")
+    exclude("com/github/shynixn/fasterxml/**")
     exclude("org/**")
     exclude("kotlin/**")
     exclude("kotlinx/**")
     exclude("javax/**")
-    exclude("com/google/**")
-    exclude("com/github/shynixn/mccoroutine/**")
-    exclude("com/fasterxml/**")
     exclude("com/zaxxer/**")
+    exclude("templates/**")
     exclude("plugin-legacy.yml")
 }
 

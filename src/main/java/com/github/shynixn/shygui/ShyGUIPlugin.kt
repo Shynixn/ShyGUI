@@ -1,6 +1,11 @@
 package com.github.shynixn.shygui
 
+import com.github.shynixn.mccoroutine.folia.entityDispatcher
+import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
+import com.github.shynixn.mccoroutine.folia.launch
+import com.github.shynixn.mccoroutine.folia.regionDispatcher
 import com.github.shynixn.mcutils.common.ChatColor
+import com.github.shynixn.mcutils.common.CoroutinePlugin
 import com.github.shynixn.mcutils.common.Version
 import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
 import com.github.shynixn.mcutils.common.language.reloadTranslation
@@ -13,13 +18,17 @@ import com.github.shynixn.shygui.entity.ShyGUISettings
 import com.github.shynixn.shygui.enumeration.PlaceHolder
 import com.github.shynixn.shygui.impl.commandexecutor.ShyGUICommandExecutor
 import com.github.shynixn.shygui.impl.listener.GUIMenuListener
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
+import org.bukkit.Location
+import org.bukkit.entity.Entity
 import org.bukkit.plugin.ServicePriority
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Level
+import kotlin.coroutines.CoroutineContext
 
-class ShyGUIPlugin : JavaPlugin() {
+class ShyGUIPlugin : JavaPlugin(), CoroutinePlugin {
     private val prefix: String = ChatColor.BLUE.toString() + "[ShyGUI] " + ChatColor.WHITE
     private lateinit var shyGuiModule: DependencyInjectionModule
     private var immediateDisable = false
@@ -117,11 +126,6 @@ class ShyGUIPlugin : JavaPlugin() {
         val commandExecutor = shyGuiModule.getService<ShyGUICommandExecutor>()
         commandExecutor.registerShyGuiCommand()
 
-        // Register Developer Api
-        Bukkit.getServicesManager().register(
-                GUIMenuService::class.java, shyGuiModule.getService<GUIMenuService>(), this, ServicePriority.Normal
-            )
-
         // Load GUI Commands
         val plugin = this
         runBlocking {
@@ -130,6 +134,24 @@ class ShyGUIPlugin : JavaPlugin() {
             plugin.logger.log(Level.INFO, "Registered GUI commands.")
             Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Enabled ShyGUI " + plugin.description.version + " by Shynixn")
         }
+    }
+
+    override fun execute(f: suspend () -> Unit): Job {
+        return launch {
+            f.invoke()
+        }
+    }
+
+    override fun fetchEntityDispatcher(entity: Entity): CoroutineContext {
+        return entityDispatcher(entity)
+    }
+
+    override fun fetchGlobalRegionDispatcher(): CoroutineContext {
+        return globalRegionDispatcher
+    }
+
+    override fun fetchLocationDispatcher(location: Location): CoroutineContext {
+        return regionDispatcher(location)
     }
 
     /**

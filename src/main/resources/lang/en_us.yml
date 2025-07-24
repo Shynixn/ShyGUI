@@ -4,7 +4,7 @@ playerNotFoundMessage:
   # Please notice that some messages do only support chat.
   type: "CHAT"
   # The primary text to be sent.
-  text: "[&9ShyGUI&f] &cPlayer %1$1s not found."
+  text: "[&9ShyGUI&f] &cPlayer %shygui_param_1% not found."
   # Only available for type "TITLE". Adds a subTitle.
   subTitle: ""
   # Only available for type: "TITLE". Adds a fade in effect.
@@ -27,10 +27,10 @@ commandSenderHasToBePlayer:
   text: "[&9ShyGUI&f] The command sender has to be a player if you do not specify the optional player argument."
 guiMenuNotFoundMessage:
   type: "CHAT"
-  text: "[&9ShyGUI&f] &cMenu %1$1s not found."
+  text: "[&9ShyGUI&f] &cMenu %shygui_param_1% not found."
 guiMenuNoPermissionMessage:
   type: "CHAT"
-  text: "[&9ShyGUI&f] &cYou do not have permission for menu %1$1s."
+  text: "[&9ShyGUI&f] &cYou do not have permission for menu %shygui_param_1%."
 manipulateOtherMessage:
   type: "CHAT"
   text: "[&9ShyGUI&f] &cYou do not have permission to open the GUI menu for other players."
@@ -57,7 +57,7 @@ reloadMessage:
   text: "[&9ShyGUI&f] Reloaded all GUI menus and configuration."
 cannotParseItemStackError:
   type: "CHAT"
-  text: "[&9ShyGUI&f] &cCannot parse ItemStack at row %1$1s and col %2$1s! Check your GUI menu configuration by reviewing the full item parsing error in the console log."
+  text: "[&9ShyGUI&f] &cCannot parse ItemStack at row %shygui_param_1% and col %shygui_param_2%! Check your GUI menu configuration by reviewing the full item parsing error in the console log."
 rowColOutOfRangeError:
   type: "CHAT"
-  text: "[&9ShyGUI&f] &cThe specified row %1$1s and col %2$1s are out of range of the GUI! Check your GUI menu configuration."
+  text: "[&9ShyGUI&f] &cThe specified row %shygui_param_1% and col %shygui_param_2% are out of range of the GUI! Check your GUI menu configuration."

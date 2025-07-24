@@ -3,12 +3,13 @@ package com.github.shynixn.shygui.impl.commandexecutor
 import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mcutils.common.ConfigurationService
-import com.github.shynixn.mcutils.common.CoroutineExecutor
+import com.github.shynixn.mcutils.common.CoroutinePlugin
 import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandBuilder
 import com.github.shynixn.mcutils.common.command.Validator
+import com.github.shynixn.mcutils.common.language.LanguageItem
 import com.github.shynixn.mcutils.common.language.reloadTranslation
-import com.github.shynixn.mcutils.common.language.sendPluginMessage
+import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.common.repository.CacheRepository
 import com.github.shynixn.mcutils.common.translateChatColors
 import com.github.shynixn.shygui.contract.GUIMenuService
@@ -18,28 +19,20 @@ import com.github.shynixn.shygui.entity.ShyGUISettings
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import org.bukkit.plugin.Plugin
 import java.util.*
 import java.util.logging.Level
 
 class ShyGUICommandExecutor(
     private val settings: ShyGUISettings,
-    private val plugin: Plugin,
+    private val plugin: CoroutinePlugin,
     private val guiMenuService: GUIMenuService,
     private val chatMessageService: ChatMessageService,
     private val repository: CacheRepository<GUIMeta>,
     private val configurationService: ConfigurationService,
-    private val language: ShyGUILanguage
+    private val language: ShyGUILanguage,
+    private val placeHolderService: PlaceHolderService
 ) {
-    private val coroutineExecutor = object : CoroutineExecutor {
-        override fun execute(f: suspend () -> Unit) {
-            plugin.launch(plugin.globalRegionDispatcher) {
-                f.invoke()
-            }
-        }
-    }
-
-    private val onlinePlayerTabs: ( (CommandSender) -> List<String>) = {
+    private val onlinePlayerTabs: ((CommandSender) -> List<String>) = {
         Bukkit.getOnlinePlayers().map { e -> e.name }
     }
     private val paramOrOnlinePlayerTabs: ((CommandSender) -> List<String>) = {
@@ -64,7 +57,11 @@ class ShyGUICommandExecutor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return language.playerNotFoundMessage.text.format(openArgs[0])
+            return placeHolderService.resolvePlaceHolder(
+                language.playerNotFoundMessage.text,
+                null,
+                mapOf("0" to openArgs[0])
+            )
         }
     }
 
@@ -85,7 +82,11 @@ class ShyGUICommandExecutor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return language.guiMenuNotFoundMessage.text.format(openArgs[0])
+            return placeHolderService.resolvePlaceHolder(
+                language.guiMenuNotFoundMessage.text,
+                null,
+                mapOf("0" to openArgs[0])
+            )
         }
     }
 
@@ -105,12 +106,16 @@ class ShyGUICommandExecutor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return language.guiMenuNoPermissionMessage.text.format(openArgs[0])
+            return placeHolderService.resolvePlaceHolder(
+                language.guiMenuNoPermissionMessage.text,
+                null,
+                mapOf("0" to openArgs[0])
+            )
         }
     }
 
     fun registerShyGuiCommand() {
-        CommandBuilder(plugin, coroutineExecutor, settings.baseCommand, chatMessageService) {
+        CommandBuilder(plugin, settings.baseCommand, chatMessageService) {
             usage(language.commandUsage.text)
             description(language.commandDescription.text)
             aliases(plugin.config.getStringList(settings.aliasesPath))
@@ -207,7 +212,7 @@ class ShyGUICommandExecutor(
                     plugin.reloadTranslation(language)
                     configurationService.reload()
                     repository.clearCache()
-                    sender.sendPluginMessage(language.reloadMessage)
+                    sender.sendLanguageMessage(language.reloadMessage)
                 }
             }.helpCommand()
         }.build()
@@ -221,7 +226,7 @@ class ShyGUICommandExecutor(
             }
 
             val command = guiMenu.command
-            CommandBuilder(plugin, coroutineExecutor, command.command, chatMessageService) {
+            CommandBuilder(plugin, command.command, chatMessageService) {
                 usage(command.usage)
                 description(command.description)
                 aliases(command.aliases)
@@ -276,15 +281,22 @@ class ShyGUICommandExecutor(
         }
 
         if (playerResult == null) {
-            sender.sendPluginMessage(language.commandSenderHasToBePlayer)
+            sender.sendLanguageMessage(language.commandSenderHasToBePlayer)
             return null
         }
 
         if (playerResult != sender && !sender.hasPermission(settings.otherPlayerPermission)) {
-            sender.sendPluginMessage(language.manipulateOtherMessage)
+            sender.sendLanguageMessage(language.manipulateOtherMessage)
             return null
         }
 
         return Pair(arguments.toTypedArray(), playerResult)
+    }
+
+    private fun CommandSender.sendLanguageMessage(languageItem: LanguageItem, vararg args: String) {
+        val sender = this
+        plugin.launch(plugin.globalRegionDispatcher) {
+            chatMessageService.sendLanguageMessage(sender, languageItem, *args)
+        }
     }
 }

@@ -1,19 +1,15 @@
 package com.github.shynixn.shygui
 
 import com.github.shynixn.fasterxml.jackson.core.type.TypeReference
-import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mcutils.common.ConfigurationService
 import com.github.shynixn.mcutils.common.ConfigurationServiceImpl
-import com.github.shynixn.mcutils.common.CoroutineExecutor
+import com.github.shynixn.mcutils.common.CoroutinePlugin
 import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.command.CommandServiceImpl
 import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
 import com.github.shynixn.mcutils.common.item.ItemService
-import com.github.shynixn.mcutils.common.language.globalChatMessageService
-import com.github.shynixn.mcutils.common.language.globalPlaceHolderService
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
-import com.github.shynixn.mcutils.common.placeholder.PlaceHolderServiceImpl
 import com.github.shynixn.mcutils.common.repository.CacheRepository
 import com.github.shynixn.mcutils.common.repository.CachedRepositoryImpl
 import com.github.shynixn.mcutils.common.repository.Repository
@@ -33,7 +29,9 @@ import com.github.shynixn.shygui.impl.commandexecutor.ShyGUICommandExecutor
 import com.github.shynixn.shygui.impl.listener.GUIMenuListener
 import com.github.shynixn.shygui.impl.service.GUIItemConditionServiceImpl
 import com.github.shynixn.shygui.impl.service.GUIMenuServiceImpl
+import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
+import org.bukkit.plugin.ServicePriority
 
 class ShyGUIDependencyInjectionModule(
     private val plugin: Plugin,
@@ -47,8 +45,10 @@ class ShyGUIDependencyInjectionModule(
 
         // Params
         module.addService<Plugin>(plugin)
+        module.addService<CoroutinePlugin>(plugin)
         module.addService<ShyGUILanguage>(language)
         module.addService<ShyGUISettings>(settings)
+        module.addService<PlaceHolderService>(placeHolderService)
 
         // Repositories
         val templateRepositoryImpl = YamlFileRepositoryImpl<GUIMeta>(
@@ -80,36 +80,45 @@ class ShyGUIDependencyInjectionModule(
         }
         module.addService<ShyGUICommandExecutor> {
             ShyGUICommandExecutor(
-                module.getService(), module.getService(), module.getService(), module.getService(), module.getService(),
-                module.getService(), module.getService()
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService()
             )
         }
         module.addService<GUIMenuListener> {
             GUIMenuListener(module.getService(), module.getService())
         }
-
-        // Library Services
-        module.addService<ConfigurationService>(ConfigurationServiceImpl(plugin))
-        module.addService<PacketService>(PacketServiceImpl(plugin))
-        module.addService<ItemService>(ItemServiceImpl())
-        module.addService<PlaceHolderService>(placeHolderService)
-        module.addService<CommandService>(CommandServiceImpl(object : CoroutineExecutor {
-            override fun execute(f: suspend () -> Unit) {
-                plugin.launch {
-                    f.invoke()
-                }
-            }
-        }))
-        val chatMessageService = ChatMessageServiceImpl(plugin)
-        module.addService<ChatMessageService>(chatMessageService)
-        module.addService<JavaScriptService>(
+        module.addService<ConfigurationService> {
+            ConfigurationServiceImpl(module.getService())
+        }
+        module.addService<PacketService> {
+            PacketServiceImpl(module.getService())
+        }
+        module.addService<ItemService> {
+            ItemServiceImpl()
+        }
+        module.addService<CommandService> {
+            CommandServiceImpl(module.getService())
+        }
+        module.addService<ChatMessageService> {
+            ChatMessageServiceImpl(module.getService(), module.getService())
+        }
+        module.addService<JavaScriptService> {
             JavaScriptServiceImpl(
-                plugin,
-                this.plugin.config.getStringList("scriptEngine.options")
+                plugin, this.plugin.config.getStringList("scriptEngine.options")
             )
+        }
+
+        // Developer Api
+        Bukkit.getServicesManager().register(
+            GUIMenuService::class.java, module.getService<GUIMenuService>(), plugin, ServicePriority.Normal
         )
-        plugin.globalChatMessageService = chatMessageService
-        plugin.globalPlaceHolderService = placeHolderService
+
         return module
     }
 }

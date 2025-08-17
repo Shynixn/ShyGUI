@@ -32,7 +32,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.36")
+    implementation("com.github.shynixn.mcutils:common:2025.37")
     implementation("com.github.shynixn.mcutils:packet:2025.31")
 }
 
@@ -82,7 +82,7 @@ tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tas
     dependsOn("relocatePluginJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("relocatePluginJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-latest.${archiveExtension.get()}")
-    // destinationDirectory.set(File("C:\\temp\\plugins"))
+    // destinationDirectory.set(File("C:\\git\\mc\\plugins"))
 
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_8_R3/**")
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_9_R2/**")
@@ -153,7 +153,7 @@ tasks.register("pluginJarPremiumFolia", com.github.jengelman.gradle.plugins.shad
     dependsOn("relocateFoliaPluginJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("relocateFoliaPluginJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-premium-folia.${archiveExtension.get()}")
-    // destinationDirectory.set(File("C:\\temp\\Folia\\plugins"))
+    // destinationDirectory.set(File("C:\\git\\mc\\Folia\\plugins"))
 
     exclude("com/github/shynixn/mcutils/**")
     exclude("com/github/shynixn/mccoroutine/**")

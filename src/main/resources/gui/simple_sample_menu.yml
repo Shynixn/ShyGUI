@@ -26,7 +26,7 @@ condition:
   # Optional permission required to open this GUI.
   permission: ""
   # Optional script to evaluate using the SHYGUI scripting language. See https://shynixn.github.io/ShyGUI/wiki/site/script
-  script: ""
+  script: ''
 
 # All items which are rendered inside the inventory. You need to specify the item you want to display and the position.
 # For more complex GUIs, you may want to show different items on the same position depending on a certain condition:
@@ -67,7 +67,7 @@ items:
       # Optional permission required to see this item. This field works independently of the type property below.
       permission: ""
       # Optional script to evaluate using the SHYGUI scripting language. See https://shynixn.github.io/ShyGUI/wiki/site/script
-      script: ""
+      script: ''
     # Optional list of commands which are executed when you click on this item.
     commands:
       - type: "PER_PLAYER" # Execution type. Possible values: "SERVER_PER_PLAYER" executes the command with server level permissions. "PER_PLAYER" executes the command with player level permission.

@@ -5,11 +5,11 @@ nav:
   - 'ShyGUI Wiki':
       - Introduction: README.md
       - Permission: permission.md
+      - 'How to create a GUI': gettingstarted.md
+      - 'Script': script.md
       - Commands: commands.md
-      - Getting Started: gettingstarted.md
       - PlaceHolders: placeholders.md
       - Developer Api: api.md
-      - 'FAQ': faq.md
 theme:
   name: material
   features:

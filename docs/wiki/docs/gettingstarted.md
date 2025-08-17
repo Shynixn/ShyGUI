@@ -1,9 +1,8 @@
-# Getting Started
+# How to create a new GUI
 
 ### Confirming that the plugin works
 
-1. Take a look at the provided sample GUIs in the ``/plugins/ShyGUI/gui`` directory. 
-
+1. Take a look at the provided sample GUIs in the ``/plugins/ShyGUI/gui`` directory.
 2. Join your server and execute ``/shygui open simple_sample_menu`` to open the example gui. A GUI should open.
 3. After confirming that the plugin works as expected, you can start by playing around with the available options.
 

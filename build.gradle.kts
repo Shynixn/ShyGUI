@@ -8,13 +8,12 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.6.0"
+version = "1.7.0"
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi")
-    maven("https://repo.opencollab.dev/main/")
     maven(System.getenv("SHYNIXN_MCUTILS_REPOSITORY_2025")) // All MCUTILS libraries are private and not OpenSource.
 }
 
@@ -25,24 +24,16 @@ tasks.register("printVersion") {
 dependencies {
     // Compile Only
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
-    compileOnly("me.clip:placeholderapi:2.11.6")
 
     // Library dependencies with legacy compatibility, we can use more up-to-date version in the plugin.yml
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0")
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.22.0")
     implementation("com.github.shynixn:fasterxml:1.2.0")
-    implementation("org.openjdk.nashorn:nashorn-core:15.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.34")
+    implementation("com.github.shynixn.mcutils:common:2025.36")
     implementation("com.github.shynixn.mcutils:packet:2025.31")
-    implementation("com.github.shynixn.mcutils:javascript:2025.1")
-
-    // Test
-    testImplementation(kotlin("test"))
-    testImplementation("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
-    testImplementation("org.mockito:mockito-core:2.23.0")
 }
 
 
@@ -141,6 +132,40 @@ tasks.register("pluginJarPremium", com.github.jengelman.gradle.plugins.shadow.ta
     exclude("templates/**")
     exclude("plugin-legacy.yml")
 }
+
+
+/**
+ * Relocate Plugin Folia Jar.
+ */
+tasks.register("relocateFoliaPluginJar", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
+    dependsOn("shadowJar")
+    from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
+    archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-relocate-folia.${archiveExtension.get()}")
+    relocate("com.github.shynixn.mcutils", "com.github.shynixn.shygui.lib.com.github.shynixn.mcutils")
+    exclude("plugin.yml")
+    rename("plugin-folia.yml", "plugin.yml")
+}
+
+/**
+ * Create premium folia plugin jar file.
+ */
+tasks.register("pluginJarPremiumFolia", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
+    dependsOn("relocateFoliaPluginJar")
+    from(zipTree(File("./build/libs/" + (tasks.getByName("relocateFoliaPluginJar") as Jar).archiveFileName.get())))
+    archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-premium-folia.${archiveExtension.get()}")
+    // destinationDirectory.set(File("C:\\temp\\Folia\\plugins"))
+
+    exclude("com/github/shynixn/mcutils/**")
+    exclude("com/github/shynixn/mccoroutine/**")
+    exclude("com/github/shynixn/fasterxml/**")
+    exclude("kotlin/**")
+    exclude("org/**")
+    exclude("kotlinx/**")
+    exclude("javax/**")
+    exclude("plugin-folia.yml")
+    exclude("plugin-legacy.yml")
+}
+
 
 /**
  * Relocate legacy plugin jar file.

@@ -1,5 +1,5 @@
 name: ShyGUI
-version: 1.6.0
+version: 1.7.0
 author: Shynixn
 main: com.github.shynixn.shygui.ShyGUIPlugin
 softdepend: [ PlaceholderAPI]
@@ -8,6 +8,5 @@ libraries:
   - com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0
   - com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.22.0
   - com.github.shynixn:fasterxml:1.2.0
-  - org.openjdk.nashorn:nashorn-core:15.4
   - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.25
   - org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3

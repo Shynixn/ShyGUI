@@ -15,7 +15,6 @@ import com.github.shynixn.shygui.contract.GUIMenuService
 import com.github.shynixn.shygui.contract.ShyGUILanguage
 import com.github.shynixn.shygui.entity.GUIItemCondition
 import com.github.shynixn.shygui.entity.GUIMeta
-import com.github.shynixn.shygui.enumeration.GUIItemConditionType
 import com.github.shynixn.shygui.impl.GUIMenuImpl
 import kotlinx.coroutines.withContext
 import org.bukkit.entity.Player
@@ -216,39 +215,17 @@ class GUIMenuServiceImpl (
     }
 
     private suspend fun evaluateGUIOpenCondition(player: Player, guiMeta: GUIMeta): GUIItemCondition? {
-        val condition = guiMeta.condition
-
-        if (condition == null) {
-            return null
-        }
-
-        if (condition.type == GUIItemConditionType.NONE) {
-            return null
-        }
-
+        val condition = guiMeta.condition ?: return null
         val newCondition = condition.copy()
         val oldCondition = condition
 
         withContext(plugin.globalRegionDispatcher) {
-            if (oldCondition.left != null) {
-                newCondition.left =
+            if (oldCondition.script != null) {
+                newCondition.script =
                     placeHolderService.resolvePlaceHolder(
-                        oldCondition.left!!,
+                        oldCondition.script!!,
                         player
                     )
-            }
-            if (oldCondition.right != null) {
-                newCondition.right =
-                    placeHolderService.resolvePlaceHolder(
-                        oldCondition.right!!,
-                        player,
-                    )
-            }
-            if (oldCondition.js != null) {
-                newCondition.js = placeHolderService.resolvePlaceHolder(
-                    oldCondition.js!!,
-                    player,
-                )
             }
         }
 

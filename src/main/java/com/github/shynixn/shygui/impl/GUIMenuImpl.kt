@@ -14,7 +14,6 @@ import com.github.shynixn.shygui.contract.GUIMenu
 import com.github.shynixn.shygui.contract.ShyGUILanguage
 import com.github.shynixn.shygui.entity.GUIItemMeta
 import com.github.shynixn.shygui.entity.GUIMeta
-import com.github.shynixn.shygui.enumeration.GUIItemConditionType
 import com.github.shynixn.shygui.exception.GUIException
 import com.github.shynixn.shygui.impl.service.GUIMenuServiceImpl
 import kotlinx.coroutines.delay
@@ -81,11 +80,7 @@ class GUIMenuImpl(
                 indicesWithPlaceHolders.add(i)
             } else if (guiItem.commands.firstOrNull { e -> e.command.contains(placeHolderStart) } != null) {
                 indicesWithPlaceHolders.add(i)
-            } else if (guiItem.condition.js != null && guiItem.condition.js!!.contains(placeHolderStart)) {
-                indicesWithPlaceHolders.add(i)
-            } else if (guiItem.condition.left != null && guiItem.condition.left!!.contains(placeHolderStart)) {
-                indicesWithPlaceHolders.add(i)
-            } else if (guiItem.condition.right != null && guiItem.condition.right!!.contains(placeHolderStart)) {
+            } else if (guiItem.condition.script != null && guiItem.condition.script!!.contains(placeHolderStart)) {
                 indicesWithPlaceHolders.add(i)
             }
         }
@@ -319,29 +314,14 @@ class GUIMenuImpl(
                     )
                 }
 
-                if (guiItem.condition.type != GUIItemConditionType.NONE) {
-                    val newCondition = newGuiItem.condition
-                    val oldCondition = guiItem.condition
-                    if (oldCondition.left != null) {
-                        newCondition.left =
-                            placeHolderService.resolvePlaceHolder(
-                                guiItem.condition.left!!,
-                                player,
-                            )
-                    }
-                    if (oldCondition.right != null) {
-                        newCondition.right =
-                            placeHolderService.resolvePlaceHolder(
-                                guiItem.condition.right!!,
-                                player,
-                            )
-                    }
-                    if (oldCondition.js != null) {
-                        newCondition.js = placeHolderService.resolvePlaceHolder(
-                            guiItem.condition.js!!,
+                val newCondition = newGuiItem.condition
+                val oldCondition = guiItem.condition
+                if (oldCondition.script != null) {
+                    newCondition.script =
+                        placeHolderService.resolvePlaceHolder(
+                            guiItem.condition.script!!,
                             player,
                         )
-                    }
                 }
 
                 result.add(newGuiItem)

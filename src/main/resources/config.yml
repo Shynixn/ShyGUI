@@ -16,12 +16,3 @@ commands:
     aliases:
       - "gui"
       - "menu"
-
-############################
-# Script Engine
-############################
-scriptEngine:
-  # Option parameters for the NashornScriptEngine.
-  options:
-    - "--no-java-access=true"
-    - "--persistent-code-cache=true"

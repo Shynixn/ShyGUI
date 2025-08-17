@@ -14,8 +14,8 @@ import com.github.shynixn.mcutils.common.repository.CacheRepository
 import com.github.shynixn.mcutils.common.repository.CachedRepositoryImpl
 import com.github.shynixn.mcutils.common.repository.Repository
 import com.github.shynixn.mcutils.common.repository.YamlFileRepositoryImpl
-import com.github.shynixn.mcutils.javascript.JavaScriptService
-import com.github.shynixn.mcutils.javascript.JavaScriptServiceImpl
+import com.github.shynixn.mcutils.common.script.ScriptService
+import com.github.shynixn.mcutils.common.script.ScriptServiceImpl
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.mcutils.packet.impl.service.ChatMessageServiceImpl
 import com.github.shynixn.mcutils.packet.impl.service.ItemServiceImpl
@@ -76,7 +76,7 @@ class ShyGUIDependencyInjectionModule(
             )
         }
         module.addService<GUIItemConditionService> {
-            GUIItemConditionServiceImpl(module.getService(), module.getService())
+            GUIItemConditionServiceImpl(module.getService())
         }
         module.addService<ShyGUICommandExecutor> {
             ShyGUICommandExecutor(
@@ -108,10 +108,8 @@ class ShyGUIDependencyInjectionModule(
         module.addService<ChatMessageService> {
             ChatMessageServiceImpl(module.getService(), module.getService())
         }
-        module.addService<JavaScriptService> {
-            JavaScriptServiceImpl(
-                plugin, this.plugin.config.getStringList("scriptEngine.options")
-            )
+        module.addService<ScriptService> {
+            ScriptServiceImpl()
         }
 
         // Developer Api

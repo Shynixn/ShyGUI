@@ -233,10 +233,12 @@ class ShyGUICommandExecutor(
                 permission(command.permission)
                 permissionMessage(language.noPermissionCommand.text)
                 builder().executePlayer(senderHasToBePlayer) { player ->
-                    Bukkit.getServer().dispatchCommand(
-                        Bukkit.getConsoleSender(),
-                        "${settings.baseCommand} open ${guiMenu.name} / ${player.name}"
-                    )
+                    plugin.launch(plugin.globalRegionDispatcher) {
+                        Bukkit.getServer().dispatchCommand(
+                            Bukkit.getConsoleSender(),
+                            "${settings.baseCommand} open ${guiMenu.name} / ${player.name}"
+                        )
+                    }
                 }
             }.build()
 

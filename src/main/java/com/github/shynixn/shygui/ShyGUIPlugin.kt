@@ -135,6 +135,15 @@ class ShyGUIPlugin : JavaPlugin(), CoroutinePlugin {
         }
     }
 
+    override fun execute(
+        coroutineContext: CoroutineContext,
+        f: suspend () -> Unit
+    ): Job {
+        return launch(coroutineContext) {
+            f.invoke()
+        }
+    }
+
     override fun execute(f: suspend () -> Unit): Job {
         return launch {
             f.invoke()

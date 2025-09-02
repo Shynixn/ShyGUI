@@ -157,32 +157,13 @@ class GUIMenuImpl(
         }
 
         val guiItem = actionItems[index] ?: return
-
-        val serverCommands = guiItem.commands.filter { e -> e.type == CommandType.SERVER || e.type == CommandType.SERVER_PER_PLAYER }
-        plugin.launch(plugin.globalRegionDispatcher) {
-            for (command in serverCommands) {
-                if (command.command.isNotBlank()) {
-                    commandService.executeCommand(listOf(player), command) { input, player ->
-                        if (player != null) {
-                            placeHolderService.resolvePlaceHolder(input, player)
-                        } else {
-                            input
-                        }
-                    }
-                }
-            }
-        }
-
-        val playerCommands = guiItem.commands.filter { e -> e.type == CommandType.PER_PLAYER }
-        plugin.launch(plugin.entityDispatcher(player)) {
-            for (command in playerCommands) {
-                if (command.command.isNotBlank()) {
-                    commandService.executeCommand(listOf(player), command) { input, player ->
-                        if (player != null) {
-                            placeHolderService.resolvePlaceHolder(input, player)
-                        } else {
-                            input
-                        }
+        for (command in guiItem.commands) {
+            if (command.command.isNotBlank()) {
+                commandService.executeCommand(listOf(player), command) { input, player ->
+                    if (player != null) {
+                        placeHolderService.resolvePlaceHolder(input, player)
+                    } else {
+                        input
                     }
                 }
             }

@@ -54,6 +54,11 @@ interface GUIMenu {
     fun hide()
 
     /**
+     * Refreshes the placeHolders and sends a content update.
+     */
+    fun refresh()
+
+    /**
      * Sends the contents to the owner.
      */
     fun sendContentUpdate()

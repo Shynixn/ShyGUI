@@ -1,5 +1,5 @@
 # All language key identifiers.
-playerNotFoundMessage:
+shyGuiPlayerNotFoundMessage:
   # Available types: "CHAT", "TITLE", "ACTIONBAR", "HIDDEN".
   # Please notice that some messages do only support chat.
   type: "CHAT"
@@ -13,51 +13,60 @@ playerNotFoundMessage:
   stayTicks: 60
   # Only available for type: "TITLE". Adds a fade out effect.
   fadeOutTicks: 20
-noPermissionCommand:
+shyGuiNoPermissionCommand:
   type: "CHAT"
   text: "[&9ShyGUI&f] &cYou do not have permission to execute this command."
-commandUsage:
+shyGuiCommandUsage:
   type: "CHAT"
   text: "[&9ShyGUI&f] Use /shygui help to see more info about the plugin."
-commandDescription:
+shyGuiCommandDescription:
   type: "CHAT"
   text: "[&9ShyGUI&f] All commands for the ShyGUI plugin."
-commandSenderHasToBePlayer:
+shyGuiCommandSenderHasToBePlayer:
   type: "CHAT"
   text: "[&9ShyGUI&f] The command sender has to be a player if you do not specify the optional player argument."
-guiMenuNotFoundMessage:
+shyGuiGuiMenuNotFoundMessage:
   type: "CHAT"
   text: "[&9ShyGUI&f] &cMenu %shygui_param_1% not found."
-guiMenuNoPermissionMessage:
+shyGuiGuiMenuNoPermissionMessage:
   type: "CHAT"
   text: "[&9ShyGUI&f] &cYou do not have permission for menu %shygui_param_1%."
-manipulateOtherMessage:
+shyGuiManipulateOtherMessage:
   type: "CHAT"
   text: "[&9ShyGUI&f] &cYou do not have permission to open the GUI menu for other players."
-closeCommandHint:
+shyGuiCloseCommandHint:
   type: "CHAT"
   text: "Closes the GUI menu."
-backCommandHint:
+shyGuiBackCommandHint:
   type: "CHAT"
   text: "Goes back one GUI page."
-openCommandHint:
+shyGuiOpenCommandHint:
   type: "CHAT"
   text: "Opens the GUI menu with the given name."
-nextCommandHint:
+shyGuiNextCommandHint:
   type: "CHAT"
   text: "Opens the next GUI page."
-reloadCommandHint:
+shyGuiReloadCommandHint:
   type: "CHAT"
   text: "Reloads all GUI menus and configuration."
-messageCommandHint:
+shyGuiMessageCommandHint:
   type: "CHAT"
   text: "Sends a chat message."
-reloadMessage:
+shyGuiReloadMessage:
   type: "CHAT"
   text: "[&9ShyGUI&f] Reloaded all GUI menus and configuration."
-cannotParseItemStackError:
+shyGuiCannotParseItemStackError:
   type: "CHAT"
   text: "[&9ShyGUI&f] &cCannot parse ItemStack at row %shygui_param_1% and col %shygui_param_2%! Check your GUI menu configuration by reviewing the full item parsing error in the console log."
-rowColOutOfRangeError:
+shyGuiRowColOutOfRangeError:
   type: "CHAT"
   text: "[&9ShyGUI&f] &cThe specified row %shygui_param_1% and col %shygui_param_2% are out of range of the GUI! Check your GUI menu configuration."
+shyGuiRefreshCommandHint:
+  type: "CHAT"
+  text: "Refreshes the current GUI page."
+shyGuiServerCommandHint:
+  type: "CHAT"
+  text: "Sends the player to the given server."
+shyGuiServerMessage:
+  type: "CHAT"
+  text: "[&9ShyGUI&f] Connecting to server '%shygui_param_1%' ..."

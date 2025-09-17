@@ -16,11 +16,14 @@ import com.github.shynixn.shygui.contract.GUIMenuService
 import com.github.shynixn.shygui.contract.ShyGUILanguage
 import com.github.shynixn.shygui.entity.GUIMeta
 import com.github.shynixn.shygui.entity.ShyGUISettings
+import com.github.shynixn.shygui.enumeration.Permission
+import com.google.common.io.ByteStreams
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import java.util.*
 import java.util.logging.Level
+
 
 class ShyGUICommandExecutor(
     private val settings: ShyGUISettings,
@@ -58,7 +61,7 @@ class ShyGUICommandExecutor(
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
             return placeHolderService.resolvePlaceHolder(
-                language.playerNotFoundMessage.text,
+                language.shyGuiPlayerNotFoundMessage.text,
                 null,
                 mapOf("0" to openArgs[0])
             )
@@ -66,7 +69,7 @@ class ShyGUICommandExecutor(
     }
 
     private val senderHasToBePlayer: () -> String = {
-        language.commandSenderHasToBePlayer.text
+        language.shyGuiCommandSenderHasToBePlayer.text
     }
 
     private val menuTabs: (CommandSender) -> List<String> = {
@@ -83,7 +86,7 @@ class ShyGUICommandExecutor(
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
             return placeHolderService.resolvePlaceHolder(
-                language.guiMenuNotFoundMessage.text,
+                language.shyGuiGuiMenuNotFoundMessage.text,
                 null,
                 mapOf("0" to openArgs[0])
             )
@@ -107,7 +110,7 @@ class ShyGUICommandExecutor(
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
             return placeHolderService.resolvePlaceHolder(
-                language.guiMenuNoPermissionMessage.text,
+                language.shyGuiGuiMenuNoPermissionMessage.text,
                 null,
                 mapOf("0" to openArgs[0])
             )
@@ -116,13 +119,13 @@ class ShyGUICommandExecutor(
 
     fun registerShyGuiCommand() {
         CommandBuilder(plugin, settings.baseCommand, chatMessageService) {
-            usage(language.commandUsage.text)
-            description(language.commandDescription.text)
+            usage(language.shyGuiCommandUsage.text)
+            description(language.shyGuiCommandDescription.text)
             aliases(plugin.config.getStringList(settings.aliasesPath))
             permission(settings.commandPermission)
-            permissionMessage(language.noPermissionCommand.text)
+            permissionMessage(language.shyGuiNoPermissionCommand.text)
             subCommand("open") {
-                toolTip { language.openCommandHint.text }
+                toolTip { language.shyGuiOpenCommandHint.text }
                 builder().argument("menu").validator(guiMenuMustExist).validator(guiMenuMustHavePermission)
                     .tabs(menuTabs).executePlayer(senderHasToBePlayer) { player, guiMeta ->
                         plugin.launch {
@@ -141,7 +144,7 @@ class ShyGUICommandExecutor(
                     }
             }
             subCommand("close") {
-                toolTip { language.closeCommandHint.text }
+                toolTip { language.shyGuiCloseCommandHint.text }
                 builder().executePlayer(senderHasToBePlayer) { player ->
                     plugin.launch {
                         guiMenuService.getGUI(player)?.closeAll()
@@ -155,7 +158,7 @@ class ShyGUICommandExecutor(
             }
             subCommand("next") {
                 toolTip {
-                    language.nextCommandHint.text
+                    language.shyGuiNextCommandHint.text
                 }
                 builder().argument("menu").validator(guiMenuMustExist).validator(guiMenuMustHavePermission)
                     .tabs(menuTabs).executePlayer(senderHasToBePlayer) { player, guiMeta ->
@@ -174,7 +177,7 @@ class ShyGUICommandExecutor(
             }
             subCommand("back") {
                 toolTip {
-                    language.backCommandHint.text
+                    language.shyGuiBackCommandHint.text
                 }
                 builder().executePlayer(senderHasToBePlayer) { player ->
                     plugin.launch {
@@ -189,7 +192,7 @@ class ShyGUICommandExecutor(
             }
             subCommand("message") {
                 toolTip {
-                    language.messageCommandHint.text
+                    language.shyGuiMessageCommandHint.text
                 }
                 builder().argument("args.../player").validator(remainingArguments).tabs(paramOrOnlinePlayerTabs)
                     .execute { commandSender, remainingArgs ->
@@ -200,10 +203,38 @@ class ShyGUICommandExecutor(
                         player.sendMessage(finalString)
                     }
             }
+            subCommand("refresh") {
+                permission(Permission.REFRESH.text)
+                toolTip {
+                    language.shyGuiRefreshCommandHint.text
+                }
+                builder().executePlayer(senderHasToBePlayer) { player ->
+                    plugin.launch {
+                        guiMenuService.getGUI(player)?.refresh()
+                    }
+                }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
+                    .permission { settings.otherPlayerPermission }.execute { _, player ->
+                        plugin.launch {
+                            guiMenuService.getGUI(player)?.refresh()
+                        }
+                    }
+            }
+            subCommand("server") {
+                permission(Permission.SERVER.text)
+                toolTip {
+                    language.shyGuiServerCommandHint.text
+                }
+                builder().argument("server").executePlayer(senderHasToBePlayer) { player, server ->
+                    sendPlayerToServer(player, player, server)
+                }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
+                    .permission { settings.otherPlayerPermission }.execute { sender,  server, player ->
+                        sendPlayerToServer(sender, player, server)
+                    }
+            }
             subCommand("reload") {
                 permission(settings.otherPlayerPermission)
                 toolTip {
-                    language.reloadCommandHint.text
+                    language.shyGuiReloadCommandHint.text
                 }
                 builder().execute { sender ->
                     guiMenuService.close()
@@ -212,7 +243,7 @@ class ShyGUICommandExecutor(
                     plugin.reloadTranslation(language)
                     configurationService.reload()
                     repository.clearCache()
-                    sender.sendLanguageMessage(language.reloadMessage)
+                    sender.sendLanguageMessage(language.shyGuiReloadMessage)
                 }
             }.helpCommand()
         }.build()
@@ -231,7 +262,7 @@ class ShyGUICommandExecutor(
                 description(command.description)
                 aliases(command.aliases)
                 permission(command.permission)
-                permissionMessage(language.noPermissionCommand.text)
+                permissionMessage(language.shyGuiNoPermissionCommand.text)
                 builder().executePlayer(senderHasToBePlayer) { player ->
                     plugin.launch(plugin.globalRegionDispatcher) {
                         Bukkit.getServer().dispatchCommand(
@@ -248,6 +279,14 @@ class ShyGUICommandExecutor(
 
     private suspend fun openGUI(player: Player, guiMeta: GUIMeta, arguments: Array<String>) {
         guiMenuService.openGUI(player, guiMeta, arguments)
+    }
+
+    private fun sendPlayerToServer(sender: CommandSender, player: Player, server: String) {
+        val out = ByteStreams.newDataOutput()
+        out.writeUTF("Connect")
+        out.writeUTF(server)
+        player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray())
+        sender.sendLanguageMessage(language.shyGuiServerMessage, server)
     }
 
     private fun locatePlayerAndArguments(
@@ -283,12 +322,12 @@ class ShyGUICommandExecutor(
         }
 
         if (playerResult == null) {
-            sender.sendLanguageMessage(language.commandSenderHasToBePlayer)
+            sender.sendLanguageMessage(language.shyGuiCommandSenderHasToBePlayer)
             return null
         }
 
         if (playerResult != sender && !sender.hasPermission(settings.otherPlayerPermission)) {
-            sender.sendLanguageMessage(language.manipulateOtherMessage)
+            sender.sendLanguageMessage(language.shyGuiManipulateOtherMessage)
             return null
         }
 

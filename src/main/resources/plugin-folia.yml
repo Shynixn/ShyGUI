@@ -1,5 +1,5 @@
 name: ShyGUI
-version: 1.7.2
+version: 1.8.0
 author: Shynixn
 main: com.github.shynixn.shygui.ShyGUIPlugin
 softdepend: [ PlaceholderAPI]

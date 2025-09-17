@@ -4,37 +4,43 @@ import com.github.shynixn.mcutils.common.language.LanguageItem
 import com.github.shynixn.mcutils.common.language.LanguageProvider
 
 interface ShyGUILanguage : LanguageProvider {
-  var playerNotFoundMessage: LanguageItem
+  var shyGuiPlayerNotFoundMessage: LanguageItem
 
-  var noPermissionCommand: LanguageItem
+  var shyGuiNoPermissionCommand: LanguageItem
 
-  var commandUsage: LanguageItem
+  var shyGuiCommandUsage: LanguageItem
 
-  var commandDescription: LanguageItem
+  var shyGuiCommandDescription: LanguageItem
 
-  var commandSenderHasToBePlayer: LanguageItem
+  var shyGuiCommandSenderHasToBePlayer: LanguageItem
 
-  var guiMenuNotFoundMessage: LanguageItem
+  var shyGuiGuiMenuNotFoundMessage: LanguageItem
 
-  var guiMenuNoPermissionMessage: LanguageItem
+  var shyGuiGuiMenuNoPermissionMessage: LanguageItem
 
-  var manipulateOtherMessage: LanguageItem
+  var shyGuiManipulateOtherMessage: LanguageItem
 
-  var closeCommandHint: LanguageItem
+  var shyGuiCloseCommandHint: LanguageItem
 
-  var backCommandHint: LanguageItem
+  var shyGuiBackCommandHint: LanguageItem
 
-  var openCommandHint: LanguageItem
+  var shyGuiOpenCommandHint: LanguageItem
 
-  var nextCommandHint: LanguageItem
+  var shyGuiNextCommandHint: LanguageItem
 
-  var reloadCommandHint: LanguageItem
+  var shyGuiReloadCommandHint: LanguageItem
 
-  var messageCommandHint: LanguageItem
+  var shyGuiMessageCommandHint: LanguageItem
 
-  var reloadMessage: LanguageItem
+  var shyGuiReloadMessage: LanguageItem
 
-  var cannotParseItemStackError: LanguageItem
+  var shyGuiCannotParseItemStackError: LanguageItem
 
-  var rowColOutOfRangeError: LanguageItem
+  var shyGuiRowColOutOfRangeError: LanguageItem
+
+  var shyGuiRefreshCommandHint: LanguageItem
+
+  var shyGuiServerCommandHint: LanguageItem
+
+  var shyGuiServerMessage: LanguageItem
 }

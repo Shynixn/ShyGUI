@@ -98,6 +98,9 @@ class ShyGUIPlugin : JavaPlugin(), CoroutinePlugin {
 
         logger.log(Level.INFO, "Loaded NMS version ${Version.serverVersion}.")
 
+        // Register Plugin Channel
+        server.messenger.registerOutgoingPluginChannel(this, "BungeeCord")
+
         // Register Language
         val language = ShyGUILanguageImpl()
         reloadTranslation(language)

@@ -89,6 +89,37 @@ Closes the current GUI and clears the GUI session and navigation history.
 
 * Player: Optional player argument to execute the action for another player.
 
+### /shygui refresh
+
+```
+/shygui refresh [player]
+```
+
+Resolves all GUI item placeholders again and updates the current GUI. This is useful if you have dynamic content in your GUI which may change over time.
+
+* Player: Optional player argument to execute the action for another player.
+
+### /shygui server
+
+```
+/shygui server <server> [player]
+```
+
+Connects the player to a different BungeeCord or Velocity server. 
+
+* Server: Name of the BungeeCord or Velocity server to send the player to.
+* Player: Optional player argument to execute the action for another player.
+
+### /shygui message
+
+```
+/shygui message [arguments.../player]
+```
+
+Sends a chat message to the player executing the command. 
+
+* Argument/Player: Optional arguments to provide the GUI with additional arguments and optionally a player to open the GUI for.
+
 ### /shygui reload
 
 ```

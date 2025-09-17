@@ -2,7 +2,6 @@ package com.github.shynixn.shygui.impl
 
 import com.github.shynixn.mccoroutine.folia.*
 import com.github.shynixn.mcutils.common.command.CommandService
-import com.github.shynixn.mcutils.common.command.CommandType
 import com.github.shynixn.mcutils.common.item.ItemService
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.common.translateChatColors
@@ -197,6 +196,16 @@ class GUIMenuImpl(
     }
 
     /**
+     * Refreshes the placeHolders and sends a content update.
+     */
+    override fun refresh() {
+        plugin.launch {
+            setGuiItemsToItemStacks(evaluateItemConditions(prepareItemsWithPlaceHolders()))
+            sendContentUpdate()
+        }
+    }
+
+    /**
      * Sends the contents to the owner.
      */
     override fun sendContentUpdate() {
@@ -351,9 +360,9 @@ class GUIMenuImpl(
 
             if (startIndex < 0 || startIndex >= itemStacks.size) {
                 playerHandle?.sendMessage(
-                    language.rowColOutOfRangeError.text.format(guiItemMeta.row, guiItemMeta.col).translateChatColors()
+                    language.shyGuiRowColOutOfRangeError.text.format(guiItemMeta.row, guiItemMeta.col).translateChatColors()
                 )
-                throw GUIException(language.rowColOutOfRangeError.text.format(guiItemMeta.row, guiItemMeta.col))
+                throw GUIException(language.shyGuiRowColOutOfRangeError.text.format(guiItemMeta.row, guiItemMeta.col))
             }
 
             for (i in 0 until guiItemMeta.rowSpan) {
@@ -370,13 +379,13 @@ class GUIMenuImpl(
                         this.actionItems[index] = guiItemMeta
                     } catch (e: Exception) {
                         playerHandle?.sendMessage(
-                            language.cannotParseItemStackError.text.format(
+                            language.shyGuiCannotParseItemStackError.text.format(
                                 guiItemMeta.row,
                                 guiItemMeta.col
                             ).translateChatColors()
                         )
                         throw GUIException(
-                            language.cannotParseItemStackError.text.format(
+                            language.shyGuiCannotParseItemStackError.text.format(
                                 guiItemMeta.row,
                                 guiItemMeta.col
                             ), e

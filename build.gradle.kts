@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.7.2"
+version = "1.8.0"
 
 repositories {
     mavenLocal()
@@ -156,7 +156,7 @@ tasks.register("pluginJarPremiumFolia", com.github.jengelman.gradle.plugins.shad
     dependsOn("relocateFoliaPluginJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("relocateFoliaPluginJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-premium-folia.${archiveExtension.get()}")
-    // destinationDirectory.set(File("C:\\git\\mc\\Folia\\plugins"))
+    // destinationDirectory.set(File("C:\\git\\mc\\Velocity\\s2\\plugins"))
 
     exclude("com/github/shynixn/mcutils/**")
     exclude("com/github/shynixn/mccoroutine/**")

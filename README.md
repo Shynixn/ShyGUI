@@ -9,7 +9,7 @@ ShyGUI is a high performance and asynchronous GUI plugin for Bukkit and Folia ba
 * PlaceHolderApi support
 * Bukkit and Folia compatible
 * Runs asynchronously
-* Version support 1.8.R1 - 1.21.R5
+* Version support 1.8.R1 - 1.21.R6
 
 ## Installation
 

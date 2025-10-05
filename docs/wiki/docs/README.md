@@ -9,7 +9,7 @@ ShyGUI is a high performance and asynchronous GUI plugin for Bukkit and Folia ba
 * **PlaceHolderAPI Integration**: Full support for PlaceHolderAPI placeholders and custom ShyGUI placeholders
 * **Multi-Server Compatible**: Works seamlessly with both Bukkit and Folia server implementations
 * **Asynchronous Performance**: Runs asynchronously to prevent server lag and maintain optimal performance
-* **Wide Version Support**: Compatible with Minecraft versions 1.8.R1 through 1.21.R5
+* **Wide Version Support**: Compatible with Minecraft versions 1.8.R1 through 1.21.R6
 * **Navigation System**: Built-in back/forward navigation between GUI pages
 * **Dynamic Updates**: Auto-refresh GUI content with configurable intervals
 * **Command Integration**: Execute commands, send messages, and trigger server actions from GUI interactions

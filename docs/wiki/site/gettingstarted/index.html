@@ -1166,31 +1166,29 @@
 </ul>
 <h2 id="step-1-verify-installation">Step 1: Verify Installation</h2>
 <h3 id="test-the-sample-gui">Test the Sample GUI</h3>
-<ol>
+<ul>
 <li>Navigate to the <code>/plugins/ShyGUI/gui</code> directory on your server</li>
 <li>Locate the sample GUI files (e.g., <code>simple_sample_menu.yml</code>)</li>
 <li>Join your server and execute:
    <div class="highlight"><pre><span></span><code>/shygui open simple_sample_menu
 </code></pre></div></li>
 <li>A GUI inventory should open - this confirms ShyGUI is working correctly</li>
-</ol>
+</ul>
 <h3 id="understanding-the-file-structure">Understanding the File Structure</h3>
 <p>Your GUI directory should contain files similar to:
 <div class="highlight"><pre><span></span><code>/plugins/ShyGUI/gui/
 ├── simple_sample_menu.yml
-├── petblocks_main_menu.yml
-├── petblocks_skins_menu.yml
 └── ... (other example files)
 </code></pre></div></p>
 <h2 id="step-2-create-your-first-gui">Step 2: Create Your First GUI</h2>
 <h3 id="copy-and-modify-a-sample">Copy and Modify a Sample</h3>
-<ol>
+<ul>
 <li><strong>Copy the sample</strong>: Copy <code>simple_sample_menu.yml</code> and rename it to <code>my_first_menu.yml</code></li>
 <li><strong>Edit the file</strong>: Open <code>my_first_menu.yml</code> in your text editor</li>
 <li><strong>Change the identifier</strong>: Update the name field at the top:
    <div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_first_menu&quot;</span>
 </code></pre></div></li>
-</ol>
+</ul>
 <h3 id="basic-gui-structure">Basic GUI Structure</h3>
 <p>Here's a minimal GUI configuration:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Unique identifier for this GUI (must match filename without .yml)</span>
@@ -1257,21 +1255,21 @@
 <p>Test your new GUI with:
 <div class="highlight"><pre><span></span><code>/shygui open my_first_menu
 </code></pre></div></p>
-<p>Or if you added a custom command:
+<p>Or if you added a custom command: (you need to restart your server after changing a custom command)
 <div class="highlight"><pre><span></span><code>/mymenu
 </code></pre></div></p>
 <h3 id="troubleshooting">Troubleshooting</h3>
 <p>If your GUI doesn't open:
-1. <strong>Check console logs</strong> for YAML parsing errors
-2. <strong>Verify file name</strong> matches the <code>name</code> field in the YAML
-3. <strong>Ensure proper indentation</strong> (use spaces, not tabs)
-4. <strong>Validate YAML syntax</strong> using an online YAML validator</p>
+* <strong>Check console logs</strong> for YAML parsing errors
+* <strong>Verify file name</strong> matches the <code>name</code> field in the YAML
+* <strong>Ensure proper indentation</strong> (use spaces, not tabs)
+* <strong>Validate YAML syntax</strong> using an online YAML validator</p>
 <h2 id="step-4-understanding-gui-components">Step 4: Understanding GUI Components</h2>
 <h3 id="item-positioning">Item Positioning</h3>
 <p>Items are positioned using a row/column grid system:
-- <strong>Rows</strong>: 1-6 (depending on windowType)
-- <strong>Columns</strong>: 1-9 (standard inventory width)
-- <strong>Spanning</strong>: Use <code>rowSpan</code> and <code>colSpan</code> for multi-slot items</p>
+* <strong>Rows</strong>: 1-6 (depending on windowType)
+* <strong>Columns</strong>: 1-9 (standard inventory width)
+* <strong>Spanning</strong>: Use <code>rowSpan</code> and <code>colSpan</code> for multi-slot items</p>
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w">      </span><span class="c1"># Second row</span>
 <span class="w">  </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w">      </span><span class="c1"># Third column  </span>
 <span class="w">  </span><span class="nt">rowSpan</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w">  </span><span class="c1"># Covers 2 rows (2 and 3)</span>
@@ -1385,13 +1383,13 @@
 <span class="nt">updateIntervalTicks</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 </code></pre></div>
 <h2 id="next-steps">Next Steps</h2>
-<ol>
+<ul>
 <li><strong>Explore Examples</strong>: Study the included PetBlocks GUIs for advanced patterns</li>
 <li><strong>Learn Scripting</strong>: Read the <a href="../script/">Scripting Language</a> documentation</li>
 <li><strong>Use Placeholders</strong>: Check <a href="../placeholders/">Placeholders</a> for available variables</li>
 <li><strong>Set Permissions</strong>: Configure access using <a href="../permission/">Permissions</a></li>
 <li><strong>API Integration</strong>: For plugin developers, see <a href="../api/">API Documentation</a></li>
-</ol>
+</ul>
 <h2 id="common-patterns">Common Patterns</h2>
 <h3 id="shop-menu-with-categories">Shop Menu with Categories</h3>
 <div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;shop_main&quot;</span>

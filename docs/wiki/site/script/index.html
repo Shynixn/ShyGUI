@@ -1222,13 +1222,13 @@ False   // Case insensitive
 !     // NOT
 </code></pre></div>
 <h3 id="operator-precedence-highest-to-lowest">Operator Precedence (highest to lowest)</h3>
-<ol>
+<ul>
 <li><code>!</code> (NOT)</li>
 <li><code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code> (Comparisons)</li>
 <li><code>==</code>, <code>!=</code> (Equality)</li>
 <li><code>&amp;&amp;</code> (AND)</li>
 <li><code>||</code> (OR)</li>
-</ol>
+</ul>
 <h2 id="built-in-functions">Built-in Functions</h2>
 <h3 id="string-functions">String Functions</h3>
 <h4 id="stringvalue"><code>STRING(value)</code></h4>
@@ -1354,13 +1354,13 @@ ROUND(42.7, 0)     // 43.0
 <span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w">  </span><span class="c1">// true</span>
 </code></pre></div>
 <h2 id="best-practices">Best Practices</h2>
-<ol>
+<ul>
 <li><strong>Use parentheses</strong> to make complex expressions more readable</li>
 <li><strong>Validate input</strong> before passing to numeric functions</li>
 <li><strong>Use appropriate case</strong> for function names (they're case-insensitive but UPPERCASE is conventional)</li>
 <li><strong>Handle exceptions</strong> when evaluating user-provided expressions</li>
 <li><strong>Test edge cases</strong> like empty strings and zero values</li>
-</ol>
+</ul>
 <h2 id="limitations">Limitations</h2>
 <ul>
 <li>No arithmetic operators (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>) - use functions for calculations</li>

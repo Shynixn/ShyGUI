@@ -776,8 +776,8 @@
 <p>ShyGUI uses a comprehensive permission system to control access to GUI functions and administrative features. This ensures server security while providing flexibility for different user roles.</p>
 <h2 id="permission-overview">Permission Overview</h2>
 <p>ShyGUI permissions are organized into two main categories:
-- <strong>User Permissions</strong>: Standard permissions for regular players
-- <strong>Admin Permissions</strong>: Advanced permissions for server administrators and moderators</p>
+* <strong>User Permissions</strong>: Standard permissions for regular players
+* <strong>Admin Permissions</strong>: Advanced permissions for server administrators and moderators</p>
 <h2 id="core-permissions">Core Permissions</h2>
 <h3 id="user-level-permissions">User Level Permissions</h3>
 <table>
@@ -833,11 +833,11 @@
 <p><strong>Level:</strong> User<br />
 <strong>Purpose:</strong> Base permission for ShyGUI functionality</p>
 <p>This permission grants access to:
-- <code>/shygui open &lt;name&gt;</code> - Opening GUIs for yourself
-- <code>/shygui next &lt;name&gt;</code> - Navigating to next GUI
-- <code>/shygui back</code> - Returning to previous GUI
-- <code>/shygui close</code> - Closing current GUI
-- <code>/shygui message</code> - Sending messages to yourself</p>
+* <code>/shygui open &lt;name&gt;</code> - Opening GUIs for yourself
+* <code>/shygui next &lt;name&gt;</code> - Navigating to next GUI
+* <code>/shygui back</code> - Returning to previous GUI
+* <code>/shygui close</code> - Closing current GUI
+* <code>/shygui message</code> - Sending messages to yourself</p>
 <p><strong>Example Usage:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1"># Grant to all players</span>
 <span class="nt">permissions</span><span class="p">:</span>
@@ -855,9 +855,9 @@
 <strong>Purpose:</strong> Individual GUI access control</p>
 <p>Controls access to specific GUIs. Replace <code>&lt;name&gt;</code> with the actual GUI identifier.</p>
 <p><strong>Examples:</strong>
-- <code>shygui.gui.shop_main</code> - Access to shop_main GUI
-- <code>shygui.gui.admin_panel</code> - Access to admin_panel GUI
-- <code>shygui.gui.player_stats</code> - Access to player_stats GUI</p>
+* <code>shygui.gui.shop_main</code> - Access to shop_main GUI
+* <code>shygui.gui.admin_panel</code> - Access to admin_panel GUI
+* <code>shygui.gui.player_stats</code> - Access to player_stats GUI</p>
 <p><strong>Use Cases:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1"># VIP shop access</span>
 <span class="nt">groups</span><span class="p">:</span>
@@ -877,26 +877,26 @@
 <p><strong>Level:</strong> Admin<br />
 <strong>Purpose:</strong> Content and configuration management</p>
 <p>Grants access to:
-- <code>/shygui refresh [player]</code> - Refresh GUI content
-- <code>/shygui reload</code> - Reload all GUI configurations</p>
+* <code>/shygui refresh [player]</code> - Refresh GUI content
+* <code>/shygui reload</code> - Reload all GUI configurations</p>
 <p><strong>Security Note:</strong> This permission allows reloading plugin configurations, which could affect server performance.</p>
 <h3 id="shyguiserver"><code>shygui.server</code></h3>
 <p><strong>Level:</strong> Admin<br />
 <strong>Purpose:</strong> BungeeCord/Velocity server management</p>
 <p>Grants access to:
-- <code>/shygui server &lt;server&gt; [player]</code> - Connect players to different servers</p>
+* <code>/shygui server &lt;server&gt; [player]</code> - Connect players to different servers</p>
 <p><strong>Requirements:</strong>
-- BungeeCord or Velocity proxy setup
-- Proper server network configuration</p>
+* BungeeCord or Velocity proxy setup
+* Proper server network configuration</p>
 <p><strong>Security Note:</strong> This permission allows sending players to different servers, which could be used maliciously.</p>
 <h3 id="shyguimanipulateother"><code>shygui.manipulateother</code></h3>
 <p><strong>Level:</strong> Admin<br />
 <strong>Purpose:</strong> Administrative control over other players</p>
 <p>Allows executing GUI commands for other players:
-- <code>/shygui open &lt;name&gt; / &lt;player&gt;</code> - Open GUI for another player
-- <code>/shygui close &lt;player&gt;</code> - Close another player's GUI
-- <code>/shygui refresh &lt;player&gt;</code> - Refresh another player's GUI
-- <code>/shygui back &lt;player&gt;</code> - Send another player back in GUI navigation</p>
+* <code>/shygui open &lt;name&gt; / &lt;player&gt;</code> - Open GUI for another player
+* <code>/shygui close &lt;player&gt;</code> - Close another player's GUI
+* <code>/shygui refresh &lt;player&gt;</code> - Refresh another player's GUI
+* <code>/shygui back &lt;player&gt;</code> - Send another player back in GUI navigation</p>
 
 
 

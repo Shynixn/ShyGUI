@@ -949,14 +949,14 @@
 <h1 id="gui-examples-and-templates">GUI Examples and Templates</h1>
 <p>This page provides real-world examples and templates based on the included GUI files. These examples demonstrate various ShyGUI features and patterns you can use in your own server.</p>
 <h2 id="table-of-contents">Table of Contents</h2>
-<ol>
+<ul>
 <li><a href="#pet-management-system">Pet Management System</a></li>
 <li><a href="#shop-and-commerce-guis">Shop and Commerce GUIs</a></li>
 <li><a href="#admin-and-moderation-panels">Admin and Moderation Panels</a></li>
 <li><a href="#player-information-displays">Player Information Displays</a></li>
 <li><a href="#navigation-and-menu-systems">Navigation and Menu Systems</a></li>
 <li><a href="#advanced-patterns">Advanced Patterns</a></li>
-</ol>
+</ul>
 <h2 id="pet-management-system">Pet Management System</h2>
 <p>The PetBlocks example GUIs demonstrate a complete pet management system with dynamic content and conditional displays.</p>
 <h3 id="main-pet-control-panel">Main Pet Control Panel</h3>
@@ -1452,10 +1452,6 @@
 <span class="nt">windowType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIX_ROW&quot;</span>
 <span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;cAdmin</span><span class="nv"> </span><span class="s">Control</span><span class="nv"> </span><span class="s">Panel&quot;</span>
 <span class="nt">updateIntervalTicks</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-
-<span class="c1"># Security - only admins can access</span>
-<span class="nt">condition</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;CONTAINS_IGNORE_CASE(&quot;%vault_group%&quot;,</span><span class="nv"> </span><span class="s">&quot;admin&quot;)&#39;</span>
 
 <span class="nt">command</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;admin&quot;</span>

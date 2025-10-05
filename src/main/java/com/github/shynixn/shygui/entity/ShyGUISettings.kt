@@ -11,4 +11,6 @@ class ShyGUISettings {
     var guiPermission: String = Permission.DYN_OPEN.text
     var baseCommand: String = "shygui"
     var aliasesPath: String = "commands.shygui.aliases"
+    var serverPermission : String = Permission.SERVER.text
+    var refreshPermission : String = Permission.REFRESH.text
 }

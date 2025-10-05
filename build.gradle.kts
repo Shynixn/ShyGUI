@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.8.0"
+version = "1.9.0"
 
 repositories {
     mavenLocal()
@@ -32,8 +32,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.40")
-    implementation("com.github.shynixn.mcutils:packet:2025.31")
+    implementation("com.github.shynixn.mcutils:common:2025.45")
+    implementation("com.github.shynixn.mcutils:packet:2025.37")
 }
 
 
@@ -102,6 +102,7 @@ tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tas
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R2/**")
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R3/**")
     exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R4/**")
+    exclude("com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R5/**")
     exclude("com/github/shynixn/mcutils/**")
     exclude("com/github/shynixn/mccoroutine/**")
     exclude("com/github/shynixn/fasterxml/**")

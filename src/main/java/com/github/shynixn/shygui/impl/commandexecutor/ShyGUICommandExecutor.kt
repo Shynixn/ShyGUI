@@ -204,7 +204,7 @@ class ShyGUICommandExecutor(
                     }
             }
             subCommand("refresh") {
-                permission(Permission.REFRESH.text)
+                permission(settings.refreshPermission)
                 toolTip {
                     language.shyGuiRefreshCommandHint.text
                 }
@@ -220,7 +220,7 @@ class ShyGUICommandExecutor(
                     }
             }
             subCommand("server") {
-                permission(Permission.SERVER.text)
+                permission(settings.serverPermission)
                 toolTip {
                     language.shyGuiServerCommandHint.text
                 }

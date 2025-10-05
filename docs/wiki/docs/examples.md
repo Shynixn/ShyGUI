@@ -4,12 +4,12 @@ This page provides real-world examples and templates based on the included GUI f
 
 ## Table of Contents
 
-1. [Pet Management System](#pet-management-system)
-2. [Shop and Commerce GUIs](#shop-and-commerce-guis)
-3. [Admin and Moderation Panels](#admin-and-moderation-panels)
-4. [Player Information Displays](#player-information-displays)
-5. [Navigation and Menu Systems](#navigation-and-menu-systems)
-6. [Advanced Patterns](#advanced-patterns)
+* [Pet Management System](#pet-management-system)
+* [Shop and Commerce GUIs](#shop-and-commerce-guis)
+* [Admin and Moderation Panels](#admin-and-moderation-panels)
+* [Player Information Displays](#player-information-displays)
+* [Navigation and Menu Systems](#navigation-and-menu-systems)
+* [Advanced Patterns](#advanced-patterns)
 
 ## Pet Management System
 
@@ -526,10 +526,6 @@ name: "admin_panel"
 windowType: "SIX_ROW"
 title: "&cAdmin Control Panel"
 updateIntervalTicks: 100
-
-# Security - only admins can access
-condition:
-  script: 'CONTAINS_IGNORE_CASE("%vault_group%", "admin")'
 
 command:
   command: "admin"

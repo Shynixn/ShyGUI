@@ -5,8 +5,8 @@ ShyGUI uses a comprehensive permission system to control access to GUI functions
 ## Permission Overview
 
 ShyGUI permissions are organized into two main categories:
-- **User Permissions**: Standard permissions for regular players
-- **Admin Permissions**: Advanced permissions for server administrators and moderators
+* **User Permissions**: Standard permissions for regular players
+* **Admin Permissions**: Advanced permissions for server administrators and moderators
 
 ## Core Permissions
 
@@ -32,11 +32,11 @@ ShyGUI permissions are organized into two main categories:
 **Purpose:** Base permission for ShyGUI functionality
 
 This permission grants access to:
-- `/shygui open <name>` - Opening GUIs for yourself
-- `/shygui next <name>` - Navigating to next GUI
-- `/shygui back` - Returning to previous GUI
-- `/shygui close` - Closing current GUI
-- `/shygui message` - Sending messages to yourself
+* `/shygui open <name>` - Opening GUIs for yourself
+* `/shygui next <name>` - Navigating to next GUI
+* `/shygui back` - Returning to previous GUI
+* `/shygui close` - Closing current GUI
+* `/shygui message` - Sending messages to yourself
 
 **Example Usage:**
 ```yaml
@@ -59,9 +59,9 @@ groups:
 Controls access to specific GUIs. Replace `<name>` with the actual GUI identifier.
 
 **Examples:**
-- `shygui.gui.shop_main` - Access to shop_main GUI
-- `shygui.gui.admin_panel` - Access to admin_panel GUI
-- `shygui.gui.player_stats` - Access to player_stats GUI
+* `shygui.gui.shop_main` - Access to shop_main GUI
+* `shygui.gui.admin_panel` - Access to admin_panel GUI
+* `shygui.gui.player_stats` - Access to player_stats GUI
 
 **Use Cases:**
 ```yaml
@@ -85,8 +85,8 @@ groups:
 **Purpose:** Content and configuration management
 
 Grants access to:
-- `/shygui refresh [player]` - Refresh GUI content
-- `/shygui reload` - Reload all GUI configurations
+* `/shygui refresh [player]` - Refresh GUI content
+* `/shygui reload` - Reload all GUI configurations
 
 **Security Note:** This permission allows reloading plugin configurations, which could affect server performance.
 
@@ -95,11 +95,11 @@ Grants access to:
 **Purpose:** BungeeCord/Velocity server management
 
 Grants access to:
-- `/shygui server <server> [player]` - Connect players to different servers
+* `/shygui server <server> [player]` - Connect players to different servers
 
 **Requirements:**
-- BungeeCord or Velocity proxy setup
-- Proper server network configuration
+* BungeeCord or Velocity proxy setup
+* Proper server network configuration
 
 **Security Note:** This permission allows sending players to different servers, which could be used maliciously.
 
@@ -108,7 +108,7 @@ Grants access to:
 **Purpose:** Administrative control over other players
 
 Allows executing GUI commands for other players:
-- `/shygui open <name> / <player>` - Open GUI for another player
-- `/shygui close <player>` - Close another player's GUI
-- `/shygui refresh <player>` - Refresh another player's GUI
-- `/shygui back <player>` - Send another player back in GUI navigation
+* `/shygui open <name> / <player>` - Open GUI for another player
+* `/shygui close <player>` - Close another player's GUI
+* `/shygui refresh <player>` - Refresh another player's GUI
+* `/shygui back <player>` - Send another player back in GUI navigation

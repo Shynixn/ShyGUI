@@ -26,8 +26,6 @@ Your GUI directory should contain files similar to:
 ```
 /plugins/ShyGUI/gui/
 ├── simple_sample_menu.yml
-├── petblocks_main_menu.yml
-├── petblocks_skins_menu.yml
 └── ... (other example files)
 ```
 
@@ -119,7 +117,7 @@ Test your new GUI with:
 /shygui open my_first_menu
 ```
 
-Or if you added a custom command:
+Or if you added a custom command: (you need to restart your server after changing a custom command)
 ```
 /mymenu
 ```

@@ -527,10 +527,6 @@ windowType: "SIX_ROW"
 title: "&cAdmin Control Panel"
 updateIntervalTicks: 100
 
-# Security - only admins can access
-condition:
-  script: 'CONTAINS_IGNORE_CASE("%vault_group%", "admin")'
-
 command:
   command: "admin"
   permission: "server.admin"

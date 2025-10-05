@@ -6,6 +6,7 @@ nav:
       - Introduction: README.md
       - Permission: permission.md
       - 'How to create a GUI': gettingstarted.md
+      - 'Examples': examples.md
       - 'Script': script.md
       - Commands: commands.md
       - PlaceHolders: placeholders.md

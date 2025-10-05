@@ -147,12 +147,54 @@ UPPER("hello") == "HELLO"                        // true
 CONTAINS_IGNORE_CASE("Player123", "player")     // true
 ```
 
-### Using PlaceHolders in Expressions
+### Real-World Examples from GUIs
 
+**Pet State Checking:**
 ```javascript
-CONTAINS("%shygui_player_name%", "Mario")        // If the current player has got 'Mario' in his name.
-UPPER("%shygui_player_name%") == "MARIO"        // true
-CONTAINS_IGNORE_CASE("%shygui_player_name%", "MaRiO")     // true
+// Check if pet is spawned (from petblocks_main_menu.yml)
+"%petblocks_pet_isSpawned_selected%" == "true"
+
+// Check if pet is not spawned
+"%petblocks_pet_isSpawned_selected%" == "false"
+
+// Check if pet is mounted
+"%petblocks_pet_isMounted_selected%" == "true"
+```
+
+**Player Permission/Group Checks:**
+```javascript
+// Check if player is admin
+CONTAINS_IGNORE_CASE("%vault_group%", "admin")
+
+// Check if player is VIP or higher
+CONTAINS_IGNORE_CASE("%vault_group%", "vip") || CONTAINS_IGNORE_CASE("%vault_group%", "admin")
+
+// Check player name contains specific text
+CONTAINS("%shygui_player_name%", "Mario")
+```
+
+**Economic Conditions:**
+```javascript
+// Check if player can afford an item
+NUMBER("%vault_eco_balance%") >= 1000
+
+// Check if player has enough points
+NUMBER("%playerpoints_points%") >= 500
+
+// Verify minimum balance for VIP features
+NUMBER("%vault_eco_balance%") >= 10000 && CONTAINS_IGNORE_CASE("%vault_group%", "vip")
+```
+
+**Placeholder Validation:**
+```javascript
+// Check if placeholder exists and is not empty (from petblocks examples)
+!CONTAINS("%petblocks_pet_itemType_selected%", "petblocks_pet_itemType_selected")
+
+// Verify GUI parameter is provided
+LENGTH("%shygui_gui_param1%") > 0
+
+// Check if player has balance data
+!CONTAINS("%vault_eco_balance%", "vault_eco_balance")
 ```
 
 ### Logical Operations

@@ -98,6 +98,10 @@ items:
       - type: "SERVER_PER_PLAYER"
         # Sends a message to the executing player. Server level permission require you to reference the player name in the command.
         command: "/shygui message Hello to player &e%shygui_player_name% &afrom GUI. / %shygui_player_name%"
+        # The delay in ticks.
+        delay: 5
+        # If set, a command is only executed for those players who have got this permission. This does not have an effect on how the command is executed.
+        playerPermission: ""
   - row: 3
     col: 8
     item:

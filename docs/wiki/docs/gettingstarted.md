@@ -4,21 +4,21 @@ This guide will walk you through creating your first interactive GUI menu using 
 
 ## Prerequisites
 
-- ShyGUI plugin installed on your Bukkit/Folia server
-- Basic understanding of YAML file structure
-- Text editor (VSCode, Notepad++, or similar recommended)
+* ShyGUI plugin installed on your Bukkit/Folia server
+* Basic understanding of YAML file structure
+* Text editor (VSCode, Notepad++, or similar recommended)
 
 ## Step 1: Verify Installation
 
 ### Test the Sample GUI
 
-1. Navigate to the `/plugins/ShyGUI/gui` directory on your server
-2. Locate the sample GUI files (e.g., `simple_sample_menu.yml`)
-3. Join your server and execute:
+* Navigate to the `/plugins/ShyGUI/gui` directory on your server
+* Locate the sample GUI files (e.g., `simple_sample_menu.yml`)
+* Join your server and execute:
    ```
    /shygui open simple_sample_menu
    ```
-4. A GUI inventory should open - this confirms ShyGUI is working correctly
+* A GUI inventory should open - this confirms ShyGUI is working correctly
 
 ### Understanding the File Structure
 
@@ -33,9 +33,9 @@ Your GUI directory should contain files similar to:
 
 ### Copy and Modify a Sample
 
-1. **Copy the sample**: Copy `simple_sample_menu.yml` and rename it to `my_first_menu.yml`
-2. **Edit the file**: Open `my_first_menu.yml` in your text editor
-3. **Change the identifier**: Update the name field at the top:
+* **Copy the sample**: Copy `simple_sample_menu.yml` and rename it to `my_first_menu.yml`
+* **Edit the file**: Open `my_first_menu.yml` in your text editor
+* **Change the identifier**: Update the name field at the top:
    ```yaml
    name: "my_first_menu"
    ```
@@ -125,19 +125,19 @@ Or if you added a custom command: (you need to restart your server after changin
 ### Troubleshooting
 
 If your GUI doesn't open:
-1. **Check console logs** for YAML parsing errors
-2. **Verify file name** matches the `name` field in the YAML
-3. **Ensure proper indentation** (use spaces, not tabs)
-4. **Validate YAML syntax** using an online YAML validator
+* **Check console logs** for YAML parsing errors
+* **Verify file name** matches the `name` field in the YAML
+* **Ensure proper indentation** (use spaces, not tabs)
+* **Validate YAML syntax** using an online YAML validator
 
 ## Step 4: Understanding GUI Components
 
 ### Item Positioning
 
 Items are positioned using a row/column grid system:
-- **Rows**: 1-6 (depending on windowType)
-- **Columns**: 1-9 (standard inventory width)
-- **Spanning**: Use `rowSpan` and `colSpan` for multi-slot items
+* **Rows**: 1-6 (depending on windowType)
+* **Columns**: 1-9 (standard inventory width)
+* **Spanning**: Use `rowSpan` and `colSpan` for multi-slot items
 
 ```yaml
 - row: 2      # Second row
@@ -291,11 +291,11 @@ updateIntervalTicks: 100
 
 ## Next Steps
 
-1. **Explore Examples**: Study the included PetBlocks GUIs for advanced patterns
-2. **Learn Scripting**: Read the [Scripting Language](script.md) documentation
-3. **Use Placeholders**: Check [Placeholders](placeholders.md) for available variables
-4. **Set Permissions**: Configure access using [Permissions](permission.md)
-5. **API Integration**: For plugin developers, see [API Documentation](api.md)
+* **Explore Examples**: Study the included PetBlocks GUIs for advanced patterns
+* **Learn Scripting**: Read the [Scripting Language](script.md) documentation
+* **Use Placeholders**: Check [Placeholders](placeholders.md) for available variables
+* **Set Permissions**: Configure access using [Permissions](permission.md)
+* **API Integration**: For plugin developers, see [API Documentation](api.md)
 
 ## Common Patterns
 

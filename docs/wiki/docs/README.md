@@ -16,10 +16,10 @@ ShyGUI is a high performance and asynchronous GUI plugin for Bukkit and Folia ba
 
 ## Quick Start
 
-1. **Installation**: Place `ShyGUI.jar` in your server's `plugins` folder
-2. **First Launch**: Restart your server to generate default configuration files
-3. **Test Installation**: Run `/shygui open simple_sample_menu` to verify the plugin works
-4. **Create Your GUI**: Copy and modify the sample files in `/plugins/ShyGUI/gui/` directory
+* **Installation**: Place `ShyGUI.jar` in your server's `plugins` folder
+* **First Launch**: Restart your server to generate default configuration files
+* **Test Installation**: Run `/shygui open simple_sample_menu` to verify the plugin works
+* **Create Your GUI**: Copy and modify the sample files in `/plugins/ShyGUI/gui/` directory
 
 ## Example Use Cases
 

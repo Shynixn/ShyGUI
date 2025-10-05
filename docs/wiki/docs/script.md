@@ -6,9 +6,9 @@ A simple expression-based scripting language for evaluating conditions and perfo
 
 The language supports three fundamental data types:
 
-- **String**: Text values enclosed in double quotes
-- **Number**: Numeric values (integers and decimals)
-- **Boolean**: `true` or `false` values
+* **String**: Text values enclosed in double quotes
+* **Number**: Numeric values (integers and decimals)
+* **Boolean**: `true` or `false` values
 
 ## Literals
 
@@ -55,11 +55,11 @@ False   // Case insensitive
 ```
 
 ### Operator Precedence (highest to lowest)
-1. `!` (NOT)
-2. `>`, `>=`, `<`, `<=` (Comparisons)
-3. `==`, `!=` (Equality)
-4. `&&` (AND)
-5. `||` (OR)
+* `!` (NOT)
+* `>`, `>=`, `<`, `<=` (Comparisons)
+* `==`, `!=` (Equality)
+* `&&` (AND)
+* `||` (OR)
 
 ## Built-in Functions
 
@@ -229,16 +229,16 @@ CONTAINS("test", "t") && (true || false)  // true
 
 ## Best Practices
 
-1. **Use parentheses** to make complex expressions more readable
-2. **Validate input** before passing to numeric functions
-3. **Use appropriate case** for function names (they're case-insensitive but UPPERCASE is conventional)
-4. **Handle exceptions** when evaluating user-provided expressions
-5. **Test edge cases** like empty strings and zero values
+* **Use parentheses** to make complex expressions more readable
+* **Validate input** before passing to numeric functions
+* **Use appropriate case** for function names (they're case-insensitive but UPPERCASE is conventional)
+* **Handle exceptions** when evaluating user-provided expressions
+* **Test edge cases** like empty strings and zero values
 
 ## Limitations
 
-- No arithmetic operators (`+`, `-`, `*`, `/`) - use functions for calculations
-- No variable assignment - expressions are stateless
-- No custom function definitions
-- Limited to expression evaluation (no statements or control flow)
-- String escape sequences are limited (only `\"` is supported)
+* No arithmetic operators (`+`, `-`, `*`, `/`) - use functions for calculations
+* No variable assignment - expressions are stateless
+* No custom function definitions
+* Limited to expression evaluation (no statements or control flow)
+* String escape sequences are limited (only `\"` is supported)

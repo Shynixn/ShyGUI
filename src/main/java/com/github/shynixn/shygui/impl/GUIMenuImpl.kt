@@ -1,6 +1,7 @@
 package com.github.shynixn.shygui.impl
 
 import com.github.shynixn.mccoroutine.folia.*
+import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
@@ -32,6 +33,7 @@ class GUIMenuImpl(
     private var playerHandle: Player? = null,
     private var guiMenuService: GUIMenuServiceImpl? = null,
     private var guiItemConditionService: GUIItemConditionService,
+    private val chatMessageService: ChatMessageService,
     private val commandService: CommandService,
     private val language: ShyGUILanguage,
     override val previousGUIName: String?,
@@ -359,10 +361,15 @@ class GUIMenuImpl(
             val startIndex = (guiItemMeta.row - 1) * 9 + guiItemMeta.col - 1
 
             if (startIndex < 0 || startIndex >= itemStacks.size) {
-                playerHandle?.sendMessage(
-                    language.shyGuiRowColOutOfRangeError.text.format(guiItemMeta.row, guiItemMeta.col).translateChatColors()
-                )
-                throw GUIException(language.shyGuiRowColOutOfRangeError.text.format(guiItemMeta.row, guiItemMeta.col))
+                if (playerHandle != null) {
+                    chatMessageService.sendLanguageMessage(
+                        playerHandle!!,
+                        language.shyGuiRowColOutOfRangeError,
+                        guiItemMeta.row,
+                        guiItemMeta.col
+                    )
+                }
+                throw GUIException("The following row and col is not allowed in the GUI: " + guiItemMeta.row.toString() + "-" + guiItemMeta.col)
             }
 
             for (i in 0 until guiItemMeta.rowSpan) {
@@ -378,17 +385,17 @@ class GUIMenuImpl(
                         this.itemStacks[index] = itemStack
                         this.actionItems[index] = guiItemMeta
                     } catch (e: Exception) {
-                        playerHandle?.sendMessage(
-                            language.shyGuiCannotParseItemStackError.text.format(
+                        if (playerHandle != null) {
+                            chatMessageService.sendLanguageMessage(
+                                playerHandle!!,
+                                language.shyGuiCannotParseItemStackError,
                                 guiItemMeta.row,
                                 guiItemMeta.col
-                            ).translateChatColors()
-                        )
+                            )
+                        }
                         throw GUIException(
-                            language.shyGuiCannotParseItemStackError.text.format(
-                                guiItemMeta.row,
-                                guiItemMeta.col
-                            ), e
+                            "Cannot parse ItemStack: " + guiItemMeta.row.toString() + "-" + guiItemMeta.col,
+                            e
                         )
                     }
                 }

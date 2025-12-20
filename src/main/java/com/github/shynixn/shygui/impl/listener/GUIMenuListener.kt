@@ -25,7 +25,7 @@ class GUIMenuListener (private val plugin: Plugin, private val guiMenuService: G
     @EventHandler
     fun onPlayerQuitEvent(event: PlayerQuitEvent) {
         plugin.launch {
-            guiMenuService.clearCache(event.player)
+            guiMenuService.close(event.player)
         }
     }
 
@@ -71,8 +71,7 @@ class GUIMenuListener (private val plugin: Plugin, private val guiMenuService: G
 
         if (packet is PacketInInventoryClose) {
             plugin.launch {
-                val gui = guiMenuService.getGUI(player)
-                gui?.closeAll()
+                guiMenuService.close(event.player)
             }
         }
     }

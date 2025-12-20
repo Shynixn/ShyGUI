@@ -5,7 +5,6 @@ import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
-import com.github.shynixn.mcutils.common.translateChatColors
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.mcutils.packet.api.meta.enumeration.WindowType
 import com.github.shynixn.mcutils.packet.api.packet.PacketOutInventoryClose
@@ -255,7 +254,7 @@ class GUIMenuImpl(
     /**
      * Disposes the inventory.
      */
-    override fun dispose() {
+    private fun dispose() {
         isDisposed = true
         isVisible = false
         playerHandle = null

@@ -129,7 +129,7 @@ class ShyGUICommandExecutor(
                 builder().argument("menu").validator(guiMenuMustExist).validator(guiMenuMustHavePermission)
                     .tabs(menuTabs).executePlayer(senderHasToBePlayer) { player, guiMeta ->
                         plugin.launch {
-                            guiMenuService.clearCache(player)
+                            guiMenuService.close(player)
                             openGUI(player, guiMeta, emptyArray())
                         }
                     }.argument("args.../player").validator(remainingArguments).tabs(paramOrOnlinePlayerTabs)
@@ -138,7 +138,7 @@ class ShyGUICommandExecutor(
                         val player = playerWithArg.second ?: return@execute
                         val arguments = playerWithArg.first
                         plugin.launch {
-                            guiMenuService.clearCache(player)
+                            guiMenuService.close(player)
                             openGUI(player, guiMeta, arguments)
                         }
                     }

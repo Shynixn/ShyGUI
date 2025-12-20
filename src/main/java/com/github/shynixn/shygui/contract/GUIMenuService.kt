@@ -34,7 +34,7 @@ interface GUIMenuService : AutoCloseable {
     fun getGUI(player: Player): GUIMenu?
 
     /**
-     * Clears the cache for the given player.
+     * Removes all resources of a player.
      */
-    fun clearCache(player: Player)
+    fun close(player: Player)
 }

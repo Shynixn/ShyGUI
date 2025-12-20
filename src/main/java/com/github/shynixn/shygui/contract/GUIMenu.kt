@@ -72,9 +72,4 @@ interface GUIMenu {
      * Permanently closes this window and goes back to the previous window. Disposes this inventory.
      */
     fun closeBack()
-
-    /**
-     * Disposes the inventory.
-     */
-    fun dispose()
 }

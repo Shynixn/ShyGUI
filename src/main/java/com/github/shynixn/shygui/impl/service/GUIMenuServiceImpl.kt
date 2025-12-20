@@ -25,7 +25,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.CompletionStage
 import java.util.concurrent.Executor
 
-class GUIMenuServiceImpl (
+class GUIMenuServiceImpl(
     private val plugin: Plugin,
     private val packetService: PacketService,
     private val itemService: ItemService,
@@ -34,7 +34,7 @@ class GUIMenuServiceImpl (
     private val commandService: CommandService,
     private val chatMessageService: ChatMessageService,
     private val repository: CacheRepository<GUIMeta>,
-    private val language : ShyGUILanguage
+    private val language: ShyGUILanguage
 ) : GUIMenuService {
     private val maxSubPages = 20
     private val guis = HashMap<Player, Stack<GUIMenu>>()
@@ -154,6 +154,7 @@ class GUIMenuServiceImpl (
             val guiStack = guis[player]!!
 
             if (guiStack.isEmpty()) {
+                guis.remove(player)
                 return null
             }
 
@@ -164,10 +165,11 @@ class GUIMenuServiceImpl (
     }
 
     /**
-     * Clears the cache for the given player.
+     * Removes all resources of a player.
      */
-    override fun clearCache(player: Player) {
-        guis.remove(player)
+    override fun close(player: Player) {
+        val gui = getGUI(player)
+        gui?.closeAll()
     }
 
     /**
@@ -179,21 +181,18 @@ class GUIMenuServiceImpl (
         }
 
         val guiStack = guis[player]!!
-
-        if (closeAll) {
-            guiStack.clear()
-        }
+        guiStack.pop()
 
         if (guiStack.isEmpty()) {
             guis.remove(player)
             return
-        }
-
-        guiStack.pop()
-
-        if (!guiStack.isEmpty()) {
+        }else{
             val previousGUI = guiStack.peek()
-            previousGUI.show()
+            if (closeAll) {
+                previousGUI.closeAll()
+            } else {
+                previousGUI.show()
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package com.github.shynixn.shygui.impl.service
 
 import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
+import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.item.ItemService
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
@@ -31,6 +32,7 @@ class GUIMenuServiceImpl (
     private val placeHolderService: PlaceHolderService,
     private val guiItemConditionService: GUIItemConditionService,
     private val commandService: CommandService,
+    private val chatMessageService: ChatMessageService,
     private val repository: CacheRepository<GUIMeta>,
     private val language : ShyGUILanguage
 ) : GUIMenuService {
@@ -118,6 +120,7 @@ class GUIMenuServiceImpl (
             player,
             this,
             guiItemConditionService,
+            chatMessageService,
             commandService,
             language,
             previousGuiName,

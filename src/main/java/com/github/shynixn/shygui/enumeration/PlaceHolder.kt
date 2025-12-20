@@ -13,14 +13,14 @@ enum class PlaceHolder(
 ) {
     PARAM_1("param_1", { _, _, context ->
         if (context != null) {
-            context["0"] as String?
+            context["0"]?.toString()
         } else {
             null
         }
     }),
     PARAM_2("param_2", { _, _, context ->
         if (context != null) {
-            context["1"] as kotlin.String?
+            context["1"]?.toString()
         } else {
             null
         }

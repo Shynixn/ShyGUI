@@ -5,7 +5,7 @@ import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mccoroutine.folia.regionDispatcher
 import com.github.shynixn.mcutils.common.ChatColor
-import com.github.shynixn.mcutils.common.CoroutinePlugin
+import com.github.shynixn.mcutils.common.CoroutineHandler
 import com.github.shynixn.mcutils.common.Version
 import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
 import com.github.shynixn.mcutils.common.language.reloadTranslation
@@ -27,7 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Level
 import kotlin.coroutines.CoroutineContext
 
-class ShyGUIPlugin : JavaPlugin(), CoroutinePlugin {
+class ShyGUIPlugin : JavaPlugin(), CoroutineHandler {
     private val prefix: String = ChatColor.BLUE.toString() + "[ShyGUI] " + ChatColor.WHITE
     private lateinit var shyGuiModule: DependencyInjectionModule
     private var immediateDisable = false
@@ -81,9 +81,10 @@ class ShyGUIPlugin : JavaPlugin(), CoroutinePlugin {
                 Version.VERSION_1_21_R5,
                 Version.VERSION_1_21_R6,
                 Version.VERSION_1_21_R7,
+                Version.VERSION_26_R1,
             )
         } else {
-            listOf(Version.VERSION_1_21_R7)
+            listOf(Version.VERSION_26_R1)
         }
 
         if (!Version.serverVersion.isCompatible(*versions.toTypedArray())) {
@@ -109,7 +110,7 @@ class ShyGUIPlugin : JavaPlugin(), CoroutinePlugin {
         logger.log(Level.INFO, "Loaded language file.")
 
         // Module
-        val placeHolderService = PlaceHolderServiceImpl(this)
+        val placeHolderService = PlaceHolderServiceImpl(this, Bukkit.getPluginManager())
         this.shyGuiModule =
             ShyGUIDependencyInjectionModule(this, ShyGUISettings(), language, placeHolderService).build()
 

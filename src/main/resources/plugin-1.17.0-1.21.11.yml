@@ -1,12 +1,13 @@
 name: ShyGUI
-version: 1.11.4
+version: 1.12.0
 author: Shynixn
 main: com.github.shynixn.shygui.ShyGUIPlugin
-softdepend: [ PlaceholderAPI]
+softdepend: [ PlaceholderAPI, WorldGuard]
 api-version: 1.13
 libraries:
   - com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0
   - com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.22.0
   - com.github.shynixn:fasterxml:1.2.0
   - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.25
-  - org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3
+  - org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0
+

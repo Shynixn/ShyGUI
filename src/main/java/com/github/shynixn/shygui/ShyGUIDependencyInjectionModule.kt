@@ -3,7 +3,7 @@ package com.github.shynixn.shygui
 import com.github.shynixn.fasterxml.jackson.core.type.TypeReference
 import com.github.shynixn.mcutils.common.ConfigurationService
 import com.github.shynixn.mcutils.common.ConfigurationServiceImpl
-import com.github.shynixn.mcutils.common.CoroutinePlugin
+import com.github.shynixn.mcutils.common.CoroutineHandler
 import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.command.CommandServiceImpl
@@ -45,7 +45,7 @@ class ShyGUIDependencyInjectionModule(
 
         // Params
         module.addService<Plugin>(plugin)
-        module.addService<CoroutinePlugin>(plugin)
+        module.addService<CoroutineHandler>(plugin)
         module.addService<ShyGUILanguage>(language)
         module.addService<ShyGUISettings>(settings)
         module.addService<PlaceHolderService>(placeHolderService)
@@ -88,6 +88,8 @@ class ShyGUIDependencyInjectionModule(
                 module.getService(),
                 module.getService(),
                 module.getService(),
+                module.getService(),
+                module.getService(),
                 module.getService()
             )
         }
@@ -107,7 +109,7 @@ class ShyGUIDependencyInjectionModule(
             CommandServiceImpl(module.getService())
         }
         module.addService<ChatMessageService> {
-            ChatMessageServiceImpl(module.getService(), module.getService())
+            ChatMessageServiceImpl(module.getService(), module.getService(), module.getService())
         }
         module.addService<ScriptService> {
             ScriptServiceImpl()

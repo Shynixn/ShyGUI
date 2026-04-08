@@ -12,7 +12,7 @@ This includes, but is not limited to:
 * All JAR files (regardless of name)
 * All ZIP archives
 * All Metadata or Config files
-* All Derivative Works or modified versions of the above
+* All Derivative Works (modified versions) or source code of the above.
 
 3. Redistribution Rules
 You are strictly prohibited from redistributing any files.
@@ -27,13 +27,26 @@ A "revenue-generating environment" includes any server, service, or platform tha
 (including donations, web-stores, or sponsorships), regardless of whether the Program is the direct source of that income.
 
 How to obtain a License:
-You must be an active (paying), subscribed member of the Shynixn Patreon (https://patreon.com/Shynixn) during the month a version is released, or at the time you first download/access a previously released version.
-An active subscription grants a lifetime commercial license for any version released during that subscription period or the version currently marked as "Latest" at the time of joining.
-A past subscription does not grant rights to future updates.
-To use a new version commercially, you must be a subscriber at the time of that new version's release.
+You must be an Active Subscriber of the Shynixn Patreon (https://patreon.com/Shynixn) during the month a version
+is released, or at the time you first download/access a previously released version.
+An Active Subscriber is defined strictly as a member with a successfully processed payment status for the current period.
+Being an Active Subscriber grants a lifetime commercial license for any version released during that subscription period
+or the version currently marked as "Latest" at the time of joining.
+A past subscription does not grant rights to future updates. To use a new version commercially, you must be an Active Subscriber
+at the time of that new version's release.
 Users are responsible for retaining their Patreon payment receipts as proof of their version-specific commercial rights.
 
-5. Acceptance
+5. Support Services
+Technical support is provided as a courtesy and is subject to the following conditions:
+Active Eligibility: Support is only provided to currently Active Subscribers.
+Past Subscribers: Support services are immediately terminated upon the expiration or cancellation of a subscription. Access to historical support threads or documentation may be restricted.
+Verification: The Author reserves the right to request proof of active subscription status before providing assistance.
+
+6. Liability, Termination, and Enforcement
+No Warranty: The Program is provided "as is" without warranty of any kind. The Author is not liable for any damages arising from its use. See the GPLv3 for full details.
+Legal Action: The Author reserves the right to pursue legal action to the fullest extent of the law for any violations of these terms, including but not limited to claims for damages, lost revenue, and legal fees.
+
+7. Acceptance
 By downloading, receiving, or running any part of this Program:
 You acknowledge these terms. You agree to be bound by them.
 

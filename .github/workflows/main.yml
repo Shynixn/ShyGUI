@@ -111,7 +111,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: /home/runner/work/ShyGUI/ShyGUI/build/libs/shygui-${{ env.RELEASE_VERSION }}-26.1.0-latest-free.jar
-          asset_name: ShyGUI-26.1.0-latest-Free.jar
+          asset_name: ShyGUI.jar
           asset_content_type: application/jar
 
       - uses: Shynixn/repository-m2-deploy-action@v1.1.0

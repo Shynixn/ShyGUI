@@ -7,9 +7,9 @@ permissions:
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main, development ]
+    branches: [main, development]
   pull_request:
-    branches: [ main, development ]
+    branches: [main, development]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
-          java-version: '8'
+          java-version: "8"
 
       - name: Build Java Application
         env:
@@ -35,6 +35,37 @@ jobs:
           ./gradlew build pluginJars
           echo "RELEASE_VERSION=$(./gradlew -q printVersion)" >> $GITHUB_ENV
 
+      - name: Rename Artifacts
+        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
+        run: |
+          mv ./build/libs/shygui-${{ env.RELEASE_VERSION }}-26.1.0-latest-premium-folia.jar ./ShyGUI-26.1.0-latest-Premium-Folia.jar
+          mv ./build/libs/shygui-${{ env.RELEASE_VERSION }}-1.17.0-1.21.11-premium-folia.jar ./ShyGUI-1.17.0-1.21.11-Premium-Folia.jar
+          mv ./build/libs/shygui-${{ env.RELEASE_VERSION }}-1.8.8-1.16.5-premium.jar ./ShyGUI-1.8.8-1.16.5-Premium.jar
+          mv ./build/libs/shygui-${{ env.RELEASE_VERSION }}-1.17.0-1.21.11-premium.jar ./ShyGUI-1.17.0-1.21.11-Premium.jar
+          mv ./build/libs/shygui-${{ env.RELEASE_VERSION }}-26.1.0-latest-premium.jar ./ShyGUI-26.1.0-latest-Premium.jar
+
+      - name: Parse Changelog
+        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
+        run: |
+          VERSION=${{ env.RELEASE_VERSION }}
+          CHANGES=$(awk '/^---/{exit} /^## Release /{found=1; next} found{print}' CHANGELOG.md)
+          FOOTER=$(cat docs/footer-github.md)
+          FOOTER="${FOOTER//<version>/$VERSION}"
+          PATREON_FOOTER_BASIC=$(cat docs/footer-patreon-basic.md)
+          PATREON_FOOTER_ELITE=$(cat docs/footer-patreon-elite.md)
+          BODY="$CHANGES"$'\n'"$FOOTER"
+          PATREON_BODY_BASIC="$CHANGES"$'\n'"$PATREON_FOOTER_BASIC"
+          PATREON_BODY_ELITE="$CHANGES"$'\n'"$PATREON_FOOTER_ELITE"
+          echo "RELEASE_BODY<<EOF" >> $GITHUB_ENV
+          echo "$BODY" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "RELEASE_PATREON_BASIC<<EOF" >> $GITHUB_ENV
+          echo "$PATREON_BODY_BASIC" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "RELEASE_PATREON_ELITE<<EOF" >> $GITHUB_ENV
+          echo "$PATREON_BODY_ELITE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Create Github Release
         if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
         id: create_release
@@ -42,66 +73,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          body: "This release was automatically created by Github Actions. Please wait until the author manually sets the patchnotes for this release."
+          body: ${{ env.RELEASE_BODY }}
           tag_name: ${{ env.RELEASE_VERSION }}
           release_name: Release ${{ env.RELEASE_VERSION }}
           draft: true
           prerelease: false
-
-      - name: Upload ShyGUI-1.8.8-1.16.5-Premium.jar
-        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/ShyGUI/ShyGUI/build/libs/shygui-${{ env.RELEASE_VERSION }}-1.8.8-1.16.5-premium.jar
-          asset_name: ShyGUI-1.8.8-1.16.5-Premium.jar
-          asset_content_type: application/jar
-
-      - name: Upload ShyGUI-1.17.0-1.21.11-Premium.jar
-        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/ShyGUI/ShyGUI/build/libs/shygui-${{ env.RELEASE_VERSION }}-1.17.0-1.21.11-premium.jar
-          asset_name: ShyGUI-1.17.0-1.21.11-Premium.jar
-          asset_content_type: application/jar
-
-      - name: Upload ShyGUI-1.17.0-1.21.11-Premium-Folia.jar
-        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/ShyGUI/ShyGUI/build/libs/shygui-${{ env.RELEASE_VERSION }}-1.17.0-1.21.11-premium-folia.jar
-          asset_name: ShyGUI-1.17.0-1.21.11-Premium-Folia.jar
-          asset_content_type: application/jar
-
-      - name: Upload ShyGUI-26.1.0-latest-Premium.jar
-        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/ShyGUI/ShyGUI/build/libs/shygui-${{ env.RELEASE_VERSION }}-26.1.0-latest-premium.jar
-          asset_name: ShyGUI-26.1.0-latest-Premium.jar
-          asset_content_type: application/jar
-
-      - name: Upload ShyGUI-26.1.0-latest-Premium-Folia.jar
-        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/ShyGUI/ShyGUI/build/libs/shygui-${{ env.RELEASE_VERSION }}-26.1.0-latest-premium-folia.jar
-          asset_name: ShyGUI-26.1.0-latest-Premium-Folia.jar
-          asset_content_type: application/jar
 
       - name: Upload ShyGUI-26.1.0-latest-Free.jar
         if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
@@ -118,16 +94,64 @@ jobs:
         if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
         name: Deploy ShyGUI Jar
         with:
-          primary-jar-file: 'build/libs/shygui-${{ env.RELEASE_VERSION }}.jar'
-          group-id: 'com.github.shynixn.shygui'
-          artifact-id: 'shygui'
-          source-directories: 'src/main/java'
+          primary-jar-file: "build/libs/shygui-${{ env.RELEASE_VERSION }}.jar"
+          group-id: "com.github.shynixn.shygui"
+          artifact-id: "shygui"
+          source-directories: "src/main/java"
           version-id: ${{ env.RELEASE_VERSION }}
-          repository: 'releases'
+          repository: "releases"
           generate-sources-jar: true
           github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          github-username: 'Shynixn'
-          github-repository: 'm2'
+          github-username: "Shynixn"
+          github-repository: "m2"
+
+      - name: Publish Patreon Release
+        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
+        env:
+          PAPOA_API_KEY: ${{ secrets.PAPOA_API_KEY }}
+          PAPOA_PASSWORD: ${{ secrets.PAPOA_PASSWORD }}
+        run: |
+          wget -O papoa https://github.com/Shynixn/PatreonPostApi/releases/latest/download/papoa-linux-x64
+          chmod +x papoa
+          ./papoa post create \
+            --title "ShyGUI for Folia v${{ env.RELEASE_VERSION }} (1.8.9-26.1.2)" \
+            --content "$RELEASE_PATREON_ELITE" \
+            --content-format text/markdown \
+            --tier-name "Elite" \
+            --tier-name "Legendary" \
+            --collection-name "ShyGUI" \
+            --tag shygui \
+            --tag minecraft \
+            --tag plugin \
+            --ttl-days 1 \
+            --file ./ShyGUI-26.1.0-latest-Premium-Folia.jar \
+            --file ./ShyGUI-1.17.0-1.21.11-Premium-Folia.jar \
+            --file /home/runner/work/ShyGUI/ShyGUI/docs/wiki/docs/assets/title.png \
+            --photo-attachment-file-name "title.png" \
+            --attachment-file-name "ShyGUI-26.1.0-latest-Premium-Folia.jar" \
+            --attachment-file-name "ShyGUI-1.17.0-1.21.11-Premium-Folia.jar" \
+            --password "$PAPOA_PASSWORD"
+          ./papoa post create \
+            --title "ShyGUI v${{ env.RELEASE_VERSION }} (1.8.9-26.1.2)" \
+            --content "$RELEASE_PATREON_BASIC" \
+            --content-format text/markdown \
+            --tier-name "Basic" \
+            --tier-name "Elite" \
+            --tier-name "Legendary" \
+            --collection-name "ShyGUI" \
+            --tag shygui \
+            --tag minecraft \
+            --tag plugin \
+            --ttl-days 1 \
+            --file ./ShyGUI-1.8.8-1.16.5-Premium.jar \
+            --file ./ShyGUI-1.17.0-1.21.11-Premium.jar \
+            --file ./ShyGUI-26.1.0-latest-Premium.jar \
+            --file /home/runner/work/ShyGUI/ShyGUI/docs/wiki/docs/assets/title.png \
+            --photo-attachment-file-name "title.png" \
+            --attachment-file-name "ShyGUI-1.8.8-1.16.5-Premium.jar" \
+            --attachment-file-name "ShyGUI-1.17.0-1.21.11-Premium.jar" \
+            --attachment-file-name "ShyGUI-26.1.0-latest-Premium.jar" \
+            --password "$PAPOA_PASSWORD"
 
   Documentation:
     runs-on: ubuntu-latest
@@ -136,11 +160,11 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
-          java-version: '8'
+          java-version: "8"
       - uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
-          architecture: 'x64'
+          python-version: "3.x"
+          architecture: "x64"
 
       - name: Build Documentation
         run: |

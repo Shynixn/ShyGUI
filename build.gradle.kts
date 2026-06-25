@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.12.1"
+version = "1.13.0"
 
 repositories {
     mavenCentral()
@@ -27,8 +27,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2026.7")
-    implementation("com.github.shynixn.mcutils:packet:2026.12")
+    implementation("com.github.shynixn.mcutils:common:2026.13")
+    implementation("com.github.shynixn.mcutils:packet:2026.24")
 
     // Test
     testImplementation(kotlin("test"))
@@ -149,7 +149,8 @@ fun registerPluginJar(
                 "com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R4/**",
                 "com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R5/**",
                 "com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R6/**",
-                "com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R7/**"
+                "com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R7/**",
+                "com/github/shynixn/shygui/lib/com/github/shynixn/mcutils/packet/nms/v26_1_R1/**"
             )
             for (path in oldNmsPaths) exclude(path)
         }

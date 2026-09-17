@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -1417,31 +1417,31 @@
 <h3 id="basic-usage-examples">Basic Usage Examples</h3>
 <h4 id="player-personalization">Player Personalization</h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Welcome message with player name</span>
-<span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;bWelcome,</span><span class="nv"> </span><span class="s">%shygui_player_name%!&quot;</span>
+<span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;bWelcome,</span><span class="nv"> </span><span class="s">%shygui_player_name%!"</span>
 
-<span class="c1"># Show player&#39;s balance</span>
+<span class="c1"># Show player's balance</span>
 <span class="nt">lore</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Your</span><span class="nv"> </span><span class="s">balance:</span><span class="nv"> </span><span class="s">&amp;a$%vault_eco_balance%&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7World:</span><span class="nv"> </span><span class="s">&amp;e%player_world%&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Rank:</span><span class="nv"> </span><span class="s">&amp;6%vault_group%&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Your</span><span class="nv"> </span><span class="s">balance:</span><span class="nv"> </span><span class="s">&amp;a$%vault_eco_balance%"</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7World:</span><span class="nv"> </span><span class="s">&amp;e%player_world%"</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Rank:</span><span class="nv"> </span><span class="s">&amp;6%vault_group%"</span>
 </code></pre></div>
 <h4 id="parameter-based-content">Parameter-Based Content</h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Using GUI parameters for dynamic content</span>
-<span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;e%shygui_gui_param1%</span><span class="nv"> </span><span class="s">Shop&quot;</span><span class="w">  </span><span class="c1"># &quot;Weapons Shop&quot; if param1 = &quot;Weapons&quot;</span>
+<span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;e%shygui_gui_param1%</span><span class="nv"> </span><span class="s">Shop"</span><span class="w">  </span><span class="c1"># "Weapons Shop" if param1 = "Weapons"</span>
 
 <span class="c1"># Category-specific lore</span>
 <span class="nt">lore</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Category:</span><span class="nv"> </span><span class="s">&amp;b%shygui_gui_param1%&quot;</span><span class="w">     </span><span class="c1"># Category from parameter</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Page:</span><span class="nv"> </span><span class="s">&amp;e%shygui_gui_param2%&quot;</span><span class="w">        </span><span class="c1"># Page number from parameter</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Filter:</span><span class="nv"> </span><span class="s">&amp;d%shygui_gui_param3%&quot;</span><span class="w">      </span><span class="c1"># Filter type from parameter</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Category:</span><span class="nv"> </span><span class="s">&amp;b%shygui_gui_param1%"</span><span class="w">     </span><span class="c1"># Category from parameter</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Page:</span><span class="nv"> </span><span class="s">&amp;e%shygui_gui_param2%"</span><span class="w">        </span><span class="c1"># Page number from parameter</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Filter:</span><span class="nv"> </span><span class="s">&amp;d%shygui_gui_param3%"</span><span class="w">      </span><span class="c1"># Filter type from parameter</span>
 </code></pre></div>
 <h4 id="navigation-information">Navigation Information</h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Back button showing previous menu</span>
-<span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;7←</span><span class="nv"> </span><span class="s">Back</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">%shygui_gui_backName%&quot;</span>
+<span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;7←</span><span class="nv"> </span><span class="s">Back</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">%shygui_gui_backName%"</span>
 
 <span class="c1"># Current location breadcrumb  </span>
 <span class="nt">lore</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Location:</span><span class="nv"> </span><span class="s">&amp;e%shygui_gui_backName%</span><span class="nv"> </span><span class="s">&amp;7&gt;</span><span class="nv"> </span><span class="s">&amp;e%shygui_gui_name%&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Location:</span><span class="nv"> </span><span class="s">&amp;e%shygui_gui_backName%</span><span class="nv"> </span><span class="s">&amp;7&gt;</span><span class="nv"> </span><span class="s">&amp;e%shygui_gui_name%"</span>
 </code></pre></div>
 <h3 id="real-world-examples-from-petblocks-gui">Real-World Examples from PetBlocks GUI</h3>
 <h4 id="dynamic-pet-display">Dynamic Pet Display</h4>
@@ -1449,42 +1449,42 @@
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">  </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="w">  </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%petblocks_pet_itemType_selected%&quot;</span><span class="w">           </span><span class="c1"># Dynamic item type</span>
-<span class="w">    </span><span class="nt">durability</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%petblocks_pet_itemDurability_selected%&quot;</span><span class="w">   </span><span class="c1"># Dynamic durability</span>
-<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%petblocks_pet_displayName_selected%&quot;</span><span class="w">     </span><span class="c1"># Dynamic name</span>
-<span class="w">    </span><span class="nt">skinBase64</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%petblocks_pet_itemHeadBase64_selected%&quot;</span><span class="w">   </span><span class="c1"># Dynamic head texture</span>
+<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"%petblocks_pet_itemType_selected%"</span><span class="w">           </span><span class="c1"># Dynamic item type</span>
+<span class="w">    </span><span class="nt">durability</span><span class="p">:</span><span class="w"> </span><span class="s">"%petblocks_pet_itemDurability_selected%"</span><span class="w">   </span><span class="c1"># Dynamic durability</span>
+<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"%petblocks_pet_displayName_selected%"</span><span class="w">     </span><span class="c1"># Dynamic name</span>
+<span class="w">    </span><span class="nt">skinBase64</span><span class="p">:</span><span class="w"> </span><span class="s">"%petblocks_pet_itemHeadBase64_selected%"</span><span class="w">   </span><span class="c1"># Dynamic head texture</span>
 </code></pre></div>
 <h4 id="conditional-content-based-on-state">Conditional Content Based on State</h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Pet control button - text changes based on pet state</span>
-<span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;aPet</span><span class="nv"> </span><span class="s">enabled&quot;</span>
+<span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;aPet</span><span class="nv"> </span><span class="s">enabled"</span>
 <span class="nt">lore</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Owner:</span><span class="nv"> </span><span class="s">&amp;e%petblocks_owner_name%&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Status:</span><span class="nv"> </span><span class="s">%petblocks_pet_isSpawned_selected%&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Mounted:</span><span class="nv"> </span><span class="s">%petblocks_pet_isMounted_selected%&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Owner:</span><span class="nv"> </span><span class="s">&amp;e%petblocks_owner_name%"</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Status:</span><span class="nv"> </span><span class="s">%petblocks_pet_isSpawned_selected%"</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Mounted:</span><span class="nv"> </span><span class="s">%petblocks_pet_isMounted_selected%"</span>
 </code></pre></div>
 <h4 id="command-integration-with-placeholders">Command Integration with Placeholders</h4>
 <div class="highlight"><pre><span></span><code><span class="nt">commands</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SERVER_PER_PLAYER&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"SERVER_PER_PLAYER"</span>
 <span class="w">    </span><span class="c1"># Uses placeholders in the command itself</span>
-<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/petblocks</span><span class="nv"> </span><span class="s">spawn</span><span class="nv"> </span><span class="s">%petblocks_pet_name_selected%&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PER_PLAYER&quot;</span><span class="w">  </span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/petblocks</span><span class="nv"> </span><span class="s">spawn</span><span class="nv"> </span><span class="s">%petblocks_pet_name_selected%"</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"PER_PLAYER"</span><span class="w">  </span>
 <span class="w">    </span><span class="c1"># Message with placeholder</span>
-<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/shygui</span><span class="nv"> </span><span class="s">message</span><span class="nv"> </span><span class="s">&amp;aSpawned</span><span class="nv"> </span><span class="s">pet:</span><span class="nv"> </span><span class="s">%petblocks_pet_displayName_selected%&quot;</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/shygui</span><span class="nv"> </span><span class="s">message</span><span class="nv"> </span><span class="s">&amp;aSpawned</span><span class="nv"> </span><span class="s">pet:</span><span class="nv"> </span><span class="s">%petblocks_pet_displayName_selected%"</span>
 </code></pre></div>
 <h2 id="advanced-placeholder-usage">Advanced Placeholder Usage</h2>
 <h3 id="conditional-display-with-scripting">Conditional Display with Scripting</h3>
 <p>Placeholders can be used within conditional scripts:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">condition</span><span class="p">:</span>
 <span class="w">  </span><span class="c1"># Only show if player has enough money</span>
-<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;NUMBER(&quot;%vault_eco_balance%&quot;)</span><span class="nv"> </span><span class="s">&gt;=</span><span class="nv"> </span><span class="s">1000&#39;</span>
+<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">'NUMBER("%vault_eco_balance%")</span><span class="nv"> </span><span class="s">&gt;=</span><span class="nv"> </span><span class="s">1000'</span>
 
 <span class="c1"># Or check player permissions</span>
 <span class="nt">condition</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;CONTAINS_IGNORE_CASE(&quot;%vault_group%&quot;,</span><span class="nv"> </span><span class="s">&quot;vip&quot;)&#39;</span>
+<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">'CONTAINS_IGNORE_CASE("%vault_group%",</span><span class="nv"> </span><span class="s">"vip")'</span>
 
 <span class="c1"># Or verify player state</span>
 <span class="nt">condition</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&quot;%player_gamemode%&quot;</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">&quot;SURVIVAL&quot;&#39;</span>
+<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">'"%player_gamemode%"</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">"SURVIVAL"'</span>
 </code></pre></div>
 <h3 id="complex-parameter-combinations">Complex Parameter Combinations</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Shop GUI that uses multiple parameters</span>
@@ -1494,14 +1494,14 @@
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">    </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="w">    </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:diamond_sword&quot;</span>
-<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;e%shygui_gui_param1%</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">%shygui_gui_param2%&quot;</span><span class="w">  </span><span class="c1"># &quot;weapons - swords&quot;</span>
+<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:diamond_sword"</span>
+<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;e%shygui_gui_param1%</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">%shygui_gui_param2%"</span><span class="w">  </span><span class="c1"># "weapons - swords"</span>
 <span class="w">      </span><span class="nt">lore</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Category:</span><span class="nv"> </span><span class="s">&amp;b%shygui_gui_param1%&quot;</span><span class="w">    </span><span class="c1"># &quot;weapons&quot;</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Subcategory:</span><span class="nv"> </span><span class="s">&amp;d%shygui_gui_param2%&quot;</span><span class="w"> </span><span class="c1"># &quot;swords&quot;  </span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Page:</span><span class="nv"> </span><span class="s">&amp;e%shygui_gui_param3%&quot;</span><span class="w">       </span><span class="c1"># &quot;1&quot;</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Rarity:</span><span class="nv"> </span><span class="s">&amp;6%shygui_gui_param4%&quot;</span><span class="w">    </span><span class="c1"># &quot;rare&quot;</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7For</span><span class="nv"> </span><span class="s">player:</span><span class="nv"> </span><span class="s">&amp;a%shygui_gui_param5%&quot;</span><span class="w"> </span><span class="c1"># &quot;steve&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Category:</span><span class="nv"> </span><span class="s">&amp;b%shygui_gui_param1%"</span><span class="w">    </span><span class="c1"># "weapons"</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Subcategory:</span><span class="nv"> </span><span class="s">&amp;d%shygui_gui_param2%"</span><span class="w"> </span><span class="c1"># "swords"  </span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Page:</span><span class="nv"> </span><span class="s">&amp;e%shygui_gui_param3%"</span><span class="w">       </span><span class="c1"># "1"</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Rarity:</span><span class="nv"> </span><span class="s">&amp;6%shygui_gui_param4%"</span><span class="w">    </span><span class="c1"># "rare"</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7For</span><span class="nv"> </span><span class="s">player:</span><span class="nv"> </span><span class="s">&amp;a%shygui_gui_param5%"</span><span class="w"> </span><span class="c1"># "steve"</span>
 </code></pre></div>
 <h3 id="dynamic-item-types">Dynamic Item Types</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Item type determined by parameter</span>
@@ -1509,15 +1509,15 @@
 <span class="w">  </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <span class="w">  </span><span class="nt">item</span><span class="p">:</span>
 <span class="w">    </span><span class="c1"># Use parameter to determine item type</span>
-<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:%shygui_gui_param1%&quot;</span><span class="w">  </span><span class="c1"># Could be &quot;diamond_sword&quot;, &quot;iron_pickaxe&quot;, etc.</span>
-<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;eSelected:</span><span class="nv"> </span><span class="s">%shygui_gui_param1%&quot;</span>
+<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:%shygui_gui_param1%"</span><span class="w">  </span><span class="c1"># Could be "diamond_sword", "iron_pickaxe", etc.</span>
+<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;eSelected:</span><span class="nv"> </span><span class="s">%shygui_gui_param1%"</span>
 </code></pre></div>
 <h3 id="multi-language-support">Multi-Language Support</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Using placeholders for language-specific content</span>
-<span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%lang_shop_title%&quot;</span><span class="w">  </span><span class="c1"># Resolves to language-specific title</span>
+<span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"%lang_shop_title%"</span><span class="w">  </span><span class="c1"># Resolves to language-specific title</span>
 <span class="nt">lore</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;%lang_shop_description%&quot;</span><span class="w">     </span><span class="c1"># Language-specific description</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Player:</span><span class="nv"> </span><span class="s">%shygui_player_name%&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"%lang_shop_description%"</span><span class="w">     </span><span class="c1"># Language-specific description</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Player:</span><span class="nv"> </span><span class="s">%shygui_player_name%"</span>
 </code></pre></div>
 <h2 id="placeholder-debugging">Placeholder Debugging</h2>
 <h3 id="common-issues-and-solutions">Common Issues and Solutions</h3>
@@ -1529,7 +1529,7 @@
 - Some placeholders may be empty if data doesn't exist
 - Use conditional scripts to check for empty values:
   <div class="highlight"><pre><span></span><code><span class="nt">condition</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;LENGTH(&quot;%vault_eco_balance%&quot;)</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">0&#39;</span>
+<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">'LENGTH("%vault_eco_balance%")</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">0'</span>
 </code></pre></div></p>
 <p><strong>Parameter placeholders showing incorrectly:</strong>
 - Verify parameters are passed in the correct order
@@ -1553,11 +1553,11 @@
 </ul>
 <h3 id="placeholder-safety">Placeholder Safety</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Always provide fallbacks for optional placeholders</span>
-<span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%custom_title%</span><span class="nv"> </span><span class="s">&amp;7-</span><span class="nv"> </span><span class="s">%shygui_player_name%&quot;</span>
+<span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"%custom_title%</span><span class="nv"> </span><span class="s">&amp;7-</span><span class="nv"> </span><span class="s">%shygui_player_name%"</span>
 
 <span class="c1"># Use conditions to handle missing data</span>
 <span class="nt">condition</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;!CONTAINS(&quot;%vault_eco_balance%&quot;,</span><span class="nv"> </span><span class="s">&quot;vault_eco_balance&quot;)&#39;</span>
+<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">'!CONTAINS("%vault_eco_balance%",</span><span class="nv"> </span><span class="s">"vault_eco_balance")'</span>
 </code></pre></div>
 <h3 id="naming-conventions">Naming Conventions</h3>
 <ul>
@@ -1570,23 +1570,23 @@
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">  </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
 <span class="w">  </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:diamond&quot;</span>
-<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;e%shop_item_name%</span><span class="nv"> </span><span class="s">&amp;7(&amp;a$%shop_item_price%&amp;7)&quot;</span>
-<span class="w">    </span><span class="nt">amount</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%shop_item_quantity%&quot;</span>
+<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:diamond"</span>
+<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;e%shop_item_name%</span><span class="nv"> </span><span class="s">&amp;7(&amp;a$%shop_item_price%&amp;7)"</span>
+<span class="w">    </span><span class="nt">amount</span><span class="p">:</span><span class="w"> </span><span class="s">"%shop_item_quantity%"</span>
 <span class="w">    </span><span class="nt">lore</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Category:</span><span class="nv"> </span><span class="s">&amp;b%shygui_gui_param1%&quot;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Your</span><span class="nv"> </span><span class="s">balance:</span><span class="nv"> </span><span class="s">&amp;a$%vault_eco_balance%&quot;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">purchase&quot;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Buyer:</span><span class="nv"> </span><span class="s">&amp;e%shygui_player_name%&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Category:</span><span class="nv"> </span><span class="s">&amp;b%shygui_gui_param1%"</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Your</span><span class="nv"> </span><span class="s">balance:</span><span class="nv"> </span><span class="s">&amp;a$%vault_eco_balance%"</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">""</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">purchase"</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Buyer:</span><span class="nv"> </span><span class="s">&amp;e%shygui_player_name%"</span>
 <span class="w">  </span><span class="nt">condition</span><span class="p">:</span>
 <span class="w">    </span><span class="c1"># Only show if player can afford it</span>
-<span class="w">    </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;NUMBER(&quot;%vault_eco_balance%&quot;)</span><span class="nv"> </span><span class="s">&gt;=</span><span class="nv"> </span><span class="s">NUMBER(&quot;%shop_item_price%&quot;)&#39;</span>
+<span class="w">    </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">'NUMBER("%vault_eco_balance%")</span><span class="nv"> </span><span class="s">&gt;=</span><span class="nv"> </span><span class="s">NUMBER("%shop_item_price%")'</span>
 <span class="w">  </span><span class="nt">commands</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SERVER_PER_PLAYER&quot;</span>
-<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/shop</span><span class="nv"> </span><span class="s">buy</span><span class="nv"> </span><span class="s">%shop_item_id%</span><span class="nv"> </span><span class="s">%shygui_player_name%&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PER_PLAYER&quot;</span>
-<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/shygui</span><span class="nv"> </span><span class="s">refresh&quot;</span><span class="w">  </span><span class="c1"># Refresh to update balance</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"SERVER_PER_PLAYER"</span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/shop</span><span class="nv"> </span><span class="s">buy</span><span class="nv"> </span><span class="s">%shop_item_id%</span><span class="nv"> </span><span class="s">%shygui_player_name%"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"PER_PLAYER"</span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/shygui</span><span class="nv"> </span><span class="s">refresh"</span><span class="w">  </span><span class="c1"># Refresh to update balance</span>
 </code></pre></div>
 <p>This placeholder system provides the foundation for creating highly dynamic and personalized GUI experiences that adapt to player state, server conditions, and external plugin data.</p>
 
@@ -1678,7 +1678,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tabs", "content.tabs.link", "content.code.copy", "navigation.footer"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

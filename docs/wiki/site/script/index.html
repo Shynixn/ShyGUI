@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -1368,9 +1368,9 @@
 </ul>
 <h2 id="literals">Literals</h2>
 <h3 id="string-literals">String Literals</h3>
-<div class="highlight"><pre><span></span><code>&quot;Hello World&quot;
-&quot;This is a string&quot;
-&quot;&quot;  // Empty string
+<div class="highlight"><pre><span></span><code>"Hello World"
+"This is a string"
+""  // Empty string
 </code></pre></div>
 <h3 id="number-literals">Number Literals</h3>
 <div class="highlight"><pre><span></span><code>42
@@ -1410,37 +1410,37 @@ False   // Case insensitive
 <h3 id="string-functions">String Functions</h3>
 <h4 id="stringvalue"><code>STRING(value)</code></h4>
 <p>Converts any value to a string.
-<div class="highlight"><pre><span></span><code>STRING(42)        // &quot;42&quot;
-STRING(true)      // &quot;true&quot;
-STRING(3.14)      // &quot;3.14&quot;
+<div class="highlight"><pre><span></span><code>STRING(42)        // "42"
+STRING(true)      // "true"
+STRING(3.14)      // "3.14"
 </code></pre></div></p>
 <h4 id="uppertext"><code>UPPER(text)</code></h4>
 <p>Converts text to uppercase.
-<div class="highlight"><pre><span></span><code>UPPER(&quot;hello&quot;)    // &quot;HELLO&quot;
+<div class="highlight"><pre><span></span><code>UPPER("hello")    // "HELLO"
 </code></pre></div></p>
 <h4 id="lowertext"><code>LOWER(text)</code></h4>
 <p>Converts text to lowercase.
-<div class="highlight"><pre><span></span><code>LOWER(&quot;WORLD&quot;)    // &quot;world&quot;
+<div class="highlight"><pre><span></span><code>LOWER("WORLD")    // "world"
 </code></pre></div></p>
 <h4 id="lengthtext"><code>LENGTH(text)</code></h4>
 <p>Returns the length of a string.
-<div class="highlight"><pre><span></span><code>LENGTH(&quot;hello&quot;)   // 5
-LENGTH(&quot;&quot;)        // 0
+<div class="highlight"><pre><span></span><code>LENGTH("hello")   // 5
+LENGTH("")        // 0
 </code></pre></div></p>
 <h4 id="containshaystack-needle"><code>CONTAINS(haystack, needle)</code></h4>
 <p>Checks if a string contains another string (case-sensitive).
-<div class="highlight"><pre><span></span><code>CONTAINS(&quot;hello world&quot;, &quot;world&quot;)  // true
-CONTAINS(&quot;Hello&quot;, &quot;hello&quot;)        // false
+<div class="highlight"><pre><span></span><code>CONTAINS("hello world", "world")  // true
+CONTAINS("Hello", "hello")        // false
 </code></pre></div></p>
 <h4 id="contains_ignore_casehaystack-needle"><code>CONTAINS_IGNORE_CASE(haystack, needle)</code></h4>
 <p>Checks if a string contains another string (case-insensitive).
-<div class="highlight"><pre><span></span><code>CONTAINS_IGNORE_CASE(&quot;Hello World&quot;, &quot;hello&quot;)  // true
+<div class="highlight"><pre><span></span><code>CONTAINS_IGNORE_CASE("Hello World", "hello")  // true
 </code></pre></div></p>
 <h3 id="numeric-functions">Numeric Functions</h3>
 <h4 id="numbervalue"><code>NUMBER(value)</code></h4>
 <p>Converts a value to a number.
-<div class="highlight"><pre><span></span><code>NUMBER(&quot;42&quot;)      // 42.0
-NUMBER(&quot;3.14&quot;)    // 3.14
+<div class="highlight"><pre><span></span><code>NUMBER("42")      // 42.0
+NUMBER("3.14")    // 3.14
 NUMBER(true)      // 1.0
 NUMBER(false)     // 0.0
 </code></pre></div></p>
@@ -1457,70 +1457,70 @@ ROUND(42.7, 0)     // 43.0
 <h2 id="examples">Examples</h2>
 <h3 id="basic-comparisons">Basic Comparisons</h3>
 <div class="highlight"><pre><span></span><code><span class="mf">5</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">3</span><span class="w">                    </span><span class="c1">// true</span>
-<span class="s2">&quot;apple&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;orange&quot;</span><span class="w">      </span><span class="c1">// false</span>
-<span class="nx">LENGTH</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">4</span><span class="w">      </span><span class="c1">// true</span>
+<span class="s2">"apple"</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"orange"</span><span class="w">      </span><span class="c1">// false</span>
+<span class="nx">LENGTH</span><span class="p">(</span><span class="s2">"test"</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">4</span><span class="w">      </span><span class="c1">// true</span>
 </code></pre></div>
 <h3 id="string-operations">String Operations</h3>
-<div class="highlight"><pre><span></span><code><span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">&quot;minecraft&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;craft&quot;</span><span class="p">)</span><span class="w">                    </span><span class="c1">// true</span>
-<span class="nx">UPPER</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;HELLO&quot;</span><span class="w">                        </span><span class="c1">// true</span>
-<span class="nx">CONTAINS_IGNORE_CASE</span><span class="p">(</span><span class="s2">&quot;Player123&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;player&quot;</span><span class="p">)</span><span class="w">     </span><span class="c1">// true</span>
+<div class="highlight"><pre><span></span><code><span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">"minecraft"</span><span class="p">,</span><span class="w"> </span><span class="s2">"craft"</span><span class="p">)</span><span class="w">                    </span><span class="c1">// true</span>
+<span class="nx">UPPER</span><span class="p">(</span><span class="s2">"hello"</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"HELLO"</span><span class="w">                        </span><span class="c1">// true</span>
+<span class="nx">CONTAINS_IGNORE_CASE</span><span class="p">(</span><span class="s2">"Player123"</span><span class="p">,</span><span class="w"> </span><span class="s2">"player"</span><span class="p">)</span><span class="w">     </span><span class="c1">// true</span>
 </code></pre></div>
 <h3 id="real-world-examples-from-guis">Real-World Examples from GUIs</h3>
 <p><strong>Pet State Checking:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1">// Check if pet is spawned (from petblocks_main_menu.yml)</span>
-<span class="s2">&quot;%petblocks_pet_isSpawned_selected%&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;true&quot;</span>
+<span class="s2">"%petblocks_pet_isSpawned_selected%"</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"true"</span>
 
 <span class="c1">// Check if pet is not spawned</span>
-<span class="s2">&quot;%petblocks_pet_isSpawned_selected%&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;false&quot;</span>
+<span class="s2">"%petblocks_pet_isSpawned_selected%"</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"false"</span>
 
 <span class="c1">// Check if pet is mounted</span>
-<span class="s2">&quot;%petblocks_pet_isMounted_selected%&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;true&quot;</span>
+<span class="s2">"%petblocks_pet_isMounted_selected%"</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"true"</span>
 </code></pre></div></p>
 <p><strong>Player Permission/Group Checks:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1">// Check if player is admin</span>
-<span class="nx">CONTAINS_IGNORE_CASE</span><span class="p">(</span><span class="s2">&quot;%vault_group%&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+<span class="nx">CONTAINS_IGNORE_CASE</span><span class="p">(</span><span class="s2">"%vault_group%"</span><span class="p">,</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">)</span>
 
 <span class="c1">// Check if player is VIP or higher</span>
-<span class="nx">CONTAINS_IGNORE_CASE</span><span class="p">(</span><span class="s2">&quot;%vault_group%&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;vip&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">CONTAINS_IGNORE_CASE</span><span class="p">(</span><span class="s2">&quot;%vault_group%&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+<span class="nx">CONTAINS_IGNORE_CASE</span><span class="p">(</span><span class="s2">"%vault_group%"</span><span class="p">,</span><span class="w"> </span><span class="s2">"vip"</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">CONTAINS_IGNORE_CASE</span><span class="p">(</span><span class="s2">"%vault_group%"</span><span class="p">,</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">)</span>
 
 <span class="c1">// Check player name contains specific text</span>
-<span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">&quot;%shygui_player_name%&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Mario&quot;</span><span class="p">)</span>
+<span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">"%shygui_player_name%"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Mario"</span><span class="p">)</span>
 </code></pre></div></p>
 <p><strong>Economic Conditions:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1">// Check if player can afford an item</span>
-<span class="nx">NUMBER</span><span class="p">(</span><span class="s2">&quot;%vault_eco_balance%&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">1000</span>
+<span class="nx">NUMBER</span><span class="p">(</span><span class="s2">"%vault_eco_balance%"</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">1000</span>
 
 <span class="c1">// Check if player has enough points</span>
-<span class="nx">NUMBER</span><span class="p">(</span><span class="s2">&quot;%playerpoints_points%&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">500</span>
+<span class="nx">NUMBER</span><span class="p">(</span><span class="s2">"%playerpoints_points%"</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">500</span>
 
 <span class="c1">// Verify minimum balance for VIP features</span>
-<span class="nx">NUMBER</span><span class="p">(</span><span class="s2">&quot;%vault_eco_balance%&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">10000</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">CONTAINS_IGNORE_CASE</span><span class="p">(</span><span class="s2">&quot;%vault_group%&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;vip&quot;</span><span class="p">)</span>
+<span class="nx">NUMBER</span><span class="p">(</span><span class="s2">"%vault_eco_balance%"</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">10000</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">CONTAINS_IGNORE_CASE</span><span class="p">(</span><span class="s2">"%vault_group%"</span><span class="p">,</span><span class="w"> </span><span class="s2">"vip"</span><span class="p">)</span>
 </code></pre></div></p>
 <p><strong>Placeholder Validation:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1">// Check if placeholder exists and is not empty (from petblocks examples)</span>
-<span class="o">!</span><span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">&quot;%petblocks_pet_itemType_selected%&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;petblocks_pet_itemType_selected&quot;</span><span class="p">)</span>
+<span class="o">!</span><span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">"%petblocks_pet_itemType_selected%"</span><span class="p">,</span><span class="w"> </span><span class="s2">"petblocks_pet_itemType_selected"</span><span class="p">)</span>
 
 <span class="c1">// Verify GUI parameter is provided</span>
-<span class="nx">LENGTH</span><span class="p">(</span><span class="s2">&quot;%shygui_gui_param1%&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span>
+<span class="nx">LENGTH</span><span class="p">(</span><span class="s2">"%shygui_gui_param1%"</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span>
 
 <span class="c1">// Check if player has balance data</span>
-<span class="o">!</span><span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">&quot;%vault_eco_balance%&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;vault_eco_balance&quot;</span><span class="p">)</span>
+<span class="o">!</span><span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">"%vault_eco_balance%"</span><span class="p">,</span><span class="w"> </span><span class="s2">"vault_eco_balance"</span><span class="p">)</span>
 </code></pre></div></p>
 <h3 id="logical-operations">Logical Operations</h3>
 <div class="highlight"><pre><span></span><code><span class="kc">true</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="kc">false</span><span class="w">                           </span><span class="c1">// false</span>
 <span class="mf">5</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">1</span><span class="w">                        </span><span class="c1">// true</span>
-<span class="o">!</span><span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;world&quot;</span><span class="p">)</span><span class="w">            </span><span class="c1">// true</span>
-<span class="nx">LENGTH</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="kc">true</span><span class="w">             </span><span class="c1">// true</span>
+<span class="o">!</span><span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">"hello"</span><span class="p">,</span><span class="w"> </span><span class="s2">"world"</span><span class="p">)</span><span class="w">            </span><span class="c1">// true</span>
+<span class="nx">LENGTH</span><span class="p">(</span><span class="s2">"test"</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="kc">true</span><span class="w">             </span><span class="c1">// true</span>
 </code></pre></div>
 <h3 id="complex-expressions">Complex Expressions</h3>
 <div class="highlight"><pre><span></span><code><span class="c1">// Check if a string is not empty and contains specific text</span>
-<span class="nx">LENGTH</span><span class="p">(</span><span class="s2">&quot;player_name&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">CONTAINS_IGNORE_CASE</span><span class="p">(</span><span class="s2">&quot;player_name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+<span class="nx">LENGTH</span><span class="p">(</span><span class="s2">"player_name"</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">CONTAINS_IGNORE_CASE</span><span class="p">(</span><span class="s2">"player_name"</span><span class="p">,</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">)</span>
 
 <span class="c1">// Validate numeric range</span>
-<span class="nx">NUMBER</span><span class="p">(</span><span class="s2">&quot;25&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">18</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">NUMBER</span><span class="p">(</span><span class="s2">&quot;25&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">65</span>
+<span class="nx">NUMBER</span><span class="p">(</span><span class="s2">"25"</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">18</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">NUMBER</span><span class="p">(</span><span class="s2">"25"</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">65</span>
 
 <span class="c1">// String validation with multiple conditions</span>
-<span class="nx">UPPER</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;YES&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">UPPER</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;Y&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">UPPER</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;TRUE&quot;</span>
+<span class="nx">UPPER</span><span class="p">(</span><span class="s2">"input"</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"YES"</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">UPPER</span><span class="p">(</span><span class="s2">"input"</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Y"</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">UPPER</span><span class="p">(</span><span class="s2">"input"</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"TRUE"</span>
 
 <span class="c1">// Function composition</span>
 <span class="nx">ROUND</span><span class="p">(</span><span class="nx">ABS</span><span class="p">(</span><span class="o">-</span><span class="mf">3.14159</span><span class="p">),</span><span class="w"> </span><span class="mf">2</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">3.14</span>
@@ -1528,7 +1528,7 @@ ROUND(42.7, 0)     // 43.0
 <h3 id="parentheses-for-precedence">Parentheses for Precedence</h3>
 <div class="highlight"><pre><span></span><code><span class="p">(</span><span class="mf">5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">3</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">6</span><span class="w">              </span><span class="c1">// true (if arithmetic was supported)</span>
 <span class="o">!</span><span class="p">(</span><span class="kc">false</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w">         </span><span class="c1">// false</span>
-<span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w">  </span><span class="c1">// true</span>
+<span class="nx">CONTAINS</span><span class="p">(</span><span class="s2">"test"</span><span class="p">,</span><span class="w"> </span><span class="s2">"t"</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w">  </span><span class="c1">// true</span>
 </code></pre></div>
 <h2 id="best-practices">Best Practices</h2>
 <ul>
@@ -1635,7 +1635,7 @@ ROUND(42.7, 0)     // 43.0
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tabs", "content.tabs.link", "content.code.copy", "navigation.footer"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -1355,29 +1355,29 @@
 <li><strong>Copy the sample</strong>: Copy <code>simple_sample_menu.yml</code> and rename it to <code>my_first_menu.yml</code></li>
 <li><strong>Edit the file</strong>: Open <code>my_first_menu.yml</code> in your text editor</li>
 <li><strong>Change the identifier</strong>: Update the name field at the top:
-   <div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_first_menu&quot;</span>
+   <div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"my_first_menu"</span>
 </code></pre></div></li>
 </ul>
 <h3 id="basic-gui-structure">Basic GUI Structure</h3>
 <p>Here's a minimal GUI configuration:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Unique identifier for this GUI (must match filename without .yml)</span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_first_menu&quot;</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"my_first_menu"</span>
 
 <span class="c1"># Inventory size: ONE_ROW, TWO_ROW, THREE_ROW, FOUR_ROW, FIVE_ROW, SIX_ROW  </span>
-<span class="nt">windowType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;THREE_ROW&quot;</span>
+<span class="nt">windowType</span><span class="p">:</span><span class="w"> </span><span class="s">"THREE_ROW"</span>
 
 <span class="c1"># Title displayed at the top of the inventory</span>
-<span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;9My</span><span class="nv"> </span><span class="s">First</span><span class="nv"> </span><span class="s">GUI</span><span class="nv"> </span><span class="s">Menu&quot;</span>
+<span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;9My</span><span class="nv"> </span><span class="s">First</span><span class="nv"> </span><span class="s">GUI</span><span class="nv"> </span><span class="s">Menu"</span>
 
 <span class="c1"># How often to refresh placeholders (in ticks, 20 = 1 second)</span>
 <span class="nt">updateIntervalTicks</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 
 <span class="c1"># Optional: Custom command to open this GUI</span>
 <span class="nt">command</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mymenu&quot;</span>
-<span class="w">  </span><span class="nt">permission</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myplugin.gui&quot;</span>
-<span class="w">  </span><span class="nt">usage</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/mymenu&quot;</span>
-<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Opens</span><span class="nv"> </span><span class="s">my</span><span class="nv"> </span><span class="s">custom</span><span class="nv"> </span><span class="s">GUI</span><span class="nv"> </span><span class="s">menu&quot;</span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"mymenu"</span>
+<span class="w">  </span><span class="nt">permission</span><span class="p">:</span><span class="w"> </span><span class="s">"myplugin.gui"</span>
+<span class="w">  </span><span class="nt">usage</span><span class="p">:</span><span class="w"> </span><span class="s">"/mymenu"</span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Opens</span><span class="nv"> </span><span class="s">my</span><span class="nv"> </span><span class="s">custom</span><span class="nv"> </span><span class="s">GUI</span><span class="nv"> </span><span class="s">menu"</span>
 
 <span class="c1"># Items to display in the inventory</span>
 <span class="nt">items</span><span class="p">:</span>
@@ -1387,33 +1387,33 @@
 <span class="w">    </span><span class="nt">rowSpan</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <span class="w">    </span><span class="nt">colSpan</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9</span>
 <span class="w">    </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:black_stained_glass_pane&quot;</span>
-<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="nv"> </span><span class="s">&quot;</span>
+<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:black_stained_glass_pane"</span>
+<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"</span><span class="nv"> </span><span class="s">"</span>
 
 <span class="w">  </span><span class="c1"># Welcome item</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">    </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="w">    </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:diamond&quot;</span>
-<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;bWelcome,</span><span class="nv"> </span><span class="s">%shygui_player_name%!&quot;</span>
+<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:diamond"</span>
+<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;bWelcome,</span><span class="nv"> </span><span class="s">%shygui_player_name%!"</span>
 <span class="w">      </span><span class="nt">lore</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7This</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">your</span><span class="nv"> </span><span class="s">first</span><span class="nv"> </span><span class="s">GUI&quot;</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">get</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">message&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7This</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">your</span><span class="nv"> </span><span class="s">first</span><span class="nv"> </span><span class="s">GUI"</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">get</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">message"</span>
 <span class="w">    </span><span class="nt">commands</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PER_PLAYER&quot;</span>
-<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/shygui</span><span class="nv"> </span><span class="s">message</span><span class="nv"> </span><span class="s">&amp;aHello</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">your</span><span class="nv"> </span><span class="s">GUI!&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"PER_PLAYER"</span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/shygui</span><span class="nv"> </span><span class="s">message</span><span class="nv"> </span><span class="s">&amp;aHello</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">your</span><span class="nv"> </span><span class="s">GUI!"</span>
 
 <span class="w">  </span><span class="c1"># Close button</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <span class="w">    </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9</span>
 <span class="w">    </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:barrier&quot;</span>
-<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;cClose&quot;</span>
+<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:barrier"</span>
+<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;cClose"</span>
 <span class="w">      </span><span class="nt">lore</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">close</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">menu&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">close</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">menu"</span>
 <span class="w">    </span><span class="nt">commands</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PER_PLAYER&quot;</span>
-<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/shygui</span><span class="nv"> </span><span class="s">close&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"PER_PLAYER"</span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/shygui</span><span class="nv"> </span><span class="s">close"</span>
 </code></pre></div>
 <h2 id="step-3-load-and-test-your-gui">Step 3: Load and Test Your GUI</h2>
 <h3 id="reload-the-plugin">Reload the Plugin</h3>
@@ -1447,24 +1447,24 @@
 <h3 id="item-properties">Item Properties</h3>
 <p>Essential item properties:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">item</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:diamond_sword&quot;</span><span class="w">    </span><span class="c1"># Material name</span>
+<span class="w">  </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:diamond_sword"</span><span class="w">    </span><span class="c1"># Material name</span>
 <span class="w">  </span><span class="nt">durability</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">                          </span><span class="c1"># Item damage/durability</span>
-<span class="w">  </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;bMy</span><span class="nv"> </span><span class="s">Sword&quot;</span><span class="w">             </span><span class="c1"># Display name with color codes</span>
+<span class="w">  </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;bMy</span><span class="nv"> </span><span class="s">Sword"</span><span class="w">             </span><span class="c1"># Display name with color codes</span>
 <span class="w">  </span><span class="nt">amount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">                             </span><span class="c1"># Stack size (1-64)</span>
 <span class="w">  </span><span class="nt">lore</span><span class="p">:</span><span class="w">                                 </span><span class="c1"># Description lines</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7This</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">custom</span><span class="nv"> </span><span class="s">sword&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">use&quot;</span>
-<span class="w">  </span><span class="nt">skinBase64</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;eyJ0ZXh0dXJl...&quot;</span><span class="w">        </span><span class="c1"># Custom head texture (for player_head items)</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7This</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">custom</span><span class="nv"> </span><span class="s">sword"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">use"</span>
+<span class="w">  </span><span class="nt">skinBase64</span><span class="p">:</span><span class="w"> </span><span class="s">"eyJ0ZXh0dXJl..."</span><span class="w">        </span><span class="c1"># Custom head texture (for player_head items)</span>
 </code></pre></div>
 <h3 id="command-types">Command Types</h3>
 <p>When players click items, you can execute different command types:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">commands</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PER_PLAYER&quot;</span><span class="w">          </span><span class="c1"># Runs as the clicking player</span>
-<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/heal&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SERVER_PER_PLAYER&quot;</span><span class="w">   </span><span class="c1"># Runs from server console for the player</span>
-<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/give</span><span class="nv"> </span><span class="s">%shygui_player_name%</span><span class="nv"> </span><span class="s">diamond</span><span class="nv"> </span><span class="s">1&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SERVER&quot;</span><span class="w">              </span><span class="c1"># Runs from server console</span>
-<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/broadcast</span><span class="nv"> </span><span class="s">%shygui_player_name%</span><span class="nv"> </span><span class="s">opened</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">GUI!&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"PER_PLAYER"</span><span class="w">          </span><span class="c1"># Runs as the clicking player</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/heal"</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"SERVER_PER_PLAYER"</span><span class="w">   </span><span class="c1"># Runs from server console for the player</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/give</span><span class="nv"> </span><span class="s">%shygui_player_name%</span><span class="nv"> </span><span class="s">diamond</span><span class="nv"> </span><span class="s">1"</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"SERVER"</span><span class="w">              </span><span class="c1"># Runs from server console</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/broadcast</span><span class="nv"> </span><span class="s">%shygui_player_name%</span><span class="nv"> </span><span class="s">opened</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">GUI!"</span>
 </code></pre></div>
 <h2 id="step-5-real-world-example-pet-management-gui">Step 5: Real-World Example - Pet Management GUI</h2>
 <p>Let's examine the included PetBlocks main menu to understand advanced features:</p>
@@ -1473,68 +1473,68 @@
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">  </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="w">  </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%petblocks_pet_itemType_selected%&quot;</span>
-<span class="w">    </span><span class="nt">durability</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%petblocks_pet_itemDurability_selected%&quot;</span>
-<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%petblocks_pet_displayName_selected%&quot;</span>
-<span class="w">    </span><span class="nt">skinBase64</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%petblocks_pet_itemHeadBase64_selected%&quot;</span>
+<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"%petblocks_pet_itemType_selected%"</span>
+<span class="w">    </span><span class="nt">durability</span><span class="p">:</span><span class="w"> </span><span class="s">"%petblocks_pet_itemDurability_selected%"</span>
+<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"%petblocks_pet_displayName_selected%"</span>
+<span class="w">    </span><span class="nt">skinBase64</span><span class="p">:</span><span class="w"> </span><span class="s">"%petblocks_pet_itemHeadBase64_selected%"</span>
 </code></pre></div>
 <h3 id="conditional-items">Conditional Items</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Enable pet button - only shows when pet is disabled</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">  </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="w">  </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:player_head&quot;</span>
-<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;aPet</span><span class="nv"> </span><span class="s">enabled&quot;</span>
-<span class="w">    </span><span class="nt">skinBase64</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;eyJ0ZXh0dXJl...&quot;</span>
+<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:player_head"</span>
+<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;aPet</span><span class="nv"> </span><span class="s">enabled"</span>
+<span class="w">    </span><span class="nt">skinBase64</span><span class="p">:</span><span class="w"> </span><span class="s">"eyJ0ZXh0dXJl..."</span>
 <span class="w">  </span><span class="nt">condition</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&quot;%petblocks_pet_isSpawned_selected%&quot;</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">&quot;true&quot;&#39;</span>
+<span class="w">    </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">'"%petblocks_pet_isSpawned_selected%"</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">"true"'</span>
 <span class="w">  </span><span class="nt">commands</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PER_PLAYER&quot;</span>
-<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/petblocks</span><span class="nv"> </span><span class="s">despawn</span><span class="nv"> </span><span class="s">%petblocks_pet_name_selected%&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"PER_PLAYER"</span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/petblocks</span><span class="nv"> </span><span class="s">despawn</span><span class="nv"> </span><span class="s">%petblocks_pet_name_selected%"</span>
 
 <span class="c1"># Different item for the same position when pet is disabled</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">  </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="w">  </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:player_head&quot;</span>
-<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;cPet</span><span class="nv"> </span><span class="s">disabled&quot;</span><span class="w"> </span>
-<span class="w">    </span><span class="nt">skinBase64</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;eyJ0ZXh0dXJl...&quot;</span>
+<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:player_head"</span>
+<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;cPet</span><span class="nv"> </span><span class="s">disabled"</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">skinBase64</span><span class="p">:</span><span class="w"> </span><span class="s">"eyJ0ZXh0dXJl..."</span>
 <span class="w">  </span><span class="nt">condition</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&quot;%petblocks_pet_isSpawned_selected%&quot;</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">&quot;false&quot;&#39;</span>
+<span class="w">    </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">'"%petblocks_pet_isSpawned_selected%"</span><span class="nv"> </span><span class="s">==</span><span class="nv"> </span><span class="s">"false"'</span>
 <span class="w">  </span><span class="nt">commands</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PER_PLAYER&quot;</span>
-<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/petblocks</span><span class="nv"> </span><span class="s">spawn</span><span class="nv"> </span><span class="s">%petblocks_pet_name_selected%&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"PER_PLAYER"</span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/petblocks</span><span class="nv"> </span><span class="s">spawn</span><span class="nv"> </span><span class="s">%petblocks_pet_name_selected%"</span>
 </code></pre></div>
 <h3 id="navigation-between-guis">Navigation Between GUIs</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Navigation to sub-menu</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">  </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">  </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:player_head&quot;</span>
-<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;6Pet</span><span class="nv"> </span><span class="s">Skins&quot;</span>
+<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:player_head"</span>
+<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;6Pet</span><span class="nv"> </span><span class="s">Skins"</span>
 <span class="w">    </span><span class="nt">lore</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">open</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">pet</span><span class="nv"> </span><span class="s">skins</span><span class="nv"> </span><span class="s">menu&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">open</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">pet</span><span class="nv"> </span><span class="s">skins</span><span class="nv"> </span><span class="s">menu"</span>
 <span class="w">  </span><span class="nt">commands</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PER_PLAYER&quot;</span>
-<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/shygui</span><span class="nv"> </span><span class="s">next</span><span class="nv"> </span><span class="s">petblocks_skins_menu&quot;</span><span class="w">  </span><span class="c1"># Opens sub-menu</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"PER_PLAYER"</span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/shygui</span><span class="nv"> </span><span class="s">next</span><span class="nv"> </span><span class="s">petblocks_skins_menu"</span><span class="w">  </span><span class="c1"># Opens sub-menu</span>
 
 <span class="c1"># Back button in sub-menu</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span>
 <span class="w">  </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="w">  </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:barrier&quot;</span>
-<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;cBack&quot;</span>
+<span class="w">    </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:barrier"</span>
+<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;cBack"</span>
 <span class="w">  </span><span class="nt">commands</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PER_PLAYER&quot;</span>
-<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/shygui</span><span class="nv"> </span><span class="s">back&quot;</span><span class="w">  </span><span class="c1"># Returns to previous menu</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"PER_PLAYER"</span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/shygui</span><span class="nv"> </span><span class="s">back"</span><span class="w">  </span><span class="c1"># Returns to previous menu</span>
 </code></pre></div>
 <h2 id="step-6-advanced-features">Step 6: Advanced Features</h2>
 <h3 id="using-placeholders">Using Placeholders</h3>
 <p>ShyGUI provides built-in placeholders:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Welcome,</span><span class="nv"> </span><span class="s">%shygui_player_name%!&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"Welcome,</span><span class="nv"> </span><span class="s">%shygui_player_name%!"</span>
 <span class="nt">lore</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Current</span><span class="nv"> </span><span class="s">GUI:</span><span class="nv"> </span><span class="s">%shygui_gui_name%&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Parameter</span><span class="nv"> </span><span class="s">1:</span><span class="nv"> </span><span class="s">%shygui_gui_param1%&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Current</span><span class="nv"> </span><span class="s">GUI:</span><span class="nv"> </span><span class="s">%shygui_gui_name%"</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Parameter</span><span class="nv"> </span><span class="s">1:</span><span class="nv"> </span><span class="s">%shygui_gui_param1%"</span>
 </code></pre></div>
 <h3 id="gui-parameters">GUI Parameters</h3>
 <p>Pass parameters when opening GUIs:</p>
@@ -1544,7 +1544,7 @@
 <h3 id="scripting-conditions">Scripting Conditions</h3>
 <p>Use the built-in scripting language for complex conditions:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">condition</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;CONTAINS_IGNORE_CASE(&quot;%shygui_player_name%&quot;,</span><span class="nv"> </span><span class="s">&quot;admin&quot;)</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">LENGTH(&quot;%shygui_gui_param1%&quot;)</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">0&#39;</span>
+<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="s">'CONTAINS_IGNORE_CASE("%shygui_player_name%",</span><span class="nv"> </span><span class="s">"admin")</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">LENGTH("%shygui_gui_param1%")</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">0'</span>
 </code></pre></div>
 <h3 id="auto-refresh">Auto-Refresh</h3>
 <p>Set GUI to automatically update:</p>
@@ -1561,51 +1561,51 @@
 </ul>
 <h2 id="common-patterns">Common Patterns</h2>
 <h3 id="shop-menu-with-categories">Shop Menu with Categories</h3>
-<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;shop_main&quot;</span>
-<span class="nt">windowType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SIX_ROW&quot;</span>
-<span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;6Server</span><span class="nv"> </span><span class="s">Shop&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"shop_main"</span>
+<span class="nt">windowType</span><span class="p">:</span><span class="w"> </span><span class="s">"SIX_ROW"</span>
+<span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;6Server</span><span class="nv"> </span><span class="s">Shop"</span>
 
 <span class="nt">items</span><span class="p">:</span>
 <span class="w">  </span><span class="c1"># Category: Blocks</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">    </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">    </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:stone&quot;</span>
-<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;eBlocks&quot;</span>
+<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:stone"</span>
+<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;eBlocks"</span>
 <span class="w">      </span><span class="nt">lore</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">browse</span><span class="nv"> </span><span class="s">blocks&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">browse</span><span class="nv"> </span><span class="s">blocks"</span>
 <span class="w">    </span><span class="nt">commands</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PER_PLAYER&quot;</span>
-<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/shygui</span><span class="nv"> </span><span class="s">next</span><span class="nv"> </span><span class="s">shop_blocks&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"PER_PLAYER"</span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/shygui</span><span class="nv"> </span><span class="s">next</span><span class="nv"> </span><span class="s">shop_blocks"</span>
 
 <span class="w">  </span><span class="c1"># Category: Tools  </span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">    </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
 <span class="w">    </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:diamond_pickaxe&quot;</span>
-<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;eTools&quot;</span>
+<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:diamond_pickaxe"</span>
+<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;eTools"</span>
 <span class="w">      </span><span class="nt">lore</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">browse</span><span class="nv"> </span><span class="s">tools&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Click</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">browse</span><span class="nv"> </span><span class="s">tools"</span>
 <span class="w">    </span><span class="nt">commands</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PER_PLAYER&quot;</span>
-<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/shygui</span><span class="nv"> </span><span class="s">next</span><span class="nv"> </span><span class="s">shop_tools&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"PER_PLAYER"</span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="s">"/shygui</span><span class="nv"> </span><span class="s">next</span><span class="nv"> </span><span class="s">shop_tools"</span>
 </code></pre></div>
 <h3 id="player-information-display">Player Information Display</h3>
-<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;player_info&quot;</span>
-<span class="nt">windowType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;THREE_ROW&quot;</span>
-<span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;9Player</span><span class="nv"> </span><span class="s">Information&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"player_info"</span>
+<span class="nt">windowType</span><span class="p">:</span><span class="w"> </span><span class="s">"THREE_ROW"</span>
+<span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;9Player</span><span class="nv"> </span><span class="s">Information"</span>
 
 <span class="nt">items</span><span class="p">:</span>
 <span class="w">  </span><span class="c1"># Player head</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">    </span><span class="nt">col</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="w">    </span><span class="nt">item</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minecraft:player_head&quot;</span>
-<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&amp;b%shygui_player_name%&quot;</span>
+<span class="w">      </span><span class="nt">typeName</span><span class="p">:</span><span class="w"> </span><span class="s">"minecraft:player_head"</span>
+<span class="w">      </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="s">"&amp;b%shygui_player_name%"</span>
 <span class="w">      </span><span class="nt">lore</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Display</span><span class="nv"> </span><span class="s">Name:</span><span class="nv"> </span><span class="s">%shygui_player_displayName%&quot;</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Online</span><span class="nv"> </span><span class="s">Since:</span><span class="nv"> </span><span class="s">%player_first_join_date%&quot;</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&amp;7Playtime:</span><span class="nv"> </span><span class="s">%statistic_time_played%&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Display</span><span class="nv"> </span><span class="s">Name:</span><span class="nv"> </span><span class="s">%shygui_player_displayName%"</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Online</span><span class="nv"> </span><span class="s">Since:</span><span class="nv"> </span><span class="s">%player_first_join_date%"</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"&amp;7Playtime:</span><span class="nv"> </span><span class="s">%statistic_time_played%"</span>
 </code></pre></div>
 <p>This concludes the getting started guide. You now have the foundation to create powerful, interactive GUI menus with ShyGUI!</p>
 
@@ -1697,7 +1697,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tabs", "content.tabs.link", "content.code.copy", "navigation.footer"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

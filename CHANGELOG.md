@@ -1,5 +1,13 @@
 # Changelog
 
+## Release 1.14.0
+
+### Changes
+
+* #49 Added support for Minecraft 26.3.x
+
+---
+
 ## Release 1.13.0
 
 ### Changes
